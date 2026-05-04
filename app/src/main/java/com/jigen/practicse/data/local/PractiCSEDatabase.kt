@@ -15,7 +15,7 @@ import com.jigen.practicse.data.local.entity.SessionEntity
 import com.jigen.practicse.data.local.entity.UserProgressEntity
 
 @Database(
-	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class],
+	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class, com.jigen.practicse.data.local.entity.LeaderboardEntryEntity::class],
 	version = 2,
 	exportSchema = false
 )
@@ -29,6 +29,8 @@ abstract class PractiCSEDatabase : RoomDatabase() {
 	abstract fun progressDao(): ProgressDao
 
 	abstract fun errorReportDao(): ErrorReportDao
+
+	abstract fun leaderboardDao(): com.jigen.practicse.data.local.dao.LeaderboardDao
 
 	companion object {
 
