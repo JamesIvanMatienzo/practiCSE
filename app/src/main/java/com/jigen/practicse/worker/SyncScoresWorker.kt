@@ -10,7 +10,8 @@ import androidx.work.Constraints
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.ExistingPeriodicWorkPolicy
 import com.jigen.practicse.data.local.PractiCSEDatabase
-import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
+import com.jigen.practicse.repository.SupabaseLeaderboardRepository
+import com.jigen.practicse.util.CrashReporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.OutputStreamWriter
@@ -28,44 +29,26 @@ class SyncScoresWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            val userName = prefs.getString("user_name", "anonymous") ?: "anonymous"
+            val displayName = prefs.getString("user_name", "anonymous") ?: "anonymous"
 
             // Compute total score: sum of correct answers
             val progress = database.progressDao().getAllProgress()
             val totalScore = progress.count { it.isCorrect }
 
-            // Only send minimal fields
-            val payload = "{\"userName\":\"${userName}\",\"totalScore\":$totalScore}"
-
-            val endpoint = options.getString("endpoint") ?: System.getenv("SCORES_ENDPOINT")
-            val apiKey = options.getString("apiKey") ?: System.getenv("SCORES_API_KEY")
-
-            if (endpoint.isNullOrBlank()) {
-                return@withContext Result.failure()
-            }
-
-            val url = URL(endpoint)
-            val conn = (url.openConnection() as HttpURLConnection).apply {
-                requestMethod = "POST"
-                setRequestProperty("Content-Type", "application/json")
-                if (!apiKey.isNullOrBlank()) setRequestProperty("Authorization", "Bearer $apiKey")
-                doOutput = true
-                connectTimeout = 15_000
-                readTimeout = 15_000
-            }
-
-            conn.outputStream.use { os ->
-                OutputStreamWriter(os).use { it.write(payload) }
-            }
-
-            val code = conn.responseCode
-            if (code in 200..299) {
-                // update local cache
-                val entry = LeaderboardEntryEntity(userName = userName, totalScore = totalScore, lastUpdatedMillis = System.currentTimeMillis())
-                database.leaderboardDao().upsert(entry)
-                return@withContext Result.success()
-            } else {
-                return@withContext Result.retry()
+            // Use SupabaseRepository to upsert only display name and score (no PII)
+            val repo = SupabaseLeaderboardRepository(applicationContext)
+            return@withContext try {
+                val ok = repo.upsertScore(displayName, totalScore)
+                if (ok) {
+                    Result.success()
+                } else {
+                    // non-fatal report so we can monitor reliability
+                    CrashReporter.recordException(RuntimeException("SyncScoresWorker: upsert returned false"), "SyncScoresWorker")
+                    Result.retry()
+                }
+            } catch (e: Exception) {
+                CrashReporter.recordException(e, "SyncScoresWorker")
+                Result.retry()
             }
 
         } catch (e: Exception) {
