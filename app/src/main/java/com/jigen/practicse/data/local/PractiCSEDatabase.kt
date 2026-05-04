@@ -41,11 +41,17 @@ abstract class PractiCSEDatabase : RoomDatabase() {
 
 		fun getInstance(context: Context): PractiCSEDatabase {
 			return instance ?: synchronized(this) {
-				instance ?: Room.databaseBuilder(
-					context.applicationContext,
-					PractiCSEDatabase::class.java,
-					DATABASE_NAME
-				).fallbackToDestructiveMigration().build().also { instance = it }
+				try {
+					instance ?: Room.databaseBuilder(
+						context.applicationContext,
+						PractiCSEDatabase::class.java,
+						DATABASE_NAME
+					).fallbackToDestructiveMigration().build().also { instance = it }
+				} catch (e: Exception) {
+					// Log migration or DB open errors to CrashReporter for observability
+					com.jigen.practicse.util.CrashReporter.recordException(e, "RoomDatabaseOpenError")
+					throw e
+				}
 			}
 		}
 	}
