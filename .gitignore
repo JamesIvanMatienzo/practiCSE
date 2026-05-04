@@ -1,0 +1,17 @@
+# Gradle files
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# Log files
+*.log
+
+# IDE specific
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
+Thumbs.db
