@@ -49,10 +49,26 @@ dependencies {
 	implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
 	implementation("com.google.firebase:firebase-config-ktx")
 	implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+	// Networking
+	implementation("com.squareup.retrofit2:retrofit:2.9.0")
+	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+	implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 	implementation(platform("androidx.compose:compose-bom:2024.06.00"))
 	implementation("androidx.activity:activity-compose:1.9.1")
 	implementation("androidx.compose.foundation:foundation")
 	implementation("androidx.compose.material3:material3")
 	implementation("androidx.compose.runtime:runtime")
 	implementation("androidx.compose.ui:ui")
+}
+
+// BuildConfig fields for Supabase; values should be supplied in gradle.properties or via CI
+val supabaseUrl: String? = project.findProperty("SUPABASE_URL") as String?
+val supabaseKey: String? = project.findProperty("SUPABASE_KEY") as String?
+
+android {
+	defaultConfig {
+		buildConfigField("String", "SUPABASE_URL", "\"${supabaseUrl ?: ""}\"")
+		buildConfigField("String", "SUPABASE_KEY", "\"${supabaseKey ?: ""}\"")
+	}
 }

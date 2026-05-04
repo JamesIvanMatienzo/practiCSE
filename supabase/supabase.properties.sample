@@ -1,0 +1,6 @@
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_KEY=YOUR_SUPABASE_ANON_OR_SERVICE_KEY
+
+# Notes:
+# - Prefer using authenticated user's JWT for writes. Place SUPABASE_KEY empty for client builds if you expect runtime JWT to be used.
+# - For CI, set SUPABASE_URL and SUPABASE_KEY as environment variables and inject into gradle.properties.
