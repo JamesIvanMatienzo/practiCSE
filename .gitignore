@@ -5,6 +5,7 @@ build/
 # Local configuration
 local.properties
 supabase/supabase.properties
+app/google-services.json
 
 # Log files
 *.log
