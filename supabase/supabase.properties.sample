@@ -1,6 +1,8 @@
-SUPABASE_URL=https://your-project-ref.supabase.co
-SUPABASE_KEY=YOUR_SUPABASE_ANON_OR_SERVICE_KEY
+SUPABASE_URL="https://your-project-ref.supabase.co"
+SUPABASE_KEY="your-anon-or-jwt-token-here"
 
 # Notes:
-# - Prefer using authenticated user's JWT for writes. Place SUPABASE_KEY empty for client builds if you expect runtime JWT to be used.
-# - For CI, set SUPABASE_URL and SUPABASE_KEY as environment variables and inject into gradle.properties.
+# - Copy this file to `supabase/supabase.properties` and fill in the real values locally.
+# - Keep `supabase/supabase.properties` out of git; it is ignored by `.gitignore`.
+# - Prefer using an authenticated user's JWT for writes. Leave SUPABASE_KEY empty if your runtime injects the JWT.
+# - For CI, set SUPABASE_URL and SUPABASE_KEY as environment variables or Gradle properties.

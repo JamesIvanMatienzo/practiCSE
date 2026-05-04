@@ -7,6 +7,8 @@ plugins {
 	id("com.google.firebase.crashlytics")
 }
 
+import java.util.Properties
+
 android {
 	namespace = "com.jigen.practicse"
 	compileSdk = 35
@@ -37,6 +39,23 @@ android {
 	}
 }
 
+val supabaseProperties = Properties().apply {
+	val localSupabaseProperties = rootProject.file("supabase/supabase.properties")
+	if (localSupabaseProperties.exists()) {
+		localSupabaseProperties.inputStream().use { load(it) }
+	}
+}
+
+fun resolveSupabaseValue(propertyName: String): String {
+	val localValue = supabaseProperties.getProperty(propertyName)?.trim().orEmpty()
+	if (localValue.isNotEmpty()) return localValue
+	val gradleValue = project.findProperty(propertyName) as String?
+	return gradleValue?.trim().orEmpty()
+}
+
+val supabaseUrl = resolveSupabaseValue("SUPABASE_URL")
+val supabaseKey = resolveSupabaseValue("SUPABASE_KEY")
+
 dependencies {
 	implementation("androidx.core:core-ktx:1.13.1")
 	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
@@ -62,13 +81,9 @@ dependencies {
 	implementation("androidx.compose.ui:ui")
 }
 
-// BuildConfig fields for Supabase; values should be supplied in gradle.properties or via CI
-val supabaseUrl: String? = project.findProperty("SUPABASE_URL") as String?
-val supabaseKey: String? = project.findProperty("SUPABASE_KEY") as String?
-
 android {
 	defaultConfig {
-		buildConfigField("String", "SUPABASE_URL", "\"${supabaseUrl ?: ""}\"")
-		buildConfigField("String", "SUPABASE_KEY", "\"${supabaseKey ?: ""}\"")
+		buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+		buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
 	}
 }

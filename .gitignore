@@ -4,6 +4,7 @@ build/
 
 # Local configuration
 local.properties
+supabase/supabase.properties
 
 # Log files
 *.log
