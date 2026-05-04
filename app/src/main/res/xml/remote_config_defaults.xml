@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>passing_threshold</key>
+        <value>80</value>
+    </entry>
+    <entry>
+        <key>ai_step_enabled</key>
+        <value>true</value>
+    </entry>
+</defaultsMap>

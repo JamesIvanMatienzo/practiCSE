@@ -32,7 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jigen.practicse.data.local.entity.QuestionEntity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 private val ScreenBackground = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1A73E8)
@@ -55,7 +54,6 @@ fun ExamScreen(
 	modifier: Modifier = Modifier
 ) {
 	val uiState by viewModel.uiState.collectAsState()
-	val coroutineScope = rememberCoroutineScope()
 
 	when (val state = uiState) {
 		is ExamUiState.Loading -> {
@@ -89,6 +87,9 @@ fun ExamScreen(
 				initialPage = state.currentQuestionIndex,
 				pageCount = { state.questions.size.coerceAtLeast(1) }
 			)
+			val currentQuestion = remember(state.questions, state.currentQuestionIndex) {
+				state.questions.getOrNull(state.currentQuestionIndex)
+			}
 
 			LaunchedEffect(state.currentQuestionIndex) {
 				if (pagerState.currentPage != state.currentQuestionIndex && state.questions.isNotEmpty()) {
@@ -114,23 +115,7 @@ fun ExamScreen(
 				modifier = modifier.fillMaxSize(),
 				containerColor = ScreenBackground,
 				topBar = {
-					TopAppBar(
-						title = {
-							Text(
-								text = "Civil Service Exam",
-								color = TextColor,
-								style = MaterialTheme.typography.titleMedium
-							)
-						},
-						actions = {
-							Text(
-								text = formatDuration(state.remainingTimeMillis),
-								color = PrimaryBlue,
-								style = MaterialTheme.typography.labelLarge,
-								modifier = Modifier.padding(end = 16.dp)
-							)
-						}
-					)
+					ExamTopBar(remainingTimeMillis = state.remainingTimeMillis)
 				},
 				floatingActionButton = {
 					FloatingActionButton(
@@ -143,41 +128,82 @@ fun ExamScreen(
 					}
 				}
 			) { innerPadding ->
-				Column(
-					modifier = Modifier
-						.fillMaxSize()
-						.padding(innerPadding),
-					verticalArrangement = Arrangement.Top
-				) {
-					PassageHeader(
-						question = state.questions.getOrNull(state.currentQuestionIndex),
-						modifier = Modifier.fillMaxWidth()
+					ExamPagerContent(
+						questions = state.questions,
+						currentQuestionIndex = state.currentQuestionIndex,
+						selectedAnswerIndex = state.selectedAnswerIndex,
+						isSelectionLocked = state.isSelectionLocked,
+						pagerState = pagerState,
+						currentQuestion = currentQuestion,
+						modifier = Modifier
+							.fillMaxSize()
+							.padding(innerPadding),
+						onAnswerSelected = viewModel::selectAnswer
 					)
-
-					HorizontalPager(
-						state = pagerState,
-						modifier = Modifier.fillMaxSize(),
-						contentPadding = PaddingValues(horizontal = 16.dp),
-						pageSpacing = 16.dp,
-						userScrollEnabled = state.questions.isNotEmpty()
-					) { page ->
-						QuestionPage(
-							question = state.questions.getOrNull(page),
-							selectedAnswerIndex = if (page == state.currentQuestionIndex) state.selectedAnswerIndex else null,
-							isLocked = page == state.currentQuestionIndex && state.isSelectionLocked,
-							onAnswerSelected = { choiceIndex ->
-								coroutineScope.launch {
-									viewModel.selectAnswer(choiceIndex)
-								}
-							}
-						)
-					}
-				}
 			}
 		}
 	}
 }
 
+
+@Composable
+private fun ExamTopBar(remainingTimeMillis: Long) {
+	TopAppBar(
+		title = {
+			Text(
+				text = "Civil Service Exam",
+				color = TextColor,
+				style = MaterialTheme.typography.titleMedium
+			)
+		},
+		actions = {
+			Text(
+				text = formatDuration(remainingTimeMillis),
+				color = PrimaryBlue,
+				style = MaterialTheme.typography.labelLarge,
+				modifier = Modifier.padding(end = 16.dp)
+			)
+		}
+	)
+}
+
+@Composable
+private fun ExamPagerContent(
+	questions: List<QuestionEntity>,
+	currentQuestionIndex: Int,
+	selectedAnswerIndex: Int?,
+	isSelectionLocked: Boolean,
+	pagerState: androidx.compose.foundation.pager.PagerState,
+	currentQuestion: QuestionEntity?,
+	modifier: Modifier = Modifier,
+	onAnswerSelected: (Int) -> Unit
+) {
+	Column(
+		modifier = modifier,
+		verticalArrangement = Arrangement.Top
+	) {
+		PassageHeader(
+			question = currentQuestion,
+			modifier = Modifier.fillMaxWidth()
+		)
+
+		HorizontalPager(
+			state = pagerState,
+			modifier = Modifier.fillMaxSize(),
+			contentPadding = PaddingValues(horizontal = 16.dp),
+			pageSpacing = 16.dp,
+			userScrollEnabled = questions.isNotEmpty()
+		) { page ->
+			val pageQuestion = questions.getOrNull(page)
+			QuestionPage(
+				question = pageQuestion,
+				selectedAnswerIndex = if (page == currentQuestionIndex) selectedAnswerIndex else null,
+				isLocked = page == currentQuestionIndex && isSelectionLocked,
+				onAnswerSelected = onAnswerSelected
+			)
+		}
+	}
+}
 @Composable
 private fun PassageHeader(
 	question: QuestionEntity?,
