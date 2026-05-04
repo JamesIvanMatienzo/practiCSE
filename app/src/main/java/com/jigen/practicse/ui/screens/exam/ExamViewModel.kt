@@ -3,9 +3,11 @@ package com.jigen.practicse.ui.screens.exam
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jigen.practicse.data.local.dao.ErrorReportDao
 import com.jigen.practicse.data.local.dao.ProgressDao
 import com.jigen.practicse.data.local.dao.QuestionDao
 import com.jigen.practicse.data.local.dao.SessionDao
+import com.jigen.practicse.data.local.entity.ErrorReportEntity
 import com.jigen.practicse.data.local.entity.SessionEntity
 import com.jigen.practicse.data.local.entity.UserProgressEntity
 import kotlinx.coroutines.Job
@@ -21,7 +23,8 @@ import kotlinx.coroutines.launch
 class ExamViewModel(
 	private val questionDao: QuestionDao,
 	private val sessionDao: SessionDao,
-	private val progressDao: ProgressDao
+	private val progressDao: ProgressDao,
+	private val errorReportDao: ErrorReportDao
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow<ExamUiState>(ExamUiState.Loading)
@@ -153,6 +156,20 @@ class ExamViewModel(
 		}
 	}
 
+	fun reportCurrentQuestion() {
+		val currentState = _uiState.value as? ExamUiState.Success ?: return
+		val question = currentState.questions.getOrNull(currentState.currentQuestionIndex) ?: return
+
+		viewModelScope.launch {
+			errorReportDao.insert(
+				ErrorReportEntity(
+					questionId = question.id,
+					reportedAtMillis = System.currentTimeMillis()
+				)
+			)
+		}
+	}
+
 	override fun onCleared() {
 		super.onCleared()
 		timerJob?.cancel()
@@ -204,13 +221,14 @@ class ExamViewModel(
 		fun factory(
 			questionDao: QuestionDao,
 			sessionDao: SessionDao,
-			progressDao: ProgressDao
+			progressDao: ProgressDao,
+			errorReportDao: ErrorReportDao
 		): ViewModelProvider.Factory {
 			return object : ViewModelProvider.Factory {
 				override fun <T : ViewModel> create(modelClass: Class<T>): T {
 					if (modelClass.isAssignableFrom(ExamViewModel::class.java)) {
 						@Suppress("UNCHECKED_CAST")
-						return ExamViewModel(questionDao, sessionDao, progressDao) as T
+						return ExamViewModel(questionDao, sessionDao, progressDao, errorReportDao) as T
 					}
 					throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
 				}
