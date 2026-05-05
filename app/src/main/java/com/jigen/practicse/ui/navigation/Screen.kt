@@ -14,6 +14,7 @@ sealed class Screen(val route: String) {
 		fun createRoute(questionId: String) = "deepdive/$questionId"
 	}
 	object Ranking : Screen("ranking")
+		object StudyLibrary : Screen("study_library")
 	object Profile : Screen("profile")
 	object Settings : Screen("settings")
 	object About : Screen("about")

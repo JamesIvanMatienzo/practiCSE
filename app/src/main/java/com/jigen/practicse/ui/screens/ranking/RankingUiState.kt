@@ -7,7 +7,8 @@ sealed class RankingUiState {
     data class Success(
         val top: List<LeaderboardEntryEntity> = emptyList(),
         val userRank: Int? = null,
-        val userEntry: LeaderboardEntryEntity? = null
+        val userEntry: LeaderboardEntryEntity? = null,
+        val isPlaceholder: Boolean = false
     ) : RankingUiState()
 
     data class Error(val message: String) : RankingUiState()

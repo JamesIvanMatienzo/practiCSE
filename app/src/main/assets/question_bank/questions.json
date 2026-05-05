@@ -1,0 +1,4785 @@
+[
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "The 1987 Constitution was ratified on:",
+        "referenceText": null,
+        "correctAnswer": "February 2, 1987",
+        "wrongChoices": [
+            "February 25",
+            "1986",
+            "January 17",
+            "1973",
+            "June 12",
+            "1898"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "Which branch of government is responsible for the execution and administration of laws?",
+        "referenceText": null,
+        "correctAnswer": "Executive",
+        "wrongChoices": [
+            "Judiciary",
+            "Legislative",
+            "Administrative"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "The power of the State to take private property for public use upon payment of just compensation is:",
+        "referenceText": null,
+        "correctAnswer": "Eminent Domain",
+        "wrongChoices": [
+            "Taxation",
+            "Police Power",
+            "Escheat"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "According to RA 6713, public officials must file their SALN within how many days after assumption of office?",
+        "referenceText": null,
+        "correctAnswer": "30 days",
+        "wrongChoices": [
+            "15 days",
+            "60 days",
+            "90 days"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "The right to be informed of one's right to remain silent and to have competent counsel is known as:",
+        "referenceText": null,
+        "correctAnswer": "Miranda Rights",
+        "wrongChoices": [
+            "Writ of Amparo",
+            "Habeas Corpus",
+            "Due Process"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What is the national language of the Philippines according to 1987 Phil Constitution article XIV section 6?",
+        "referenceText": null,
+        "correctAnswer": "Filipino",
+        "wrongChoices": [
+            "Pilipino",
+            "Tagalog",
+            "English",
+            "Both Tagalog & Filipino"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What do you call the introductory part of the Constitution?",
+        "referenceText": null,
+        "correctAnswer": "Preamble",
+        "wrongChoices": [
+            "Preface",
+            "Amendments",
+            "Bill of Rights"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What form of government does the Philippines adopt?",
+        "referenceText": null,
+        "correctAnswer": "Both Republican and Democratic",
+        "wrongChoices": [
+            "Republican",
+            "Democratic",
+            "Neither Republican nor Democratic"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "Who among the following may issue a warrant of arrest or a search warrant?",
+        "referenceText": null,
+        "correctAnswer": "A judge",
+        "wrongChoices": [
+            "A senator",
+            "A congressman",
+            "The President"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "A foreigner may acquire Filipino citizenship through _",
+        "referenceText": null,
+        "correctAnswer": "Naturalization",
+        "wrongChoices": [
+            "Extradition",
+            "Rebirth",
+            "Visa application"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What is regarded by the State as a \"primary social economic force?\"",
+        "referenceText": null,
+        "correctAnswer": "labor",
+        "wrongChoices": [
+            "education",
+            "trade",
+            "commerce"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "According to Article III, Section 15 of the Constitution, the writ of habeas corpus may be suspended in times of rebellion or what?",
+        "referenceText": null,
+        "correctAnswer": "invasion",
+        "wrongChoices": [
+            "martial law",
+            "war",
+            "terrorism"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "The Lower Chamber of the Congress of the Philippines is known by what name?",
+        "referenceText": null,
+        "correctAnswer": "House of Representatives",
+        "wrongChoices": [
+            "Senate",
+            "Congressional Lower Chamber",
+            "National Assembly"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "A Member of either house of Congress may be expelled by their fellow Members. For a Member to be expelled, how much of the total number of Members of a house must concur with the expulsion?",
+        "referenceText": null,
+        "correctAnswer": "two-thirds",
+        "wrongChoices": [
+            "majority",
+            "three-fourths",
+            "nine-tenths"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "If a President wishes to veto a bill, he/she must communicate it within a certain span of time, otherwise the bill will become a law. How long is this span of time?",
+        "referenceText": null,
+        "correctAnswer": "30 days",
+        "wrongChoices": [
+            "3 weeks",
+            "48 days",
+            "60 days"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "At present, how many percent of the population of the Philippines are aliens?",
+        "referenceText": null,
+        "correctAnswer": "30%",
+        "wrongChoices": [
+            "25%",
+            "40%",
+            "50%",
+            "70%"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What project of the DENR that includes the protection of Industrial pollution of our Environment?",
+        "referenceText": null,
+        "correctAnswer": "Solid Waste Management",
+        "wrongChoices": [
+            "Bantay Kalikasan",
+            "Bantay Ilog",
+            "Bantay Dagat",
+            "Ecological Watch"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What government agency thus the status of government employee in the free voluntary services belong?",
+        "referenceText": null,
+        "correctAnswer": "Barangay",
+        "wrongChoices": [
+            "Secretary",
+            "Regional",
+            "Municipal",
+            "National"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "Which is not a ground for Impeachment of the Pres., Vice-Pres., Ombudsman, and Senator?",
+        "referenceText": null,
+        "correctAnswer": "against the Family if the child scolded by the parents",
+        "wrongChoices": [
+            "graft and corruption",
+            "sexual harassment",
+            "grave abuse of the authority",
+            "Other crimes"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "What is the ground for impeachment of the Pres., Vice-Pres., Ombudsman, and Senator?",
+        "referenceText": null,
+        "correctAnswer": "culpable violation of the Constitution",
+        "wrongChoices": [
+            "sexual harassment",
+            "heinous crime",
+            "grave abuse of the authority",
+            "graft and corruption"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "The official motto used in 30th Southeast Asian Games is what?",
+        "referenceText": null,
+        "correctAnswer": "We Win As One",
+        "wrongChoices": [
+            "We Care As One",
+            "We Play As One",
+            "We Will As One",
+            "We Work As One"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "On August 16, 2018, the government announced at least _ Philippine holidays for 2019 as declared by virtue of Proclamation No. 555, series of 2018.",
+        "referenceText": null,
+        "correctAnswer": "18",
+        "wrongChoices": [
+            "16",
+            "19",
+            "15",
+            "14"
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "Which of the following statements best describes the relationship between global warming ozone depletion?",
+        "referenceText": null,
+        "correctAnswer": "Ozone depletion contributes to global warming.",
+        "wrongChoices": [
+            "Global warming causes ozone depletion.",
+            "Ozone depletion and global warming have nothing to do with each other.",
+            "Excessive build-up of carbon dioxide causes both global warming and ozone depletion."
+        ]
+    },
+    {
+        "category": "General Information",
+        "subCategory": "General",
+        "questionText": "It is only Philippine province with an English name.",
+        "referenceText": null,
+        "correctAnswer": "Mountain Province",
+        "wrongChoices": [
+            "Cebu",
+            "General Santos",
+            "Zambales"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 25, 7, _ , 9, 19",
+        "referenceText": null,
+        "correctAnswer": "22",
+        "wrongChoices": [
+            "23",
+            "25",
+            "32",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "62, 64, _ , 32, 14, 16",
+        "referenceText": null,
+        "correctAnswer": "30",
+        "wrongChoices": [
+            "26",
+            "28",
+            "32",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "100, 50, 52, 26, 28, _",
+        "referenceText": null,
+        "correctAnswer": "14",
+        "wrongChoices": [
+            "30",
+            "32",
+            "16",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "980, 392, 156.8, _ , 25.088, 10.0352",
+        "referenceText": null,
+        "correctAnswer": "62.72",
+        "wrongChoices": [
+            "63.85",
+            "65.04",
+            "60.28",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "113, 225, 449, _ , 1793",
+        "referenceText": null,
+        "correctAnswer": "897",
+        "wrongChoices": [
+            "789",
+            "786",
+            "987",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 9, 21, 37, 81, _",
+        "referenceText": null,
+        "correctAnswer": "153",
+        "wrongChoices": [
+            "163",
+            "181",
+            "203",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 10, 30, 68, _",
+        "referenceText": null,
+        "correctAnswer": "130",
+        "wrongChoices": [
+            "126",
+            "140",
+            "150",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "45, 46, 70, 141, _ , 1061.5",
+        "referenceText": null,
+        "correctAnswer": "353.5",
+        "wrongChoices": [
+            "353",
+            "352.5",
+            "352",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "33, 321, 465, 537, 573, _",
+        "referenceText": null,
+        "correctAnswer": "591",
+        "wrongChoices": [
+            "600",
+            "585",
+            "498",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 9, 30, 105, 436, 2195, _",
+        "referenceText": null,
+        "correctAnswer": "13182",
+        "wrongChoices": [
+            "25",
+            "27",
+            "30",
+            "33",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, 6, 14, 44, _ , 892",
+        "referenceText": null,
+        "correctAnswer": "178",
+        "wrongChoices": [
+            "176",
+            "172",
+            "1821",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "126, 64, 34, 20, 14, _",
+        "referenceText": null,
+        "correctAnswer": "12",
+        "wrongChoices": [
+            "14",
+            "16",
+            "18",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "16, 8, 12, 30, _ , 472.5",
+        "referenceText": null,
+        "correctAnswer": "105",
+        "wrongChoices": [
+            "100",
+            "205",
+            "300",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "25, 34, 30, 39, 35, _",
+        "referenceText": null,
+        "correctAnswer": "44",
+        "wrongChoices": [
+            "45",
+            "46",
+            "50",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 40, 8, 56, 7, 63, 9, _",
+        "referenceText": null,
+        "correctAnswer": "45",
+        "wrongChoices": [
+            "35",
+            "40",
+            "42",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "32, _ , 92, 134, 184",
+        "referenceText": null,
+        "correctAnswer": "58",
+        "wrongChoices": [
+            "55",
+            "38",
+            "45",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "11, 16, 26, _ , 86",
+        "referenceText": null,
+        "correctAnswer": "46",
+        "wrongChoices": [
+            "56",
+            "76",
+            "86",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "198, 194, 185, 169, _",
+        "referenceText": null,
+        "correctAnswer": "144",
+        "wrongChoices": [
+            "154",
+            "165",
+            "134",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "9050, 5675, 3478, 2147, _",
+        "referenceText": null,
+        "correctAnswer": "1418",
+        "wrongChoices": [
+            "3478",
+            "2428",
+            "3678",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 17, 37, 65, _ , 145",
+        "referenceText": null,
+        "correctAnswer": "101",
+        "wrongChoices": [
+            "95",
+            "99",
+            "97",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "95, 115.5, 138, _ , 189",
+        "referenceText": null,
+        "correctAnswer": "162.5",
+        "wrongChoices": [
+            "154.5",
+            "164.5",
+            "166.5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 4.5, 9, 22.5, 67.5, _ , 945",
+        "referenceText": null,
+        "correctAnswer": "236.25",
+        "wrongChoices": [
+            "265.25",
+            "225.36",
+            "150",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "8544, 1420, 280, _ , 18, 5",
+        "referenceText": null,
+        "correctAnswer": "66",
+        "wrongChoices": [
+            "33",
+            "44",
+            "56",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "812, 398, _ , 90, 40, 16",
+        "referenceText": null,
+        "correctAnswer": "192",
+        "wrongChoices": [
+            "182",
+            "172",
+            "162",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "6072, _ , 200, 48, 14, 5, 3",
+        "referenceText": null,
+        "correctAnswer": "1010",
+        "wrongChoices": [
+            "1008",
+            "1001",
+            "1005",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "200, 165, 148, _ , 104, 77, 68",
+        "referenceText": null,
+        "correctAnswer": "117",
+        "wrongChoices": [
+            "115",
+            "116",
+            "118",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "445, 221, 109, _ , 25, 11, 4",
+        "referenceText": null,
+        "correctAnswer": "53",
+        "wrongChoices": [
+            "46",
+            "57",
+            "59",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "-1/2, 0, 1/2, _ , 3/2, 2",
+        "referenceText": null,
+        "correctAnswer": "1",
+        "wrongChoices": [
+            "1/2",
+            "2/3",
+            "3/4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 9, 41, 113, _ , 577",
+        "referenceText": null,
+        "correctAnswer": "265",
+        "wrongChoices": [
+            "260",
+            "270",
+            "275",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "7, 15, _ , 106, 231",
+        "referenceText": null,
+        "correctAnswer": "42",
+        "wrongChoices": [
+            "32",
+            "45",
+            "64",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "8, _ , 41, 74, 118",
+        "referenceText": null,
+        "correctAnswer": "19",
+        "wrongChoices": [
+            "29",
+            "15",
+            "22",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "13, _ , 15, 21, 33",
+        "referenceText": null,
+        "correctAnswer": "12",
+        "wrongChoices": [
+            "11",
+            "13",
+            "14",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "7, _ , 17, 42, 91",
+        "referenceText": null,
+        "correctAnswer": "8",
+        "wrongChoices": [
+            "7",
+            "9",
+            "12",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 11, 24, 75, 304",
+        "referenceText": null,
+        "correctAnswer": "10",
+        "wrongChoices": [
+            "8",
+            "5",
+            "9",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 9, _ , 65, 126",
+        "referenceText": null,
+        "correctAnswer": "28",
+        "wrongChoices": [
+            "25",
+            "22",
+            "30",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0, _ , 68, 222, 520",
+        "referenceText": null,
+        "correctAnswer": "10",
+        "wrongChoices": [
+            "3",
+            "6",
+            "9",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, _ , 12, 38, 154",
+        "referenceText": null,
+        "correctAnswer": "5",
+        "wrongChoices": [
+            "8",
+            "12",
+            "5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "9, 22, 24, 37, _ , 52",
+        "referenceText": null,
+        "correctAnswer": "39",
+        "wrongChoices": [
+            "42",
+            "45",
+            "50",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, _ , 12, 30",
+        "referenceText": null,
+        "correctAnswer": "6",
+        "wrongChoices": [
+            "5",
+            "8",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2348, 3437, 4346, _ , 6344, 7433",
+        "referenceText": null,
+        "correctAnswer": "5435",
+        "wrongChoices": [
+            "5425",
+            "5436",
+            "5456",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "87, 86, 82, 73, 57, 32, _",
+        "referenceText": null,
+        "correctAnswer": "-4",
+        "wrongChoices": [
+            "-5",
+            "6",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "12, 20, 19, 26, _ , 31, 30",
+        "referenceText": null,
+        "correctAnswer": "25",
+        "wrongChoices": [
+            "24",
+            "26",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, 8, 11, 22, 18, 36, 25, 50",
+        "referenceText": null,
+        "correctAnswer": "36",
+        "wrongChoices": [
+            "35",
+            "46",
+            "56",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "9, 7, 64, 6, 3, 19, 1, 8, 9",
+        "referenceText": null,
+        "correctAnswer": "19",
+        "wrongChoices": [
+            "28",
+            "16",
+            "18",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "51975, 9450, 2100, _ , 240, 160, 320",
+        "referenceText": null,
+        "correctAnswer": "600",
+        "wrongChoices": [
+            "800",
+            "900",
+            "1000",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 9, 30, 105, 436, 2195, _",
+        "referenceText": null,
+        "correctAnswer": "13182",
+        "wrongChoices": [
+            "13184",
+            "13186",
+            "13175",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, 2.5, 3.5, 6.75, 15.5, 41.25, _",
+        "referenceText": null,
+        "correctAnswer": "126.75",
+        "wrongChoices": [
+            "136.75",
+            "166.75",
+            "175.75",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1, 5, 9, 17, 25, _ , 49",
+        "referenceText": null,
+        "correctAnswer": "37",
+        "wrongChoices": [
+            "35",
+            "45",
+            "42",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 10, 30, _ , 130",
+        "referenceText": null,
+        "correctAnswer": "68",
+        "wrongChoices": [
+            "64",
+            "65",
+            "69",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 12, _ , 6912",
+        "referenceText": null,
+        "correctAnswer": "192",
+        "wrongChoices": [
+            "194",
+            "196",
+            "212",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 108, 18, 6",
+        "referenceText": null,
+        "correctAnswer": "972",
+        "wrongChoices": [
+            "960",
+            "900",
+            "918",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "6, _ , 18, 56, 226",
+        "referenceText": null,
+        "correctAnswer": "8",
+        "wrongChoices": [
+            "10",
+            "12",
+            "15",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "8, _ , 218, 515",
+        "referenceText": null,
+        "correctAnswer": "65",
+        "wrongChoices": [
+            "64",
+            "66",
+            "68",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "37.5, _ , 450, 900",
+        "referenceText": null,
+        "correctAnswer": "150",
+        "wrongChoices": [
+            "125",
+            "200",
+            "250",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 16, 24, 48",
+        "referenceText": null,
+        "correctAnswer": "16",
+        "wrongChoices": [
+            "9",
+            "8",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "50, 40, _ , 14",
+        "referenceText": null,
+        "correctAnswer": "28",
+        "wrongChoices": [
+            "30",
+            "20",
+            "60",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 7, 16, 41",
+        "referenceText": null,
+        "correctAnswer": "6",
+        "wrongChoices": [
+            "3",
+            "5",
+            "8",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 10, -6, _",
+        "referenceText": null,
+        "correctAnswer": "18",
+        "wrongChoices": [
+            "12",
+            "10",
+            "28",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, _ , 15, 37.5, 112.5",
+        "referenceText": null,
+        "correctAnswer": "7.5",
+        "wrongChoices": [
+            "5.5",
+            "3.5",
+            "9.5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 5, 14, _ , 107",
+        "referenceText": null,
+        "correctAnswer": "42",
+        "wrongChoices": [
+            "28",
+            "30",
+            "16",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, _ , 10, 30, 120",
+        "referenceText": null,
+        "correctAnswer": "5",
+        "wrongChoices": [
+            "4",
+            "6",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "11, 20, 45, 94",
+        "referenceText": null,
+        "correctAnswer": "10",
+        "wrongChoices": [
+            "5",
+            "8",
+            "6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 85, 185, 235, 435",
+        "referenceText": null,
+        "correctAnswer": "35",
+        "wrongChoices": [
+            "25",
+            "20",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "10, _ , 64, 129, 388",
+        "referenceText": null,
+        "correctAnswer": "21",
+        "wrongChoices": [
+            "18",
+            "15",
+            "30",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1, _ , 24, 528, 16896",
+        "referenceText": null,
+        "correctAnswer": "2",
+        "wrongChoices": [
+            "8",
+            "5",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 4, 6, 15, 56",
+        "referenceText": null,
+        "correctAnswer": "4",
+        "wrongChoices": [
+            "2",
+            "3",
+            "1",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, _ , 21, 37, 81",
+        "referenceText": null,
+        "correctAnswer": "9",
+        "wrongChoices": [
+            "7",
+            "10",
+            "15",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "6072, _ , 200, 48, 14",
+        "referenceText": null,
+        "correctAnswer": "1010",
+        "wrongChoices": [
+            "1000",
+            "1072",
+            "985",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 3, 4.5, _ , 22.5, 67.5",
+        "referenceText": null,
+        "correctAnswer": "9",
+        "wrongChoices": [
+            "13.5",
+            "8.5",
+            "10.5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "7200, 3600, 1200, _ , 60, 10",
+        "referenceText": null,
+        "correctAnswer": "300",
+        "wrongChoices": [
+            "200",
+            "250",
+            "350",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 21, 43, 87, 175",
+        "referenceText": null,
+        "correctAnswer": "10",
+        "wrongChoices": [
+            "8",
+            "5",
+            "9",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 8, 19, _ , 243",
+        "referenceText": null,
+        "correctAnswer": "60",
+        "wrongChoices": [
+            "50",
+            "70",
+            "90",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "45, _ , 184, 371, 746",
+        "referenceText": null,
+        "correctAnswer": "91",
+        "wrongChoices": [
+            "75",
+            "60",
+            "124",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "15, 27, 51, _ , 195",
+        "referenceText": null,
+        "correctAnswer": "99",
+        "wrongChoices": [
+            "100",
+            "97",
+            "95",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 23, 44, 85, 166",
+        "referenceText": null,
+        "correctAnswer": "12",
+        "wrongChoices": [
+            "8",
+            "11",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "_ , 98, 292, 1166, 5828",
+        "referenceText": null,
+        "correctAnswer": "50",
+        "wrongChoices": [
+            "45",
+            "55",
+            "10",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "16, _ , 24, 12, 36",
+        "referenceText": null,
+        "correctAnswer": "8",
+        "wrongChoices": [
+            "20",
+            "18",
+            "19",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1, 9, 25, 49, 81, _",
+        "referenceText": null,
+        "correctAnswer": "1",
+        "wrongChoices": [
+            "2",
+            "4",
+            "1",
+            "8",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "15, 30, 60, 120, 240, _",
+        "referenceText": null,
+        "correctAnswer": "480",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "360, 180, 90, 45, 22.5, _",
+        "referenceText": null,
+        "correctAnswer": "11.25",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "12, 12, 24, 72, 288, _",
+        "referenceText": null,
+        "correctAnswer": "1440",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 6, 18, 72, _",
+        "referenceText": null,
+        "correctAnswer": "360",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "51975, 9450, 2100, 600, 240, 160, _",
+        "referenceText": null,
+        "correctAnswer": "320",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 4.5, _ , 6.75, 10.125, 15.1875",
+        "referenceText": null,
+        "correctAnswer": "6.75",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "45, 46, 70, 141, _ , 1061.5",
+        "referenceText": null,
+        "correctAnswer": "353.5",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "50, 60, 75, 97.5, _ , 184.275, 267.19875",
+        "referenceText": null,
+        "correctAnswer": "131.625",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "6, 9, 12, 15, 18, _",
+        "referenceText": null,
+        "correctAnswer": "21",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, 5, 7, 10, 14, 19, _",
+        "referenceText": null,
+        "correctAnswer": "25",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3.5, 7, 10.5, 14, _",
+        "referenceText": null,
+        "correctAnswer": "17.5",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "32, 58, 92, 134, _",
+        "referenceText": null,
+        "correctAnswer": "184",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "24, 60, 120, 210, _",
+        "referenceText": null,
+        "correctAnswer": "336",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 3.5, 5, 6.5, 8, _",
+        "referenceText": null,
+        "correctAnswer": "9.5",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "8, 16, 28, 44, _",
+        "referenceText": null,
+        "correctAnswer": "64",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "4, 11, 30, 67, 128, _",
+        "referenceText": null,
+        "correctAnswer": "219",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 128, 6, 64, 9, _ , 12, 16, 15, 8",
+        "referenceText": null,
+        "correctAnswer": "32",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "13, 41, 85, 145, _",
+        "referenceText": null,
+        "correctAnswer": "221",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0, 5, 18, 43, 84, 145, _",
+        "referenceText": null,
+        "correctAnswer": "230",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 25, 7, _, 9, 19",
+        "referenceText": null,
+        "correctAnswer": "22",
+        "wrongChoices": [
+            "23",
+            "25",
+            "32",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "62, 64, _, 32, 14, 16",
+        "referenceText": null,
+        "correctAnswer": "30",
+        "wrongChoices": [
+            "26",
+            "28",
+            "32",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "100, 50, 52, 26, 28, _",
+        "referenceText": null,
+        "correctAnswer": "14",
+        "wrongChoices": [
+            "30",
+            "32",
+            "16",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "980, 392, 156.8, _, 25.088, 10.0352",
+        "referenceText": null,
+        "correctAnswer": "62.72",
+        "wrongChoices": [
+            "63.85",
+            "65.04",
+            "60.28",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "113, 225, 449, _, 1793",
+        "referenceText": null,
+        "correctAnswer": "897",
+        "wrongChoices": [
+            "789",
+            "786",
+            "987",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 9, 21, 37, 81, _",
+        "referenceText": null,
+        "correctAnswer": "153",
+        "wrongChoices": [
+            "163",
+            "181",
+            "203",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 10, 30, 68, _",
+        "referenceText": null,
+        "correctAnswer": "130",
+        "wrongChoices": [
+            "126",
+            "140",
+            "150",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "45, 46, 70, 141, _, 1061.5",
+        "referenceText": null,
+        "correctAnswer": "353.5",
+        "wrongChoices": [
+            "353",
+            "352.5",
+            "352",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "33, 321, 465, 537, 573, _",
+        "referenceText": null,
+        "correctAnswer": "591",
+        "wrongChoices": [
+            "600",
+            "585",
+            "498",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2, 9, 30, 105, 436, 2195, _",
+        "referenceText": null,
+        "correctAnswer": "13182",
+        "wrongChoices": [
+            "25",
+            "27",
+            "30",
+            "33",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "45 is 1/3 of what number?",
+        "referenceText": null,
+        "correctAnswer": "135",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "68 is 1/4 of what number?",
+        "referenceText": null,
+        "correctAnswer": "272",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "13 is 8/9 of what number?",
+        "referenceText": null,
+        "correctAnswer": "14 5/8",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A race car travelled for 2 1/2 hours with an average speed of 132 5/8 km per hour. Find the total distance it covered.",
+        "referenceText": null,
+        "correctAnswer": "331 9/16 km",
+        "wrongChoices": [
+            "264 5/16 km",
+            "330 5/16 km",
+            "135 1/8 km"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "400 is what percent of 2000?",
+        "referenceText": null,
+        "correctAnswer": "20%",
+        "wrongChoices": [
+            "30%",
+            "50%",
+            "40%",
+            "80%"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What % of 8000 is 6000?",
+        "referenceText": null,
+        "correctAnswer": "75%",
+        "wrongChoices": [
+            "60%",
+            "85%",
+            "65%",
+            "70%"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3/4 is what part of 1 1/8?",
+        "referenceText": null,
+        "correctAnswer": "2/3",
+        "wrongChoices": [
+            "1 1/2",
+            "5 5/6",
+            "7/8",
+            "4/6"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "850 is 40% of what number?",
+        "referenceText": null,
+        "correctAnswer": "2125",
+        "wrongChoices": [
+            "340",
+            "6800",
+            "5600",
+            "212.5"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1 1/5 of what number is 1 3/8?",
+        "referenceText": null,
+        "correctAnswer": "1 7/48",
+        "wrongChoices": [
+            "55/48",
+            "1 13/20",
+            "48/55",
+            "11/24"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "120% of what number is 72?",
+        "referenceText": null,
+        "correctAnswer": "60",
+        "wrongChoices": [
+            "400",
+            "700",
+            "900",
+            "1500",
+            "2500"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "There are 96 students in a class 1/6 is enrolled in swimming 1/2 in karate and the rest in voice lessons. How many are enrolled in voice lessons?",
+        "referenceText": null,
+        "correctAnswer": "32",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "How much money was borrowed at 16% annual interest for 9 months if the interest paid was 3000?",
+        "referenceText": null,
+        "correctAnswer": "25,000",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The average of four numbers is 24. If you take a certain number out of four, the new average will be 28. Find the number.",
+        "referenceText": null,
+        "correctAnswer": "12",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "In a dormitory, where 40 students live only 5% are males. 50% of females are working and rest are students, how many females are studying?",
+        "referenceText": null,
+        "correctAnswer": "38",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Change 13.5% to its fraction form",
+        "referenceText": null,
+        "correctAnswer": "27/200",
+        "wrongChoices": [
+            "27/2",
+            "0.135",
+            "27/20",
+            "24/125"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If -6/(a-3)=3/(a+2), then a=_",
+        "referenceText": null,
+        "correctAnswer": "-1/3",
+        "wrongChoices": [
+            "1/3",
+            "2",
+            "-1/2",
+            "3"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "In a group of 80 students, 25 are taking Algebra, 40 are taking Biology, and 15 are taking both Algebra and Biology. If a student, chosen at random, is taking Algebra, what is the probability that he/she is taking Biology?",
+        "referenceText": null,
+        "correctAnswer": "60%",
+        "wrongChoices": [
+            "nan"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Put these numbers in order from least to greatest. 8.75, 8.00, 8.44, 8.04",
+        "referenceText": null,
+        "correctAnswer": "8.00, 8.04, 8.44, 8.75",
+        "wrongChoices": [
+            "8.75",
+            "8.44",
+            "8.04",
+            "8.00",
+            "8.75",
+            "8.00",
+            "8.04",
+            "8.44",
+            "8.04",
+            "8.00",
+            "8.44",
+            "8.75"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Rogie went to a store. He bought 6.4 kgs of mangoes and oranges. If 5.43 kgs were mangoes, how many kilos were oranges?",
+        "referenceText": null,
+        "correctAnswer": "0.97 kgs",
+        "wrongChoices": [
+            "11.83 kgs",
+            "1.03 kgs",
+            "1.97 kgs",
+            "1.03 kgs"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The mean median and mode of 9 numbers are equal. The numbers are 12, 22, 10, 15, 14, 11, 19, 17. What is the 9th number?",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "14",
+            "12",
+            "18",
+            "11"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Find the sum of 7,805 and 987.",
+        "referenceText": null,
+        "correctAnswer": "8,792",
+        "wrongChoices": [
+            "17",
+            "675",
+            "8",
+            "972",
+            "8",
+            "987"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Lawrence gave $281 to Joel. If he originally had $1,375, how much money does he have left?",
+        "referenceText": null,
+        "correctAnswer": "$1,094",
+        "wrongChoices": [
+            "$1",
+            "656",
+            "$1",
+            "294",
+            "$984"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Peter had $10,573 in his savings account. He then deposited $2,900 and $317. How much is in the account now?",
+        "referenceText": null,
+        "correctAnswer": "$13,790",
+        "wrongChoices": [
+            "$13",
+            "156",
+            "$7",
+            "356",
+            "$6",
+            "006"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What is the positive difference between 10,752 and 675?",
+        "referenceText": null,
+        "correctAnswer": "10,077",
+        "wrongChoices": [
+            "11",
+            "427",
+            "3",
+            "822",
+            "-10",
+            "077"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "287,500 - 52,988 + 6,808 = _",
+        "referenceText": null,
+        "correctAnswer": "241,320",
+        "wrongChoices": [
+            "347",
+            "396",
+            "46",
+            "467",
+            "333",
+            "680"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What is the product of 450 and 122?",
+        "referenceText": null,
+        "correctAnswer": "54,900",
+        "wrongChoices": [
+            "6588",
+            "572",
+            "328"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Find the quotient of 12,440 and 40.",
+        "referenceText": null,
+        "correctAnswer": "311",
+        "wrongChoices": [
+            "497",
+            "600",
+            "12",
+            "480",
+            "12",
+            "400"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "When the sum of 1,352 and 731 is subtracted from 5,000, the result is _",
+        "referenceText": null,
+        "correctAnswer": "2,917",
+        "wrongChoices": [
+            "7",
+            "083",
+            "2",
+            "083",
+            "4",
+            "379"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Numerical Ability Questions",
+        "referenceText": null,
+        "correctAnswer": "Answers",
+        "wrongChoices": [
+            "Wrong Answers (from choices)"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "25% of 200",
+        "referenceText": null,
+        "correctAnswer": "50",
+        "wrongChoices": [
+            "25",
+            "75",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If a train travels at 80 km/h for 3 hours, the distance it travels is _",
+        "referenceText": null,
+        "correctAnswer": "240 km",
+        "wrongChoices": [
+            "180 km",
+            "200 km",
+            "160 km",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 10, 20, 40, _",
+        "referenceText": null,
+        "correctAnswer": "80",
+        "wrongChoices": [
+            "50",
+            "60",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Least common multiple (LCM) of 8 and 12",
+        "referenceText": null,
+        "correctAnswer": "24",
+        "wrongChoices": [
+            "16",
+            "48",
+            "96",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A map has a scale of 1:1000. If a distance on the map is 5 cm, the actual distance in meters is _",
+        "referenceText": null,
+        "correctAnswer": "50 m",
+        "wrongChoices": [
+            "5 m",
+            "500 m",
+            "5000 m",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Sum of the interior angles of a triangle",
+        "referenceText": null,
+        "correctAnswer": "180 degrees",
+        "wrongChoices": [
+            "90 degrees",
+            "270 degrees",
+            "360 degrees",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If the perimeter of a square is 48 cm, the length of one side is _",
+        "referenceText": null,
+        "correctAnswer": "12 cm",
+        "wrongChoices": [
+            "10 cm",
+            "16 cm",
+            "4 cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3/4 as a percentage",
+        "referenceText": null,
+        "correctAnswer": "75%",
+        "wrongChoices": [
+            "50%",
+            "60%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A worker earns P1500 for 5 days of work. He earns _ per day",
+        "referenceText": null,
+        "correctAnswer": "P300",
+        "wrongChoices": [
+            "P200",
+            "P250",
+            "P350",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 2 apples cost P30, 10 apples cost _",
+        "referenceText": null,
+        "correctAnswer": "P150",
+        "wrongChoices": [
+            "P120",
+            "P180",
+            "P100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "10% of 500",
+        "referenceText": null,
+        "correctAnswer": "50",
+        "wrongChoices": [
+            "5",
+            "10",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If a car travels 180 km in 3 hours, its average speed is _",
+        "referenceText": null,
+        "correctAnswer": "60 km/h",
+        "wrongChoices": [
+            "50 km/h",
+            "70 km/h",
+            "90 km/h",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 7, 11, 15, _",
+        "referenceText": null,
+        "correctAnswer": "19",
+        "wrongChoices": [
+            "17",
+            "21",
+            "23",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Perimeter of a rectangle with length 12cm and width 8cm",
+        "referenceText": null,
+        "correctAnswer": "40 cm",
+        "wrongChoices": [
+            "20 cm",
+            "60 cm",
+            "96 cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 2/3 of a number is 10, the number is _",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "12",
+            "20",
+            "30",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Area of a square with a side length of 6cm",
+        "referenceText": null,
+        "correctAnswer": "36 sq cm",
+        "wrongChoices": [
+            "12 sq cm",
+            "24 sq cm",
+            "48 sq cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "24 / 4 * 2 + 3",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "6",
+            "12",
+            "18",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Fraction equivalent to 0.75",
+        "referenceText": null,
+        "correctAnswer": "3/4",
+        "wrongChoices": [
+            "1/2",
+            "2/3",
+            "4/5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Sum of the angles in a quadrilateral",
+        "referenceText": null,
+        "correctAnswer": "360 degrees",
+        "wrongChoices": [
+            "180 degrees",
+            "270 degrees",
+            "90 degrees",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 7 apples cost 105 pesos, 1 apple costs _",
+        "referenceText": null,
+        "correctAnswer": "15 pesos",
+        "wrongChoices": [
+            "10 pesos",
+            "20 pesos",
+            "12 pesos",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A race car travelled for 2 1/2 hours with an average speed of 132 5/8 km per hour. Find the total distance it covered.",
+        "referenceText": null,
+        "correctAnswer": "331 9/16 km",
+        "wrongChoices": [
+            "264 5/16 km",
+            "330 5/16 km",
+            "135 1/8 km",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "400 is what percent of 2000?",
+        "referenceText": null,
+        "correctAnswer": "20%",
+        "wrongChoices": [
+            "30%",
+            "50%",
+            "40%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What percent of 8000 is 6000?",
+        "referenceText": null,
+        "correctAnswer": "75%",
+        "wrongChoices": [
+            "60%",
+            "85%",
+            "65%",
+            "70%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What percent of 2500 is 750?",
+        "referenceText": null,
+        "correctAnswer": "30%",
+        "wrongChoices": [
+            "50%",
+            "40%",
+            "20%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "780 is what percent of 7800?",
+        "referenceText": null,
+        "correctAnswer": "10%",
+        "wrongChoices": [
+            "20%",
+            "26%",
+            "16%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3/4 is what part of 1 1/8?",
+        "referenceText": null,
+        "correctAnswer": "2/3",
+        "wrongChoices": [
+            "1 1/2",
+            "5 5/6",
+            "7/8",
+            "4/6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5/8 is what part of 3 3/4?",
+        "referenceText": null,
+        "correctAnswer": "1/6",
+        "wrongChoices": [
+            "2/12",
+            "4/24",
+            "1/8",
+            "5/6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "30% of what number is 900?",
+        "referenceText": null,
+        "correctAnswer": "3000",
+        "wrongChoices": [
+            "270",
+            "2700",
+            "1800",
+            "450",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "850 is 40% of what number?",
+        "referenceText": null,
+        "correctAnswer": "2125",
+        "wrongChoices": [
+            "340",
+            "6800",
+            "5600",
+            "212.5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "25% of what number is 600?",
+        "referenceText": null,
+        "correctAnswer": "2400",
+        "wrongChoices": [
+            "15",
+            "000",
+            "25",
+            "1200",
+            "120",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "300 is 75% of what number?",
+        "referenceText": null,
+        "correctAnswer": "400",
+        "wrongChoices": [
+            "700",
+            "900",
+            "1500",
+            "2500",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1 1/4 is 3/4 of what number?",
+        "referenceText": null,
+        "correctAnswer": "1 2/3",
+        "wrongChoices": [
+            "2/3",
+            "20/12",
+            "1 4/6",
+            "1 8/12",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1 1/5 of what number is 1 3/8?",
+        "referenceText": null,
+        "correctAnswer": "1 7/48",
+        "wrongChoices": [
+            "55/48",
+            "1 13/20",
+            "48/55",
+            "11/24",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1/4 of what number is 2 1/6?",
+        "referenceText": null,
+        "correctAnswer": "8 2/3",
+        "wrongChoices": [
+            "52/6",
+            "6/52",
+            "8 4/6",
+            "9 1/2",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If -6/(a-3) = 3/(a+2), then a = _",
+        "referenceText": null,
+        "correctAnswer": "-1/3",
+        "wrongChoices": [
+            "1/3",
+            "2",
+            "-1/2",
+            "3",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A special teacher has 400 units of 6% phosphoric acid solution, and an unlimited supply of 12% phosphoric acid solution. How many units of the latter must she add to the former to produce 10% phosphoric acid solution?",
+        "referenceText": null,
+        "correctAnswer": "800",
+        "wrongChoices": [
+            "500",
+            "600",
+            "700",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Merlyn has a weight of 40.65 kgs. Adel is 4.3 kgs heavier than Merlyn, and James is 2.9 kgs lighter than Merlyn. What are the weights of Adel and James?",
+        "referenceText": null,
+        "correctAnswer": "Adel: 44.95 kg and James 37.75 kg",
+        "wrongChoices": [
+            "Adel: 36.35 kg and James 43.55 kg",
+            "Adel: 37.75 kg and James 44.95 kg",
+            "Adel: 44.95 kg and James 34.50 kg",
+            "Adel: 45.95 kg and James 37.75 kg",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The mean median and mode of 9 numbers are equal. The numbers are 12, 22, 10, 15, 14, 11, 19, 17. What is the 9th number?",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "14",
+            "12",
+            "18",
+            "11",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The mean median and mode of 5 numbers are equal. The numbers are 29, 18, 24, 25. What is the 5th number?",
+        "referenceText": null,
+        "correctAnswer": "24",
+        "wrongChoices": [
+            "28",
+            "29",
+            "25",
+            "18",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A committee of 7 is to be selected from 8 seniors and 5 juniors. In how many ways can this be done if the committee must be composed of 4 seniors?",
+        "referenceText": null,
+        "correctAnswer": "8C4 x 5C3",
+        "wrongChoices": [
+            "8C4 x 5C4",
+            "8C7 x 5C0",
+            "5C4 x 8C3",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Given S=[2,5,9,7,8,8] consider the following statistics: I. The mean score is 6.5 II. The median is 4 III. The mode is 8. Which of the following is true?",
+        "referenceText": null,
+        "correctAnswer": "I and III only",
+        "wrongChoices": [
+            "I only",
+            "I and II only",
+            "II and III only",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "90 increased by what percent of itself gives 180?",
+        "referenceText": null,
+        "correctAnswer": "100%",
+        "wrongChoices": [
+            "50%",
+            "90%",
+            "150%",
+            "200%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 500 or 25% of graduating class are girls, how many are graduating?",
+        "referenceText": null,
+        "correctAnswer": "2,000",
+        "wrongChoices": [
+            "3",
+            "000",
+            "5",
+            "000",
+            "10",
+            "000",
+            "20",
+            "000",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "In a group of 8,000 applicants for a civil service examination, 1600 failed to take the first part of the test. What percent of the total applicants took the first part of the test?",
+        "referenceText": null,
+        "correctAnswer": "80%",
+        "wrongChoices": [
+            "20%",
+            "30%",
+            "40%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Cassy's father was 38 years of age when she was born while her mother was 36 years old when her brother four years younger to her was born. What is the difference between the ages of her parents?",
+        "referenceText": null,
+        "correctAnswer": "6 years",
+        "wrongChoices": [
+            "2 years",
+            "4 years",
+            "8 years",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The lowest temperature on a winter morning was -8°F. Later that same day the temperature reached a high of 24°F. By how many degrees Fahrenheit did the temperature increase?",
+        "referenceText": null,
+        "correctAnswer": "32°",
+        "wrongChoices": [
+            "3°",
+            "8°",
+            "16°",
+            "24°",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The average of four consecutive odd numbers is 24. Find the largest number.",
+        "referenceText": null,
+        "correctAnswer": "27",
+        "wrongChoices": [
+            "25",
+            "29",
+            "31",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "100%, 2, 15/5, 4, _",
+        "referenceText": null,
+        "correctAnswer": "5",
+        "wrongChoices": [
+            "2",
+            "3",
+            "4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1/6, 1/3, 1/2, 2/3, _",
+        "referenceText": null,
+        "correctAnswer": "5/6",
+        "wrongChoices": [
+            "2/6",
+            "2/7",
+            "3/5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "250%, 50%, 100%, 20%, 40%, _",
+        "referenceText": null,
+        "correctAnswer": "8%",
+        "wrongChoices": [
+            "10%",
+            "5%",
+            "15%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0.1, 30%, 1/2, 0.7, 90%, _",
+        "referenceText": null,
+        "correctAnswer": "1 1/10",
+        "wrongChoices": [
+            "100%",
+            "7/9",
+            "1.4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "(2x1÷2), (4÷1x2), (6x1÷2), _",
+        "referenceText": null,
+        "correctAnswer": "16",
+        "wrongChoices": [
+            "8",
+            "4",
+            "32",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "(15-8+3), 8, (4÷2x3), _",
+        "referenceText": null,
+        "correctAnswer": "4",
+        "wrongChoices": [
+            "3",
+            "8",
+            "2",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "75 is what percent of 3/4?",
+        "referenceText": null,
+        "correctAnswer": "10000%",
+        "wrongChoices": [
+            "1%",
+            "10%",
+            "100%",
+            "1",
+            "000%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "For the month of July, Victoria purchased the following amounts of gasoline for her car: 9.4 gallons, 18.9 gallons, and 22.7 gallons. How many gallons did she purchase in all?",
+        "referenceText": null,
+        "correctAnswer": "51",
+        "wrongChoices": [
+            "51.9",
+            "52",
+            "61",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Manny works Monday through Friday each week. His bus fare to and from work is $1.10 each way. How much does Manny spend on bus fare each week?",
+        "referenceText": null,
+        "correctAnswer": "$11.00",
+        "wrongChoices": [
+            "$10.10",
+            "$11.10",
+            "$11.20",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If one centimeter equals 0.39 inches, about how many centimeters are there in 0.75 inches?",
+        "referenceText": null,
+        "correctAnswer": "1.923",
+        "wrongChoices": [
+            "0.2925",
+            "0.52",
+            "1.75",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5.133 multiplied by 10^(-6) is equal to _",
+        "referenceText": null,
+        "correctAnswer": "0.000005133",
+        "wrongChoices": [
+            "0.0005133",
+            "0.00005133",
+            "0.0000005133",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "On a business trip, Felicia went out to lunch. The shrimp cocktail cost $5.95, the blackened swordfish with grilled vegetables cost $11.70, the cherry cheesecake cost $4.79, and the coffee was $1.52. What was Felicia's total bill?",
+        "referenceText": null,
+        "correctAnswer": "$23.96",
+        "wrongChoices": [
+            "$26.93",
+            "$29.63",
+            "$32.99",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If each of the following represents the diameter of a circle, which is the smallest diameter?",
+        "referenceText": null,
+        "correctAnswer": "7/10 inches",
+        "wrongChoices": [
+            "17/20 inches",
+            "3/4 inches",
+            "5/6 inches",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A loaf of bread has 35 slices. Ann eats 8 slices, Betty eats 6 slices, Carl eats 5, and Derrick eats 9 slices. What fraction of the loaf is left?",
+        "referenceText": null,
+        "correctAnswer": "1/5",
+        "wrongChoices": [
+            "2/11",
+            "1/9",
+            "2/7",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Bernie ate 3/7 of a chocolate chip cookie, Brian ate 1/3 of the same cookie. How much of the cookie is left?",
+        "referenceText": null,
+        "correctAnswer": "5/21 cookie",
+        "wrongChoices": [
+            "1/3 cookie",
+            "3/7 cookie",
+            "7/10 cookie",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "In a mixture 60 litres, the ratio of milk and water 2: 1. If this ratio is to be 1: 2, then the quantity of water to be further added is _",
+        "referenceText": null,
+        "correctAnswer": "60 L",
+        "wrongChoices": [
+            "20 L",
+            "30 L",
+            "40 L",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Participants in a certain conference from Luzon, Visayas, and Mindanao are in the ratio of 4:3:2. If there are 120 participants from Luzon, how many participants are there in all?",
+        "referenceText": null,
+        "correctAnswer": "270",
+        "wrongChoices": [
+            "150",
+            "240",
+            "420",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "An airplane covers 50 miles in 1/5 hours. How many miles can the airplane cover in 5 hours?",
+        "referenceText": null,
+        "correctAnswer": "1250 miles",
+        "wrongChoices": [
+            "50 miles",
+            "150 miles",
+            "2500 miles",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "How many 1/2 cups of juice are in 1 and 1/2 cups?",
+        "referenceText": null,
+        "correctAnswer": "3 of them",
+        "wrongChoices": [
+            "2 and 1/2 of them",
+            "2 of them",
+            "6 of them",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1/2 ÷ 1/4 = _",
+        "referenceText": null,
+        "correctAnswer": "More than 1",
+        "wrongChoices": [
+            "Less than 1",
+            "Equal to 1",
+            "Undefined",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If Kardo is feeding his buddy 1/2 cup of dog food but uses 1/10 of a cup, how many scoop will he need to feed his dog?",
+        "referenceText": null,
+        "correctAnswer": "5 scoops",
+        "wrongChoices": [
+            "1/12th scoop",
+            "1/20th scoop",
+            "3 scoops",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The product of the square root of 81 and the square of 2 is _",
+        "referenceText": null,
+        "correctAnswer": "36",
+        "wrongChoices": [
+            "9",
+            "18",
+            "27",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "(1/2) ÷ 2 = _",
+        "referenceText": null,
+        "correctAnswer": "1/4",
+        "wrongChoices": [
+            "1",
+            "2",
+            "4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "[2 ÷ (2 x 2)] ÷ [(2 ÷ 2) x 2] = _",
+        "referenceText": null,
+        "correctAnswer": "1/4",
+        "wrongChoices": [
+            "1",
+            "2",
+            "4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0.5 / 2 = _",
+        "referenceText": null,
+        "correctAnswer": "1/4",
+        "wrongChoices": [
+            "1",
+            "2",
+            "4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Mark's temperature at 9:00 a.m. was 97.2° F. At 4:00 p.m., his temperature was 99° F. By how many degrees did his temperature rise?",
+        "referenceText": null,
+        "correctAnswer": "1.8",
+        "wrongChoices": [
+            "0.8",
+            "2.2",
+            "2.8",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Jason had P40.00 in his wallet. He bought water for P12.90, a small pack of gum for P0.45, and a candy for P0.88. How much money did he have left?",
+        "referenceText": null,
+        "correctAnswer": "P14.23",
+        "wrongChoices": [
+            "P25.77",
+            "P25.67",
+            "P26.77",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The price of cheddar cheese is $2.12 per pound. The price of Monterey Jack cheese is $2.34 per pound. If Harrison buys 1.5 pounds of cheddar and 1 pound of Monterey Jack, how much will he spend in all?",
+        "referenceText": null,
+        "correctAnswer": "$5.52",
+        "wrongChoices": [
+            "$3.18",
+            "$4.46",
+            "$5.41",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "From a 100-foot ball of string, Randy cuts three pieces of the following lengths: 5.8 feet, 3.2 feet, 4.4 feet. How many feet of string are left?",
+        "referenceText": null,
+        "correctAnswer": "86.6",
+        "wrongChoices": [
+            "66",
+            "87.6",
+            "97.6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Fifteen-ounce cans of pure lemon juice sell at 3 for P2.00. How much does one can cost, rounded to the nearest cent?",
+        "referenceText": null,
+        "correctAnswer": "P0.67",
+        "wrongChoices": [
+            "P0.60",
+            "P0.66",
+            "P0.70",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "For every dollar Kyra saves, her employer contributes a dime to her savings, with a maximum employer contribution of $10 per month. If Kyra saves $60 in January, $130 in March, and $70 in April, how much will she have in savings at the end of that time?",
+        "referenceText": null,
+        "correctAnswer": "$283",
+        "wrongChoices": [
+            "$270",
+            "$286",
+            "$290",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Martin was shopping for a new washing machine. The one he wanted to buy cost $428.98. The salesperson informed him that the same machine would be on sale the following week for $399.99. How much money would Martin save by waiting until the washing machine went on sale?",
+        "referenceText": null,
+        "correctAnswer": "$28.99",
+        "wrongChoices": [
+            "$29.01",
+            "$39.09",
+            "$128.99",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Based on the information given in the previous question, calculate the percentage decrease.",
+        "referenceText": null,
+        "correctAnswer": "6.76%",
+        "wrongChoices": [
+            "7.25%",
+            "7%",
+            "6.25%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Marcia wants to make muffins and needs 3/4 cup of sugar. She discovers, however, that she has only 2/3 cup of sugar. How much more sugar does she need?",
+        "referenceText": null,
+        "correctAnswer": "1/12 cup",
+        "wrongChoices": [
+            "1/8 cup",
+            "1/6 cup",
+            "1/4 cup",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Angela baked 13 dozen muffins for a party. She made a mistake and bought 10-piece boxes instead of 12-piece ones. How many boxes can she fill?",
+        "referenceText": null,
+        "correctAnswer": "16 boxes",
+        "wrongChoices": [
+            "12 boxes",
+            "13 boxes",
+            "15 boxes",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A recipe calls for 2 cups of milk for every 7 cups of flour. A chef will use 28 cups of flour, how many cups of milk must he have?",
+        "referenceText": null,
+        "correctAnswer": "8",
+        "wrongChoices": [
+            "14",
+            "20",
+            "49",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Simple Interest: A sum of P12,500 amounts to P15,500 in 4 years at the rate of the simple interest. What is the rate of interest?",
+        "referenceText": null,
+        "correctAnswer": "6%",
+        "wrongChoices": [
+            "3%",
+            "4%",
+            "5%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Compound Interest: Mario invested an amount of Php8000 in a fixed deposit scheme for 2 years at compound interest rate of 5%. How much amount will Mario get on maturity of the fixed deposit?",
+        "referenceText": null,
+        "correctAnswer": "Php8820",
+        "wrongChoices": [
+            "Php8600",
+            "Php8620",
+            "Php8800",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Which of the following has the largest numerical value?",
+        "referenceText": null,
+        "correctAnswer": "0.35 x 120",
+        "wrongChoices": [
+            "30% x 120",
+            "35% of 100",
+            "1/4 of 160",
+            "1/3 x 120",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Given that a=1/2, b=-1, and c=3, solve the following expression: (5c-b)^a / 6a",
+        "referenceText": null,
+        "correctAnswer": "4/3",
+        "wrongChoices": [
+            "1",
+            "5/4",
+            "7/3",
+            "8/3",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What is the lowest term of 336/564?",
+        "referenceText": null,
+        "correctAnswer": "28/47",
+        "wrongChoices": [
+            "26/42",
+            "28/94",
+            "42/94",
+            "56/94",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The square root of the sum of 64 and 36 is _",
+        "referenceText": null,
+        "correctAnswer": "10",
+        "wrongChoices": [
+            "6",
+            "8",
+            "12",
+            "14",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "In one bag of chicken feed there are 24 chickens eating it in 45 days. In how many days do 15 chickens consume the feed?",
+        "referenceText": null,
+        "correctAnswer": "72",
+        "wrongChoices": [
+            "60",
+            "90",
+            "80",
+            "64",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "At 25% discount, Ms. Bautista paid P150.75 for a bag. What was the original price of the bag?",
+        "referenceText": null,
+        "correctAnswer": "P201.00",
+        "wrongChoices": [
+            "P37.69",
+            "P150.75",
+            "P603.00",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What is the percentage decrease from 80 to 60?",
+        "referenceText": null,
+        "correctAnswer": "25%",
+        "wrongChoices": [
+            "33.33%",
+            "20%",
+            "75%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What is the percentage increase from 60 to 80?",
+        "referenceText": null,
+        "correctAnswer": "33.33%",
+        "wrongChoices": [
+            "25%",
+            "20%",
+            "75%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A businessman sells 60% English books and still has 28 English books. Originally, he had _",
+        "referenceText": null,
+        "correctAnswer": "70",
+        "wrongChoices": [
+            "47",
+            "39",
+            "60",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Twelve and one half percent of 200 is what number?",
+        "referenceText": null,
+        "correctAnswer": "25",
+        "wrongChoices": [
+            "112",
+            "12",
+            "50",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If the price of a book is first decreased by 25% and then increased by 20%, then the net change in the price will be _",
+        "referenceText": null,
+        "correctAnswer": "10%",
+        "wrongChoices": [
+            "20%",
+            "30%",
+            "40%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "One half percent is _",
+        "referenceText": null,
+        "correctAnswer": "0.005",
+        "wrongChoices": [
+            "0.05",
+            "0.5",
+            "50%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "One fourth percent is _",
+        "referenceText": null,
+        "correctAnswer": "0.25%",
+        "wrongChoices": [
+            "25%",
+            "0.25",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What single discount is equivalent to two successive discounts of 10% and 15%?",
+        "referenceText": null,
+        "correctAnswer": "23.50%",
+        "wrongChoices": [
+            "25%",
+            "24%",
+            "24.5%",
+            "22%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "75 is 3/4 of what number?",
+        "referenceText": null,
+        "correctAnswer": "100",
+        "wrongChoices": [
+            "10",
+            "1",
+            "000",
+            "10",
+            "000",
+            "100",
+            "000",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "75 is 3/4 percent of what number?",
+        "referenceText": null,
+        "correctAnswer": "10,000",
+        "wrongChoices": [
+            "10",
+            "100",
+            "1",
+            "000",
+            "100",
+            "000",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 6, 9, 15, _",
+        "referenceText": null,
+        "correctAnswer": "25",
+        "wrongChoices": [
+            "21",
+            "27",
+            "33",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 16, 49, 104, _",
+        "referenceText": null,
+        "correctAnswer": "181",
+        "wrongChoices": [
+            "170",
+            "148",
+            "115",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "225, 336, 447, _",
+        "referenceText": null,
+        "correctAnswer": "558",
+        "wrongChoices": [
+            "114",
+            "991",
+            "338",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 12, 27, 48, 75, 108, _",
+        "referenceText": null,
+        "correctAnswer": "147",
+        "wrongChoices": [
+            "183",
+            "192",
+            "162",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0.5, 0.55, 0.65, 0.8, _",
+        "referenceText": null,
+        "correctAnswer": "1",
+        "wrongChoices": [
+            "0.82",
+            "0.9",
+            "0.95",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 8, 22, 63, 185, _",
+        "referenceText": null,
+        "correctAnswer": "550",
+        "wrongChoices": [
+            "285",
+            "310",
+            "295",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "840, 168, 42, 14, 7, _",
+        "referenceText": null,
+        "correctAnswer": "7",
+        "wrongChoices": [
+            "9",
+            "1",
+            "12",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "134, 245, 356, 467, _",
+        "referenceText": null,
+        "correctAnswer": "578",
+        "wrongChoices": [
+            "568",
+            "579",
+            "478",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "11, 12, 17, 18, 23, 24, _",
+        "referenceText": null,
+        "correctAnswer": "29",
+        "wrongChoices": [
+            "30",
+            "12",
+            "35",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "How would you divide P40.00 between two students in the ratio of 3 is to 5?",
+        "referenceText": null,
+        "correctAnswer": "P15 & P25",
+        "wrongChoices": [
+            "P23 & P17",
+            "P14 & P26",
+            "P12 & P28",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Round off value of 6488 to nearest hundreds",
+        "referenceText": null,
+        "correctAnswer": "6500",
+        "wrongChoices": [
+            "6400",
+            "7000",
+            "6600",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Millie is a night security guard at the Art Museum. Each night, she is required to walk through each gallery once. The Museum contains 52 galleries. This night, Millie has walked through 16 galleries. What fraction of the total galleries has she already visited?",
+        "referenceText": null,
+        "correctAnswer": "4/13",
+        "wrongChoices": [
+            "1/16",
+            "5/11",
+            "3/14",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Alan has been ill and worked only 3/4 of his usual 40 hour week. He makes $12.35 an hour. How much has he earned this week?",
+        "referenceText": null,
+        "correctAnswer": "$370.50",
+        "wrongChoices": [
+            "$247.00",
+            "$308.75",
+            "$432.25",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A recipe calls for 1/4 teaspoon of red pepper. How much red pepper would you need for half a recipe?",
+        "referenceText": null,
+        "correctAnswer": "1/8 teaspoon",
+        "wrongChoices": [
+            "1/10 teaspoon",
+            "1/6 teaspoon",
+            "1/2 teaspoon",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Juana's lawn is 30 yards by 27 yards. Yesterday, Juana mowed 2/3 of the lawn. How many square yards are left to be mowed today?",
+        "referenceText": null,
+        "correctAnswer": "270 square yards",
+        "wrongChoices": [
+            "540 square yards",
+            "810 square yards",
+            "1080 square yards",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A thirty-minute time slot on a television network contains 24 minutes of comedy and 6 minutes of commercials. What fraction of the program time is devoted to commercials?",
+        "referenceText": null,
+        "correctAnswer": "1/5 of the time",
+        "wrongChoices": [
+            "1/6 of the time",
+            "1/4 of the time",
+            "1/3 of the time",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A pipe can empty a tank in 40 minutes. A second pipe with diameter twice as much as that of the first is also attached with the tank to empty it. The two pipe together can empty the tank in _",
+        "referenceText": null,
+        "correctAnswer": "8 Minutes",
+        "wrongChoices": [
+            "40/3 Minutes",
+            "30 Minutes",
+            "38 Minutes",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "0.2 to 0.4 as 0.3 is to _",
+        "referenceText": null,
+        "correctAnswer": "0.9",
+        "wrongChoices": [
+            "0.009",
+            "0.0009",
+            "0.09",
+            "9.0",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "25% of 200 is _",
+        "referenceText": null,
+        "correctAnswer": "50",
+        "wrongChoices": [
+            "25",
+            "75",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If a train travels at 80 km/h for 3 hours, the distance it travels is _",
+        "referenceText": null,
+        "correctAnswer": "240 km",
+        "wrongChoices": [
+            "180 km",
+            "200 km",
+            "160 km",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5, 10, 20, 40, _",
+        "referenceText": null,
+        "correctAnswer": "80",
+        "wrongChoices": [
+            "50",
+            "60",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The least common multiple (LCM) of 8 and 12 is _",
+        "referenceText": null,
+        "correctAnswer": "24",
+        "wrongChoices": [
+            "16",
+            "48",
+            "96",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A map has a scale of 1:1000. If a distance on the map is 5 cm, the actual distance in meters is _",
+        "referenceText": null,
+        "correctAnswer": "50 m",
+        "wrongChoices": [
+            "5 m",
+            "500 m",
+            "5000 m",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The sum of the interior angles of a triangle is _",
+        "referenceText": null,
+        "correctAnswer": "180 degrees",
+        "wrongChoices": [
+            "90 degrees",
+            "270 degrees",
+            "360 degrees",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If the perimeter of a square is 48 cm, the length of one side is _",
+        "referenceText": null,
+        "correctAnswer": "12 cm",
+        "wrongChoices": [
+            "10 cm",
+            "16 cm",
+            "4 cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3/4 as a percentage is _",
+        "referenceText": null,
+        "correctAnswer": "75%",
+        "wrongChoices": [
+            "50%",
+            "60%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A worker earns P1500 for 5 days of work. He earns _ per day",
+        "referenceText": null,
+        "correctAnswer": "P300",
+        "wrongChoices": [
+            "P200",
+            "P250",
+            "P350",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 2 apples cost P30, 10 apples cost _",
+        "referenceText": null,
+        "correctAnswer": "P150",
+        "wrongChoices": [
+            "P120",
+            "P180",
+            "P100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "10% of 500 is _",
+        "referenceText": null,
+        "correctAnswer": "50",
+        "wrongChoices": [
+            "5",
+            "10",
+            "100",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If a car travels 180 km in 3 hours, its average speed is _",
+        "referenceText": null,
+        "correctAnswer": "60 km/h",
+        "wrongChoices": [
+            "50 km/h",
+            "70 km/h",
+            "90 km/h",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3, 7, 11, 15, _",
+        "referenceText": null,
+        "correctAnswer": "19",
+        "wrongChoices": [
+            "17",
+            "21",
+            "23",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The perimeter of a rectangle with length 12cm and width 8cm is _",
+        "referenceText": null,
+        "correctAnswer": "40 cm",
+        "wrongChoices": [
+            "20 cm",
+            "60 cm",
+            "96 cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 2/3 of a number is 10, the number is _",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "12",
+            "20",
+            "30",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The area of a square with a side length of 6cm is _",
+        "referenceText": null,
+        "correctAnswer": "36 sq cm",
+        "wrongChoices": [
+            "12 sq cm",
+            "24 sq cm",
+            "48 sq cm",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "24 / 4 * 2 + 3 = _",
+        "referenceText": null,
+        "correctAnswer": "15",
+        "wrongChoices": [
+            "6",
+            "12",
+            "18",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The fraction equivalent to 0.75 is _",
+        "referenceText": null,
+        "correctAnswer": "3/4",
+        "wrongChoices": [
+            "1/2",
+            "2/3",
+            "4/5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The sum of the angles in a quadrilateral is _",
+        "referenceText": null,
+        "correctAnswer": "360 degrees",
+        "wrongChoices": [
+            "180 degrees",
+            "270 degrees",
+            "90 degrees",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If 7 apples cost 105 pesos, 1 apple costs _",
+        "referenceText": null,
+        "correctAnswer": "15 pesos",
+        "wrongChoices": [
+            "10 pesos",
+            "20 pesos",
+            "12 pesos",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A race car travelled for 2 1/2 hours with an average speed of 132 5/8 km per hour. Find the total distance it covered.",
+        "referenceText": null,
+        "correctAnswer": "331 9/16 km",
+        "wrongChoices": [
+            "264 5/16 km",
+            "330 5/16 km",
+            "135 1/8 km",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "400 is what percent of 2000?",
+        "referenceText": null,
+        "correctAnswer": "20%",
+        "wrongChoices": [
+            "30%",
+            "50%",
+            "40%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What percent of 8000 is 6000?",
+        "referenceText": null,
+        "correctAnswer": "75%",
+        "wrongChoices": [
+            "60%",
+            "85%",
+            "65%",
+            "70%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "What percent of 2500 is 750?",
+        "referenceText": null,
+        "correctAnswer": "30%",
+        "wrongChoices": [
+            "50%",
+            "40%",
+            "20%",
+            "80%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "780 is what percent of 7800?",
+        "referenceText": null,
+        "correctAnswer": "10%",
+        "wrongChoices": [
+            "20%",
+            "26%",
+            "16%",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "3/4 is what part of 1 1/8?",
+        "referenceText": null,
+        "correctAnswer": "2/3",
+        "wrongChoices": [
+            "1 1/2",
+            "5 5/6",
+            "7/8",
+            "4/6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "5/8 is what part of 3 3/4?",
+        "referenceText": null,
+        "correctAnswer": "1/6",
+        "wrongChoices": [
+            "2/12",
+            "4/24",
+            "1/8",
+            "5/6",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "30% of what number is 900?",
+        "referenceText": null,
+        "correctAnswer": "3000",
+        "wrongChoices": [
+            "270",
+            "2700",
+            "1800",
+            "450",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "850 is 40% of what number?",
+        "referenceText": null,
+        "correctAnswer": "2125",
+        "wrongChoices": [
+            "340",
+            "6800",
+            "5600",
+            "212.5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "25% of what number is 600?",
+        "referenceText": null,
+        "correctAnswer": "2400",
+        "wrongChoices": [
+            "15",
+            "000",
+            "25",
+            "1200",
+            "120",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "300 is 75% of what number?",
+        "referenceText": null,
+        "correctAnswer": "400",
+        "wrongChoices": [
+            "700",
+            "900",
+            "1500",
+            "2500",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1 1/4 is 3/4 of what number?",
+        "referenceText": null,
+        "correctAnswer": "1 2/3",
+        "wrongChoices": [
+            "2/3",
+            "20/12",
+            "1 4/6",
+            "1 8/12",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1 1/5 of what number is 1 3/8?",
+        "referenceText": null,
+        "correctAnswer": "1 7/48",
+        "wrongChoices": [
+            "55/48",
+            "1 13/20",
+            "48/55",
+            "11/24",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1/4 of what number is 2 1/6?",
+        "referenceText": null,
+        "correctAnswer": "8 2/3",
+        "wrongChoices": [
+            "52/6",
+            "6/52",
+            "8 4/6",
+            "9 1/2",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If -6/(a-3) = 3/(a+2), then a = _",
+        "referenceText": null,
+        "correctAnswer": "-1/3",
+        "wrongChoices": [
+            "1/3",
+            "2",
+            "-1/2",
+            "3",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "A special teacher has 400 units of 6% phosphoric acid solution, and an unlimited supply of 12% phosphoric acid solution. How many units of the latter must she add to the former to produce 10% phosphoric acid solution?",
+        "referenceText": null,
+        "correctAnswer": "800",
+        "wrongChoices": [
+            "500",
+            "600",
+            "700",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "2187, 729, 243, 81, 27, 9, _",
+        "referenceText": null,
+        "correctAnswer": "3",
+        "wrongChoices": [
+            "6",
+            "4",
+            "2",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1, 4, 9, 16, 25, 36, 49, 64, _",
+        "referenceText": null,
+        "correctAnswer": "81",
+        "wrongChoices": [
+            "72",
+            "75",
+            "90",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The Greatest Common Factor of 36 and 54 is _",
+        "referenceText": null,
+        "correctAnswer": "18",
+        "wrongChoices": [
+            "6",
+            "12",
+            "9",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The sum of 1/2 + 8/4 + 6/12 is _",
+        "referenceText": null,
+        "correctAnswer": "3",
+        "wrongChoices": [
+            "15/12",
+            "3/12",
+            "3 1/12",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The decimal form of 3/4 % is _",
+        "referenceText": null,
+        "correctAnswer": "0.0075",
+        "wrongChoices": [
+            ".075",
+            ".75",
+            ".00075",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "1/4 in decimal is _",
+        "referenceText": null,
+        "correctAnswer": "0.25",
+        "wrongChoices": [
+            ".025",
+            "2.5",
+            ".0025",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "The value of x in the equation 5x + 25 = 10 is _",
+        "referenceText": null,
+        "correctAnswer": "-3",
+        "wrongChoices": [
+            "5",
+            "3",
+            "-5",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "If x = 8, the value of y in the equation 4x - 2y = 28 is _",
+        "referenceText": null,
+        "correctAnswer": "2",
+        "wrongChoices": [
+            "-4",
+            "-2",
+            "4",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Cathy scored 85, 87, 90, 95, and 100 in her Math exams; her average grade is _",
+        "referenceText": null,
+        "correctAnswer": "91.4",
+        "wrongChoices": [
+            "91.50",
+            "92",
+            "93.50",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Numerical Ability",
+        "subCategory": "Pattern & Arithmetic",
+        "questionText": "Letty drove at 50 mph for 2 hours, then 65 mph for 4 hours; the total distance is _",
+        "referenceText": null,
+        "correctAnswer": "360 miles",
+        "wrongChoices": [
+            "115 miles",
+            "310 miles",
+            "100 miles",
+            "None of The Above"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "1. This paragraph best supports the statement that",
+        "referenceText": "If you are a fitness walker, there is no need for a\r\ncommute to a health club. Your neighborhood can\r\nbe your health club. You do not need a lot of fancy\r\nequipment to get a good workout, either. All you\r\nneed is a well-designed pair of athletic shoes.",
+        "correctAnswer": "fitness walking is a convenient and valuable form of exercise.",
+        "wrongChoices": [
+            "fitness walking is a better form of exercise than weight lifting.",
+            "a membership in a health club is a poor investment.",
+            "walking outdoors provides a better workout than walking indoors."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "2. This paragraph best supports the statement that",
+        "referenceText": "Critical reading is a demanding process. To read critically, you must slow down your reading and, with pencil in hand, perform specific operations on the text. Mark up the text with your reactions, conclusions, and questions. In other words, when you read, become an active participant.",
+        "correctAnswer": "critical reading requires thoughtful and careful attention.",
+        "wrongChoices": [
+            "critical reading is a slow, dull, but essential process.",
+            "the best critical reading happens at critical times in a person’s life.",
+            "readers should get in the habit of questioning the truth of what they read."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "3. This paragraph best supports the statement that",
+        "referenceText": "One New York publisher has estimated that 50,000 to 60,000 people in the United States want an anthology that includes the complete works of William Shakespeare. What accounts for this renewed interest in Shakespeare? As scholars point out, his psychological insights into both male and female characters are amazing, even today.",
+        "correctAnswer": "people today are interested in Shakespeare’s work because of the characters.",
+        "wrongChoices": [
+            "Shakespeare’s characters are more interesting than fictional characters today.",
+            "academic scholars are putting together an anthology of Shakespeare’s work.",
+            "New Yorkers have a renewed interest in the work of Shakespeare."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "4. This paragraph best supports the statement that",
+        "referenceText": "There are no effective boundaries when it comes to pollutants. Studies have shown that toxic insecticides—already banned in many countries—are riding the wind from countries where they remain legal. Compounds such as DDT and toxaphene have been found in remote places like the Yukon and other Arctic regions.",
+        "correctAnswer": "bans on toxins have done little to stop the spread of pollutants.",
+        "wrongChoices": [
+            "more pollutants find their way into polar climates than they do into warmer areas.",
+            "studies show that many countries have ignored their own anti-pollution laws.",
+            "DDT and toxaphene are the two most toxic insecticides in the world."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "5. This paragraph best supports the statement that police officers cannot search a person’s home or private papers unless they have",
+        "referenceText": "The Fourth Amendment to the Constitution protects citizens against unreasonable searches and seizures. No search of a person’s home or personal effects may be conducted without a written search warrant issued on probable cause. This means that a neutral judge must approve the factual basis justifying a search before it can be conducted.",
+        "correctAnswer": "legal authorization.",
+        "wrongChoices": [
+            "direct evidence of a crime.",
+            "read the person his or her constitutional rights.",
+            "a reasonable belief that a crime has occurred."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "6. This paragraph best supports the statement that",
+        "referenceText": "Mathematics allows us to expand our consciousness. Mathematics tells us about economic trends, patterns of disease, and the growth of populations. Math is good at exposing the truth, but it can also perpetuate misunderstandings and untruths. Figures have the power to mislead people.",
+        "correctAnswer": "the study of mathematics can be both beneficial and confusing.",
+        "wrongChoices": [
+            "the study of mathematics is dangerous.",
+            "the study of mathematics is more important than other disciplines.",
+            "the power of numbers is that they cannot lie."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "7. This paragraph best supports the statement that",
+        "referenceText": "Human technology began with the development of the first stone tools about two and a half million years ago. In the beginning, the rate of development was slow, and hundreds of thousands of years passed without many technological changes. Today, new technologies are reported daily on television and in newspapers.",
+        "correctAnswer": "in today’s world, new technologies are constantly being developed.",
+        "wrongChoices": [
+            "stone tools were not really technology.",
+            "stone tools were in use for two and a half million years.",
+            "there is no way to know when stone tools first came into use."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "8. Which of the following is the correct order of steps for making ratatouille?",
+        "referenceText": "Ratatouille is a dish that has grown in popularity over the last few years. It features eggplant, zucchini, tomato, peppers, and garlic chopped, mixed, sautéed, and finally, cooked slowly over low heat. As the vegetables cook slowly, they make their own broth, which can be extended with a little tomato paste. The name ratatouille comes from the French word touiller, meaning to mix or stir together.",
+        "correctAnswer": "Mix the vegetables together, sauté them, and add tomato paste.",
+        "wrongChoices": [
+            "Chop vegetables, add tomato paste, stir or mix together.",
+            "Cook the vegetables slowly, mix them together, add tomato paste.",
+            "Add tomato paste to extend the broth and cook slowly over low heat."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "9. Ratatouille can best be described as a",
+        "referenceText": "Ratatouille is a dish that has grown in popularity over the last few years. It features eggplant, zucchini, tomato, peppers, and garlic chopped, mixed, sautéed, and finally, cooked slowly over low heat. As the vegetables cook slowly, they make their own broth, which can be extended with a little tomato paste. The name ratatouille comes from the French word touiller, meaning to mix or stir together.",
+        "correctAnswer": "vegetable stew.",
+        "wrongChoices": [
+            "French pastry.",
+            "sauce to put over vegetables.",
+            "pasta dish extended with tomato paste."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "10. In deciding whether to use ordinary rock salt or the salt and calcium chloride mixture on a particular street, which of the following is NOT a consideration?",
+        "referenceText": "After a snow or ice fall, the city streets are treated with ordinary rock salt. In some areas, the salt is combined with calcium chloride, which is more effective in below-zero temperatures and which melts ice better. This combination of salt and calcium chloride is also less damaging to foliage along the roadways.",
+        "correctAnswer": "whether the street is a main or secondary road",
+        "wrongChoices": [
+            "the temperature at the time of treatment",
+            "the plants and trees along the street",
+            "whether there is ice on the street"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "11. According to the snow treatment passage, which of the following is true?",
+        "referenceText": "After a snow or ice fall, the city streets are treated with ordinary rock salt. In some areas, the salt is combined with calcium chloride, which is more effective in below-zero temperatures and which melts ice better. This combination of salt and calcium chloride is also less damaging to foliage along the roadways.",
+        "correctAnswer": "If the temperature is below zero, a salt and calcium chloride mixture is effective in treating snow- and ice-covered streets.",
+        "wrongChoices": [
+            "Crews must wait until the snow or ice stops falling before salting streets.",
+            "Major roads are always salted first.",
+            "If the snowfall is light, the city road crews will not salt the streets because this would be a waste of the salt supply."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "12. According to the passage, each household",
+        "referenceText": "Many cities have distributed standardized recycling containers to all households. One city attached the following directions: “We prefer that you use this new container as your primary recycling container, as this will expedite pick-up of recyclables. Additional recycling containers may be purchased as needed from the Sanitation Department.”",
+        "correctAnswer": "should use the new recycling container.",
+        "wrongChoices": [
+            "may use only one recycling container.",
+            "must use the new recycling container.",
+            "must buy a new recycling container."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "13. According to the passage, which of the following is true about the new containers?",
+        "referenceText": "Many cities have distributed standardized recycling containers to all households. One city attached the following directions: “We prefer that you use this new container as your primary recycling container, as this will expedite pick-up of recyclables. Additional recycling containers may be purchased as needed from the Sanitation Department.”",
+        "correctAnswer": "The new containers will help increase the efficiency of the recycling program.",
+        "wrongChoices": [
+            "The new containers are far better than other containers in every way.",
+            "The new containers hold more than the old containers did.",
+            "The new containers are less expensive than the old."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "14. Choose the topic sentence that best fits the paragraph.",
+        "referenceText": "Spices is a pleasant word, whether it connotes fine French cuisine or down-home cinnamon-flavored apple pie. [_____]. In the past, individuals traveled the world seeking exotic spices for profit and, in searching, have changed the course of history. Indeed, to gain control of lands harboring new spices, nations have actually gone to war.",
+        "correctAnswer": "The history of spices, however, is another matter altogether, and it can be filled with danger and intrigue.",
+        "wrongChoices": [
+            "The taste and aroma of spices are the main elements that make food such a source or fascination and pleasure.",
+            "The term might equally bring to mind Indian curry made thousands of miles away or those delicious barbecued ribs sold down at Harry’s.",
+            "It is exciting to find a good cookbook and experiment with spices from other lands—indeed, it is one way to travel around the globe."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "15. Choose the topic sentence that best fits the paragraph.",
+        "referenceText": "It weighs less than three pounds and is hardly more interesting to look at than an overly ripe cauliflower. [_____]. It has created poetry and music, planned and executed wars, devised intricate scientific theories. It thinks and dreams, plots and schemes, and easily holds more information than all the libraries on Earth.",
+        "correctAnswer": "Nevertheless, the human brain is the most mysterious and complex object on earth.",
+        "wrongChoices": [
+            "The human brain is made of gelatinous matter and contains no nerve endings.",
+            "The science of neurology has found a way to map the most important areas of the human brain.",
+            "However, scientists say that each person uses only 10% of brainpower over the course of a lifetime."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "16. Choose the topic sentence that best fits the paragraph.",
+        "referenceText": "Gary is a very distinguished-looking man with a touch of gray at the temples. Even in his early fifties, he is still the one to turn heads. He enjoys spending most of his time admiring his profile in the mirror. In fact, he considers his good looks to be his second most important asset in the world. The first, however, is money. He was fortunate enough to be born into a wealthy family, and he loves the power his wealth has given him. [_____]. He can buy whatever he desires. Gary checks the mirror often and feels great delight with what he sees.",
+        "correctAnswer": "Conceit is the beginning and the end of Gary’s character: conceit of person and situation.",
+        "wrongChoices": [
+            "Gary’s gray hair is his worst characteristic.",
+            "Gary feels blessed to be wealthy and the joy consumes his every thought.",
+            "The only objects of Gary’s respect are others who hold positions in society above him."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "17. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "Life on Earth is ancient, and at its first appearance, unimaginably complex.",
+        "correctAnswer": "Scientists place its beginnings at some three billion years ago, when the first molecule floated up out of the ooze with the unique ability to replicate itself.",
+        "wrongChoices": [
+            "The most complex life form is, of course, the mammal—and the most complex mammal is humankind.",
+            "It is unknown exactly where life started—where the first molecule was “born” that had the ability to replicate itself.",
+            "Darwin’s theory of evolution was one attempt to explain what essentially remains a great mystery."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "18. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "The continuing fascination of the public with movie star Marilyn Monroe is puzzling, yet it is still strong, even after many decades.",
+        "correctAnswer": "One reason might simply be her life’s sad and premature end.",
+        "wrongChoices": [
+            "She became a star in the 1950s and died in 1962.",
+            "The film that most clearly demonstrates her talent is The Misfits.",
+            "Her name was originally Norma Jean, but she changed it to Marilyn."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "19. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "One scientific theory of the origin of the universe is the much misunderstood big bang theory.",
+        "correctAnswer": "The popular notion is that the big bang was a huge explosion in space, but this is far too simple a description.",
+        "wrongChoices": [
+            "Physicists now believe they can construct what happened in the universe during the first three minutes of its beginning.",
+            "Many scientists believe that, during microwave experiments, you can actually “hear” echoes of the big bang.",
+            "The big bang theory, if accepted, convinces us that the universe was not always as it is now."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "20. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "There is no instruction by the old bird in the movements of flight, no conscious imitation by the young.",
+        "correctAnswer": "The most obvious way in which birds differ from humans in behavior is that they can do all that they have to do, without ever being taught.",
+        "wrongChoices": [
+            "More extraordinary than a bird being able to fly untaught is that it is able to build a nest untaught.",
+            "Young birds frequently make their first flights with their parents out of sight.",
+            "Young birds brought up by hand in artificial nests will build the proper kind of nest for their species when the time comes."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "21. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "The reintroduced wolves are producing more offspring than expected.",
+        "correctAnswer": "The gray wolf will be taken off the list of endangered species in the northern Rocky Mountains when ten breeding pairs reside in a region for three years.",
+        "wrongChoices": [
+            "Ranchers and some biologists are protesting the reintroduction of the wolves.",
+            "There are active efforts to reintroduce wolves to national parks in the United States.",
+            "The success of an attempt to reintroduce red wolves to parts of North Carolina is not yet clear."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "22. Choose the sentence that best develops or supports the topic sentence.",
+        "referenceText": "The Puritans established a wide variety of punishments to enforce their strict laws.",
+        "correctAnswer": "Today, many of the punishments used by the Puritans in Massachusetts Bay seem cruel and excessive.",
+        "wrongChoices": [
+            "The Puritans believed that some lawbreakers should be shamed in public by the use of stocks and the pillory.",
+            "Disobedient children would feel the sting of the whip.",
+            "The Eighth Amendment of the Bill of Rights prohibits cruel and unusual punishment."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "23. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "Irish Catholics continued to fight against British rule.",
+        "correctAnswer": "Political violence has claimed many lives in Northern Ireland.",
+        "wrongChoices": [
+            "The struggle today is over the control of these six counties.",
+            "For centuries, all of Ireland was ruled by Great Britain.",
+            "Six counties in the north—where Protestants outnumber Catholics two to one—remained a part of Great Britain and became known as Northern Ireland."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "24. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "In Oklahoma, a girl is forbidden to take a bite from her date’s hamburger.",
+        "correctAnswer": "It may be hard to believe, but these strange laws are still on the books!",
+        "wrongChoices": [
+            "It is illegal for teenagers to take a bath during the winter in Clinton, Indiana.",
+            "On Sunday, children may not spin yo-yos in Memphis, Tennessee.",
+            "It is illegal to parade an elephant down Main Street in Austin, Texas."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "25. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "The hairs themselves are very sensitive.",
+        "correctAnswer": "A cat’s whiskers are among the most perfect organs of touch.",
+        "wrongChoices": [
+            "The roots are provided with highly sensitive nerve endings.",
+            "Serving as feelers, they aid the cat’s ability to move in the dark.",
+            "This is most important for a cat that does its prowling at night."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "26. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "French explorers probably taught the Inuit Eskimos how to play dominoes.",
+        "correctAnswer": "The game of dominoes has been popular for centuries.",
+        "wrongChoices": [
+            "It was known in 181 A.D. in China.",
+            "Also, it was played during the 1700s in Italy.",
+            "From Italy, it was introduced to the rest of the world."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "27. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "It is a fact that people are now living longer than ever before for many reasons.",
+        "correctAnswer": "Advances in medical science have done wonders for longevity.",
+        "wrongChoices": [
+            "Some people in Russia’s Caucasus Mountains live to be over one hundred years of age.",
+            "No one seems to understand this phenomenon.",
+            "The people in this region do not seem to gain anything from medical science."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "28. Choose the sentence that would make the best topic sentence.",
+        "referenceText": "For 16 years, he spread violence and death throughout the west.",
+        "correctAnswer": "Jesse Woodson James was the most legendary of all American outlaws.",
+        "wrongChoices": [
+            "Jesse was gunned down on April 3, 1882.",
+            "He left a trail of train and bank robberies.",
+            "His crimes were committed during the late 1860s."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "29. Fact or Opinion?",
+        "referenceText": "Mr. Orenstein is a terrific boss.",
+        "correctAnswer": "Opinion",
+        "wrongChoices": [
+            "Fact"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "30. Fact or Opinion?",
+        "referenceText": "Many companies have dress-down days on Fridays.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "31. Fact or Opinion?",
+        "referenceText": "Dress-down days improve employee morale.",
+        "correctAnswer": "Opinion",
+        "wrongChoices": [
+            "Fact"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "32. Fact or Opinion?",
+        "referenceText": "Wednesday is the fourth day of the week.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "33. Fact or Opinion?",
+        "referenceText": "Wednesday is the longest day of the week.",
+        "correctAnswer": "Opinion",
+        "wrongChoices": [
+            "Fact"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "34. Fact or Opinion?",
+        "referenceText": "There are many different ways to invest your money to provide for a financially secure future.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "35. Fact or Opinion?",
+        "referenceText": "Many people invest in stocks and bonds.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "36. Fact or Opinion?",
+        "referenceText": "Savings accounts and CDs (certificates of deposit) are the best way to invest your hard-earned money.",
+        "correctAnswer": "Opinion",
+        "wrongChoices": [
+            "Fact"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "37. Fact or Opinion?",
+        "referenceText": "Stocks and bonds are often risky investments.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "38. Fact or Opinion?",
+        "referenceText": "Savings accounts and CDs are fully insured and provide steady, secure interest on your money.",
+        "correctAnswer": "Fact",
+        "wrongChoices": [
+            "Opinion"
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "39. This paragraph best supports the statement that",
+        "referenceText": "The use of computer equipment and software to create high quality printing for newsletters, business cards, letterhead, and brochures is called Desktop Publishing, or DTP. The most important part of any DTP project is planning. Before you begin, you should know your intended audience, the message you want to communicate, and what form your message will take.",
+        "correctAnswer": "the first stage of any proposed DTP project should be organization and design.",
+        "wrongChoices": [
+            "DTP is one way to become acquainted with a new business audience.",
+            "computer software is continually being refined to produce more high quality printing.",
+            "the planning stage of any DTP project should not include talking with the intended audience."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "40. This paragraph best supports the statement that the Dvorak keyboard",
+        "referenceText": "Many office professionals have expressed an interest in replacing the currently used keyboard, known as the QWERTY keyboard, with a keyboard that can keep up with technological changes and make offices more efficient. The best choice is the Dvorak keyboard. Studies have shown that people using the Dvorak keyboard can type 20–30% faster and are able to cut their error rate in half. Dvorak puts vowels and other frequently used letters right under the fingers—on the home row—where typists make 70% of their keystrokes.",
+        "correctAnswer": "is more efficient than the QWERTY.",
+        "wrongChoices": [
+            "has more keys right under the typists’ fingers than the QWERTY.",
+            "is favored by more typists than the QWERTY.",
+            "is—on average—70% faster than the QWERTY."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "41. This paragraph best supports the idea that sanitation workers can be injured if they",
+        "referenceText": "Every year, Americans use over one billion sharp objects to administer health care in their homes. These sharp objects include lancets, needles, and syringes. If not disposed of in puncture-resistant containers, they can injure sanitation workers. Sharp objects should be disposed of in hard plastic or metal containers with secure lids. The containers should be clearly marked and should be puncture resistant.",
+        "correctAnswer": "come in contact with sharp objects that have not been placed in secure containers.",
+        "wrongChoices": [
+            "do not place sharp objects in puncture-resistant containers.",
+            "are careless with sharp objects such as lancets, needles, and syringes in their homes.",
+            "do not mark the containers they pick up with a warning that those containers contain sharp objects."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "42. This paragraph best supports the statement that Peace Corps employees",
+        "referenceText": "One of the missions of the Peace Corps is to bring trained men and women to work in countries who need trained professionals in certain fields. People who work for the Peace Corps are volunteers. However, in order to keep the Peace Corps dynamic and vital, no staff member can work for the agency for more than five years.",
+        "correctAnswer": "are hired for a limited term of employment.",
+        "wrongChoices": [
+            "are highly intelligent people.",
+            "must train for about five years.",
+            "have both academic and work experience."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "43. This paragraph best supports the statement that telecommuters",
+        "referenceText": "More and more office workers telecommute from offices in their own homes. The benefits of telecommuting allow for greater productivity and greater flexibility. Telecommuters produce an average of 20% more than if they were to work in an office. In addition, their flexible schedules allow them to balance their families with their work responsibilities.",
+        "correctAnswer": "get more work done in a given time period than workers who travel to the office.",
+        "wrongChoices": [
+            "produce a better quality work product than workers who travel to the office.",
+            "are more flexible in their ideas than workers who travel to the office.",
+            "would do 20% more work if they were to work in an office."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "44. This paragraph best supports the statement that",
+        "referenceText": "Close-up images of Mars by the Mariner 9 probe indicated networks of valleys that looked like the stream beds on Earth. These images also implied that Mars once had an atmosphere that was thick enough to trap the Sun’s heat. If this is true, something must have happened to Mars billions of years ago that stripped away the planet’s atmosphere.",
+        "correctAnswer": "Mars now has little or no atmosphere.",
+        "wrongChoices": [
+            "Mars once had a thicker atmosphere than Earth does.",
+            "the Mariner 9 probe took the first pictures of Mars.",
+            "Mars is closer to the Sun than Earth is."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "45. This paragraph best supports the statement that",
+        "referenceText": "It is a myth that labor shortages today center mostly on computer jobs. Although it is true that the lack of computer-related skills accounts for many of the problems in today’s job market, there is a lack of skilled labor in many other fields. There is a shortage of uniformed police officers in many cities and a shortage of trained criminal investigators in some rural areas. These jobs may utilize computer skills, but they are not essentially computer jobs.",
+        "correctAnswer": "there is a shortage of skilled workers in a variety of fields, including police work.",
+        "wrongChoices": [
+            "people with computer skills are in demand in police and criminal investigator jobs.",
+            "unemployment in computer-related fields is not as widespread as some people think.",
+            "trained criminal investigators are often underpaid in rural areas."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "46. This paragraph best supports the statement that",
+        "referenceText": "The competitive civil service system is designed to give candidates fair and equal treatment and to ensure that federal applicants are hired based on objective criteria. Hiring has to be based solely on a candidate’s knowledge, skills, and abilities—sometimes abbreviated as KSA—and not on external factors such as race, religion, or sex. Whereas employers in the private sector can hire employees for subjective reasons, federal employers must be able to justify their decision with objective evidence of candidate qualification.",
+        "correctAnswer": "the civil service strives to hire on the basis of a candidate’s abilities.",
+        "wrongChoices": [
+            "hiring in the private sector is inherently unfair.",
+            "KSA is not as important as test scores to federal employers.",
+            "federal hiring practices are simpler than those employed by the private sector."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "47. This paragraph best supports the statement that",
+        "referenceText": "It is well known that the world urgently needs adequate distribution of food, but adequate distribution of medicine is just as urgent. Medical expertise and medical supplies need to be redistributed throughout the world so that people in emerging nations will have proper medical care.",
+        "correctAnswer": "many people who live in emerging nations are not receiving proper medical care.",
+        "wrongChoices": [
+            "the majority of the people in the world have no medical care.",
+            "medical resources in emerging nations have diminished in the past few years.",
+            "not enough doctors give time and money to those in need of medical care."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "48. This paragraph best supports the statement that",
+        "referenceText": "In the past, suggesting a gas tax has usually been considered a political blunder, but that does not seem to be the case today. Several states are promoting bills in their state legislatures that would cut income or property taxes and make up the revenue with taxes on fossil fuel.",
+        "correctAnswer": "state legislators no longer fear increasing gas taxes.",
+        "wrongChoices": [
+            "gas taxes produce more revenue than income taxes.",
+            "states with low income tax rates are increasing their gas taxes.",
+            "taxes on fossil fuels are more popular than property taxes."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "49. This paragraph best supports the statement that",
+        "referenceText": "Whether you can accomplish a specific goal or meet a specific deadline depends first on how much time you need to get the job done. What should you do when the demands of the job exceed the time you have available? The best approach is to divide the project into smaller pieces. Different goals will have to be divided in different ways, but one seemingly unrealistic goal can often be accomplished by working on several smaller, more reasonable goals.",
+        "correctAnswer": "the best way to complete projects is to make sure your goals are achievable.",
+        "wrongChoices": [
+            "jobs often remain only partially completed because of lack of time.",
+            "the best way to tackle large projects is to problem-solve first.",
+            "the best approach to a demanding job is to delegate responsibility."
+        ]
+    },
+    {
+        "category": "Verbal Ability",
+        "subCategory": "Reading Comprehension",
+        "questionText": "50. This paragraph best supports the statement that",
+        "referenceText": "Before you begin to compose a business letter, sit down and think about your purpose for writing the letter. Do you want to request information, order a product, register a complaint, or apply for something? Do some brainstorming and gather information before you begin writing. Always keep your objective in mind.",
+        "correctAnswer": "for many different kinds of writing tasks, planning is an important first step.",
+        "wrongChoices": [
+            "business letters are frequently complaint letters.",
+            "brainstorming and writing take approximately equal amounts of time.",
+            "while some people plan ahead when they are writing a business letter, others do not."
+        ]
+    }
+]

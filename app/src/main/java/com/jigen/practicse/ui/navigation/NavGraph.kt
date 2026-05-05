@@ -16,6 +16,7 @@ import com.jigen.practicse.ui.screens.result.ResultScreen
 import com.jigen.practicse.ui.screens.profile.ProfileScreen
 import com.jigen.practicse.ui.screens.settings.SettingsScreen
 import com.jigen.practicse.ui.screens.about.AboutScreen
+import com.jigen.practicse.ui.screens.study_library.StudyLibraryScreen
 
 @Composable
 fun NavGraph(
@@ -64,7 +65,7 @@ fun NavGraph(
 					navController.navigate(Screen.Ranking.route)
 				},
 				onStudyLibrary = {
-					// Future: implement study library navigation
+					navController.navigate(Screen.StudyLibrary.route)
 				}
 			)
 		}
@@ -121,6 +122,18 @@ fun NavGraph(
 			AboutScreen(
 				onBack = {
 					navController.popBackStack()
+				}
+			)
+		}
+
+		composable(Screen.StudyLibrary.route) {
+			StudyLibraryScreen(
+				context = context,
+				onBack = {
+					navController.popBackStack()
+				},
+				onStartPractice = { categoryKey ->
+					navController.navigate(Screen.Exam.createRoute("new@$categoryKey"))
 				}
 			)
 		}

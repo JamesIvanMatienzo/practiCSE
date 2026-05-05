@@ -41,7 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jigen.practicse.ui.screens.exam.ExamViewModel.ExamEffect
+import com.jigen.practicse.ui.screens.exam.ExamViewModelNew.ExamEffect
 import kotlinx.coroutines.flow.collectLatest
 
 import android.content.Context
@@ -60,8 +60,8 @@ fun ExamScreen(
 	sessionId: String = "new",
 	modifier: Modifier = Modifier
 ) {
-	val viewModel: ExamViewModel = viewModel(
-		factory = ExamViewModel.factory(context)
+	val viewModel: ExamViewModelNew = viewModel(
+		factory = ExamViewModelNew.factory(context, sessionMode = sessionId)
 	)
 	val uiState by viewModel.uiState.collectAsState()
 
