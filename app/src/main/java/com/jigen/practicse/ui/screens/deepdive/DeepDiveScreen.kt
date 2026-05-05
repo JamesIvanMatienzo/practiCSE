@@ -94,7 +94,7 @@ fun DeepDiveScreen(
 						.padding(20.dp)
 				) {
 					Text(
-						text = "Deep Dive with Grok",
+						text = "Deep Dive with Groq",
 						fontSize = 22.sp,
 						fontWeight = FontWeight.Bold,
 						color = PrimaryBlue
@@ -135,7 +135,7 @@ fun DeepDiveScreen(
 						shape = RoundedCornerShape(20.dp)
 					) {
 						Column(modifier = Modifier.padding(18.dp)) {
-							Text("Grok Explanation", fontWeight = FontWeight.SemiBold, color = PrimaryBlue)
+							Text("Groq Explanation", fontWeight = FontWeight.SemiBold, color = PrimaryBlue)
 							Spacer(modifier = Modifier.height(8.dp))
 							Text(text = state.explanation, color = TextColor, lineHeight = 22.sp)
 						}

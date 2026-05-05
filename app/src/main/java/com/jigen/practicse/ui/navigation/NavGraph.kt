@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.ui.screens.login.LoginScreen
 import com.jigen.practicse.ui.screens.dashboard.DashboardScreen
@@ -27,6 +28,7 @@ fun NavGraph(
 	startDestination: String = Screen.Login.route
 ) {
 	val configStore = ExamConfigStore(context)
+	val appPreferencesStore = AppPreferencesStore(context)
 
 	NavHost(
 		navController = navController,
@@ -46,6 +48,7 @@ fun NavGraph(
 			OnboardingScreen(
 				context = context,
 				onTrackSelected = {
+					appPreferencesStore.setActiveTrack(it)
 					navController.navigate(Screen.Dashboard.route) {
 						popUpTo(Screen.Onboarding.route) { inclusive = true }
 					}
@@ -57,7 +60,9 @@ fun NavGraph(
 			DashboardScreen(
 				context = context,
 				onProfileClick = {
-					navController.navigate(Screen.Profile.route)
+					navController.navigate(Screen.Profile.route) {
+						launchSingleTop = true
+					}
 				},
 				onStartNewExam = { requested ->
 					configStore.setAllExamCount(requested)
@@ -67,10 +72,14 @@ fun NavGraph(
 					navController.navigate(Screen.Exam.createRoute("resume"))
 				},
 				onRanking = {
-					navController.navigate(Screen.Ranking.route)
+						navController.navigate(Screen.Ranking.route) {
+							launchSingleTop = true
+						}
 				},
 				onStudyLibrary = {
-					navController.navigate(Screen.StudyLibrary.route)
+						navController.navigate(Screen.StudyLibrary.route) {
+							launchSingleTop = true
+						}
 				}
 			)
 		}
@@ -117,6 +126,13 @@ fun NavGraph(
 			ProfileScreen(
 				onBack = {
 					navController.popBackStack()
+				},
+				onLogout = {
+					appPreferencesStore.clearProfile()
+					navController.navigate(Screen.Login.route) {
+						popUpTo(Screen.Login.route) { inclusive = true }
+						launchSingleTop = true
+					}
 				}
 			)
 		}

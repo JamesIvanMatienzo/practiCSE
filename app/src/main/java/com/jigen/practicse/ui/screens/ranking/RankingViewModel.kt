@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 import com.jigen.practicse.repository.RankingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +23,7 @@ class RankingViewModel(private val repository: RankingRepository, private val co
     fun refresh() {
         viewModelScope.launch {
             _uiState.value = RankingUiState.Loading
-            val prefs = context.getSharedPreferences("practicse_prefs", Context.MODE_PRIVATE)
-            val userName = prefs.getString("user_name", "You") ?: "You"
+            val userName = AppPreferencesStore(context).getDisplayName().ifBlank { "You" }
             try {
                 val list = repository.fetchGlobalTop(100)
                 val sorted = list.sortedByDescending { it.totalScore }

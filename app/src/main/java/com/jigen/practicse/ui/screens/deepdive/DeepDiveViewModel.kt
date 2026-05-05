@@ -161,13 +161,13 @@ class DeepDiveViewModel(
 				
 				val choices = root.optJSONArray("choices")
 				if (choices == null || choices.length() == 0) {
-					return@withContext "No choices found in Grok response. Correct answer: ${question.correctAnswer}"
+					return@withContext "No choices found in Groq response. Correct answer: ${question.correctAnswer}"
 				}
 				
 				val firstChoice = choices.getJSONObject(0)
 				val message = firstChoice.optJSONObject("message")
 				if (message == null) {
-					return@withContext "Invalid message format in Grok response. Correct answer: ${question.correctAnswer}"
+					return@withContext "Invalid message format in Groq response. Correct answer: ${question.correctAnswer}"
 				}
 				
 				val content = extractContent(message)
@@ -178,7 +178,7 @@ class DeepDiveViewModel(
 					"AI returned an empty explanation. Correct answer: ${question.correctAnswer}"
 				}
 			} catch (jsonError: Exception) {
-				"Failed to parse Grok response: ${jsonError.message}\n\nCorrect answer: ${question.correctAnswer}"
+					"Failed to parse Groq response: ${jsonError.message}\n\nCorrect answer: ${question.correctAnswer}"
 			}
 		} catch (e: Exception) {
 			"Network error while contacting AI: ${e.message}\n\nCorrect answer: ${question.correctAnswer}"

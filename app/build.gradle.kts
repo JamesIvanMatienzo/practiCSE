@@ -90,9 +90,9 @@ fun resolveLocalEnvValue(propertyName: String): String {
 
 val supabaseUrl = resolveSupabaseValue("SUPABASE_URL")
 val supabaseKey = resolveSupabaseValue("SUPABASE_KEY")
-val groqApiKey = resolveLocalEnvValue("GROQ_API_KEY").ifBlank { resolveLocalEnvValue("GROK_API_KEY") }
-val groqBaseUrl = resolveLocalEnvValue("GROQ_BASE_URL").ifBlank { resolveLocalEnvValue("GROK_BASE_URL") }
-val groqModel = resolveLocalEnvValue("GROQ_MODEL").ifBlank { resolveLocalEnvValue("GROK_MODEL") }
+val groqApiKey = resolveLocalEnvValue("GROQ_API_KEY")
+val groqBaseUrl = resolveLocalEnvValue("GROQ_BASE_URL")
+val groqModel = resolveLocalEnvValue("GROQ_MODEL")
 val scoresListEndpoint = resolveLocalEnvValue("SCORES_LIST_ENDPOINT")
 val scoresApiKey = resolveLocalEnvValue("SCORES_API_KEY")
 

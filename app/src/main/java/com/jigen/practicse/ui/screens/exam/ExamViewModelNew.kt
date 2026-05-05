@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jigen.practicse.data.local.AppPreferencesStore
+import com.jigen.practicse.data.local.normalizeTrackKey
+import com.jigen.practicse.data.local.trackKeyToLabel
 import com.jigen.practicse.data.entity.QuestionEntity
 import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
@@ -43,6 +46,7 @@ class ExamViewModelNew(
 
 	private var timerJob: Job? = null
 	private val examConfigStore = ExamConfigStore(context)
+	private val appPreferencesStore = AppPreferencesStore(context)
 
 	companion object {
 		private const val DEFAULT_EXAM_DURATION_MILLIS = 165L * 60_000L
@@ -82,12 +86,14 @@ class ExamViewModelNew(
 			val existingSession = if (mode == "resume") sessionDao.getSession() else null
 			val resumeCategoryKey = existingSession?.lastCategory?.let(::categoryNameToKey)
 			val activeCategoryKey = categoryKey ?: resumeCategoryKey
+			val activeTrackKey = normalizeTrackKey(existingSession?.lastTrack ?: appPreferencesStore.getActiveTrackKey())
 			val examConfig = examConfigStore.getConfig()
 			val allQuestions = questionDao.getAllQuestions()
 			val questions = buildQuestionSet(allQuestions, activeCategoryKey, examConfig)
 			val sessionCategory = activeCategoryKey?.let { displayCategoryName(it) }
 				?: existingSession?.lastCategory
 				?: "All Categories"
+			val sessionTrackLabel = trackKeyToLabel(activeTrackKey)
 
 			if (questions.isEmpty()) {
 				_uiState.value = ExamUiState.Error("No questions available")
@@ -112,19 +118,13 @@ class ExamViewModelNew(
 			if (mode == "resume") {
 				if (existingSession != null && existingSession.examEndTimeMillis == null) {
 					startingIndex = existingSession.lastQuestionIndex.coerceIn(0, uiQuestions.lastIndex.coerceAtLeast(0))
-					var score = 0
-					for (i in 0 until uiQuestions.size) {
-						val qId = uiQuestions.getOrNull(i)?.id ?: continue
-						val prog = progressDao.getProgress(qId)
-						if (prog?.isCorrect == true) score += 1
-					}
-					startingScore = score
+					startingScore = computeCurrentScore(uiQuestions)
 				} else {
-					createNewSession(sessionCategory)
+					createNewSession(sessionCategory, activeTrackKey)
 				}
 			} else {
 				// Create new session
-				createNewSession(sessionCategory)
+				createNewSession(sessionCategory, activeTrackKey)
 			}
 
 			_uiState.value = ExamUiState.Success(
@@ -132,6 +132,7 @@ class ExamViewModelNew(
 				currentIndex = startingIndex,
 				currentScore = startingScore,
 				remainingTimeMillis = DEFAULT_EXAM_DURATION_MILLIS,
+				sessionTrack = sessionTrackLabel,
 				sessionCategory = sessionCategory
 			)
 
@@ -141,15 +142,27 @@ class ExamViewModelNew(
 		}
 	}
 
-	private suspend fun createNewSession(sessionCategory: String) {
+	private suspend fun createNewSession(sessionCategory: String, trackKey: String) {
 		val newSession = SessionEntity(
 			id = 1,
+			lastScore = 0,
 			lastQuestionIndex = 0,
-			lastTrack = "Professional",
+			lastTrack = normalizeTrackKey(trackKey),
 			lastCategory = sessionCategory,
 			examEndTimeMillis = null
 		)
 		sessionDao.upsert(newSession)
+	}
+
+	private suspend fun computeCurrentScore(uiQuestions: List<QuestionUiState>): Int {
+		var score = 0
+		for (question in uiQuestions) {
+			val progress = progressDao.getProgress(question.id)
+			if (progress?.isCorrect == true) {
+				score += 1
+			}
+		}
+		return score
 	}
 
 	private fun buildQuestionSet(
@@ -241,10 +254,20 @@ class ExamViewModelNew(
 						selectedIndex = question.shuffledOptions.indexOf(selectedText).coerceAtLeast(-1),
 						isCorrect = isCorrect,
 						answeredAtMillis = System.currentTimeMillis(),
-						track = "Professional",
+						track = normalizeTrackKey(currentState.sessionTrack),
 						category = question.category
 					)
 				)
+				sessionDao.getSession()?.let { session ->
+					sessionDao.upsert(
+						session.copy(
+							lastScore = newScore,
+							lastQuestionIndex = currentState.currentIndex,
+							lastTrack = normalizeTrackKey(currentState.sessionTrack),
+							examEndTimeMillis = null
+						)
+					)
+				}
 			} catch (e: Exception) {
 				// Log but continue
 			}
@@ -267,8 +290,10 @@ class ExamViewModelNew(
 			sessionDao.getSession()?.let { session ->
 				sessionDao.upsert(
 					session.copy(
+						lastScore = currentState.currentScore,
 						lastQuestionIndex = clampedIndex,
 						lastCategory = currentState.sessionCategory,
+						lastTrack = normalizeTrackKey(currentState.sessionTrack),
 						examEndTimeMillis = null
 					)
 				)
@@ -305,11 +330,22 @@ class ExamViewModelNew(
 			sessionDao.getSession()?.let { session ->
 				sessionDao.upsert(
 					session.copy(
+						lastScore = state.currentScore,
 						lastQuestionIndex = state.currentIndex,
+						lastTrack = normalizeTrackKey(state.sessionTrack),
 						examEndTimeMillis = System.currentTimeMillis()
 					)
 				)
 			}
+
+			val displayName = appPreferencesStore.getDisplayName()
+			PractiCSEDatabase.getInstance(context).leaderboardDao().upsert(
+				com.jigen.practicse.data.local.entity.LeaderboardEntryEntity(
+					userName = displayName,
+					totalScore = state.currentScore,
+					lastUpdatedMillis = System.currentTimeMillis()
+				)
+			)
 
 			_uiState.value = ExamUiState.Completed(
 				totalScore = state.currentScore,

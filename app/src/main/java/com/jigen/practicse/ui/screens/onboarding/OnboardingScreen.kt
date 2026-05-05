@@ -33,12 +33,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.content.Context
+import com.jigen.practicse.data.local.AppPreferencesStore
 
 @Composable
 fun OnboardingScreen(
 	context: Context,
 	onTrackSelected: (trackName: String) -> Unit
 ) {
+	val store = remember(context) { AppPreferencesStore(context) }
 	var selectedTrack by remember { mutableStateOf<String?>(null) }
 
 	Scaffold(
@@ -105,6 +107,7 @@ fun OnboardingScreen(
 			Button(
 				onClick = {
 					if (selectedTrack != null) {
+						store.setActiveTrack(selectedTrack!!)
 						onTrackSelected(selectedTrack!!)
 					}
 				},

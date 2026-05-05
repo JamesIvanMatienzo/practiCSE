@@ -9,6 +9,7 @@ import androidx.work.WorkManager
 import androidx.work.Constraints
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.ExistingPeriodicWorkPolicy
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.repository.SupabaseLeaderboardRepository
 import com.jigen.practicse.util.CrashReporter
@@ -29,7 +30,7 @@ class SyncScoresWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            val displayName = prefs.getString("user_name", "anonymous") ?: "anonymous"
+            val displayName = AppPreferencesStore(applicationContext).getDisplayName().ifBlank { "anonymous" }
 
             // Compute total score: sum of correct answers
             val progress = database.progressDao().getAllProgress()

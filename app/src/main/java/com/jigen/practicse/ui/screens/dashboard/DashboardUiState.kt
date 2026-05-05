@@ -1,7 +1,8 @@
 package com.jigen.practicse.ui.screens.dashboard
 
 data class CategoryScore(
-	val category: String,
+	val categoryKey: String,
+	val categoryLabel: String,
 	val correctCount: Int,
 	val totalCount: Int,
 	val percentage: Float = if (totalCount > 0) (correctCount * 100f) / totalCount else 0f
@@ -12,6 +13,7 @@ sealed class DashboardUiState {
 
 	data class Success(
 		val categoryScores: List<CategoryScore> = emptyList(),
+		val activeTrackLabel: String = "Professional Track",
 		val hasSessionToResume: Boolean = false,
 		val lastQuestionIndex: Int = 0,
 		val isOffline: Boolean = false,

@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -151,12 +152,38 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 		horizontalArrangement = Arrangement.SpaceBetween,
 		verticalAlignment = Alignment.CenterVertically
 	) {
-		Text(
-			text = "practiCSE",
-			fontSize = 20.sp,
-			fontWeight = FontWeight.Bold,
-			color = PrimaryBlue
-		)
+		Row(verticalAlignment = Alignment.CenterVertically) {
+			Box(
+				modifier = Modifier
+					.size(34.dp)
+					.clip(RoundedCornerShape(10.dp))
+					.background(PrimaryBlueSoft),
+				contentAlignment = Alignment.Center
+			) {
+				Icon(
+					painter = painterResource(id = com.jigen.practicse.R.drawable.ic_practicse_logo),
+					contentDescription = null,
+					tint = Color.Unspecified,
+					modifier = Modifier.size(24.dp)
+				)
+			}
+
+			Spacer(modifier = Modifier.width(10.dp))
+
+			Column {
+				Text(
+					text = "practiCSE",
+					fontSize = 20.sp,
+					fontWeight = FontWeight.Bold,
+					color = TextColor
+				)
+				Text(
+					text = "Civil Service exam reviewer",
+					fontSize = 10.sp,
+					color = MutedText
+				)
+			}
+		}
 
 		Row(
 			modifier = Modifier
@@ -241,7 +268,7 @@ private fun DashboardBody(
 	Spacer(modifier = Modifier.height(10.dp))
 
 	StatusPill(
-		text = "Active Path: Professional Track",
+		text = "Active Path: ${state.activeTrackLabel}",
 		textColor = PrimaryBlue,
 		icon = Icons.Filled.Star,
 		iconTint = PrimaryBlue
@@ -294,7 +321,7 @@ private fun DashboardBody(
 
 		OutlinedActionButton(
 			icon = Icons.Filled.Info,
-			label = "Study Library",
+			label = "Browse Library",
 			onClick = onStudyLibrary,
 			modifier = Modifier.weight(1f)
 		)
@@ -528,7 +555,12 @@ private fun ProgressCard(
 				horizontalArrangement = Arrangement.SpaceBetween,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Text(score.category, color = TextColor, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+					Text(score.categoryLabel, color = TextColor, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+					Text(
+						text = "${score.correctCount} correct out of ${score.totalCount} attempts",
+						color = MutedText,
+						fontSize = 11.sp
+					)
 				Text(
 					text = "${String.format("%.0f", score.percentage)}%",
 					color = progressColor,

@@ -6,13 +6,16 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.dao.ProgressDao
 import com.jigen.practicse.data.local.dao.QuestionDao
 import com.jigen.practicse.data.local.dao.SessionDao
+import com.jigen.practicse.data.local.trackKeyToLabel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlin.comparisons.compareByDescending
 
 class DashboardViewModel(
 	private val progressDao: ProgressDao,
@@ -20,6 +23,8 @@ class DashboardViewModel(
 	private val questionDao: QuestionDao,
 	private val context: Context
 ) : ViewModel() {
+
+	private val appPreferencesStore = AppPreferencesStore(context)
 
 	private val _uiState = MutableStateFlow<DashboardUiState>(DashboardUiState.Loading)
 	val uiState: StateFlow<DashboardUiState> = _uiState
@@ -37,20 +42,23 @@ class DashboardViewModel(
 
 				// Group by category and calculate percentages
 				val categoryScores = allProgress
-					.groupBy { it.category }
-					.map { (category, entries) ->
+					.groupBy { normalizeCategoryKey(it.category) }
+					.map { (categoryKey, entries) ->
 						val correctCount = entries.count { it.isCorrect }
 						CategoryScore(
-							category = category,
+							categoryKey = categoryKey,
+							categoryLabel = categoryLabel(categoryKey),
 							correctCount = correctCount,
 							totalCount = entries.size
 						)
 					}
-					.sortedBy { it.category }
+					.sortedWith(compareByDescending<CategoryScore> { it.percentage }.thenByDescending { it.correctCount })
 
 				// Check if there's a session to resume
 				val session = sessionDao.getSession()
 				val hasSessionToResume = session != null && session.examEndTimeMillis == null
+				val activeTrackLabel = session?.lastTrack?.let(::trackKeyToLabel)
+					?: appPreferencesStore.getActiveTrackLabel()
 
 				// Check connectivity
 				val isOffline = !isNetworkConnected()
@@ -58,6 +66,7 @@ class DashboardViewModel(
 
 				_uiState.value = DashboardUiState.Success(
 					categoryScores = categoryScores,
+					activeTrackLabel = activeTrackLabel,
 					hasSessionToResume = hasSessionToResume,
 					lastQuestionIndex = session?.lastQuestionIndex ?: 0,
 					isOffline = isOffline,
@@ -75,6 +84,23 @@ class DashboardViewModel(
 		val network = connectivityManager.activeNetwork ?: return false
 		val caps = connectivityManager.getNetworkCapabilities(network) ?: return false
 		return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+	}
+
+	private fun normalizeCategoryKey(category: String): String {
+		val value = category.lowercase()
+		return when {
+			"numerical" in value -> "numerical_ability"
+			"verbal" in value -> "verbal_ability"
+			else -> "general_information"
+		}
+	}
+
+	private fun categoryLabel(categoryKey: String): String {
+		return when (categoryKey) {
+			"numerical_ability" -> "Numerical Ability"
+			"verbal_ability" -> "Verbal Ability"
+			else -> "General Information"
+		}
 	}
 
 	companion object {
