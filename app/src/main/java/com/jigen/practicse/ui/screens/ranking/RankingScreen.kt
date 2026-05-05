@@ -33,7 +33,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -56,7 +58,20 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
         containerColor = SurfaceColor,
         topBar = {
             TopAppBar(
-                title = { Text("Ranking", fontWeight = FontWeight.Bold, color = TextColor) },
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_leaderboard),
+                            contentDescription = "Ranking",
+                            modifier = Modifier.size(24.dp),
+                            tint = PrimaryBlue
+                        )
+                        Text("Leaderboard", fontWeight = FontWeight.Bold, color = TextColor)
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")

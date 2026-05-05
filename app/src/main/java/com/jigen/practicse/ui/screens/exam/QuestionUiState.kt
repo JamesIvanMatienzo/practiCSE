@@ -6,6 +6,7 @@ package com.jigen.practicse.ui.screens.exam
  */
 data class QuestionUiState(
     val id: Int,
+    val category: String,
     val text: String,
     val referenceText: String?,
     val shuffledOptions: List<String>,

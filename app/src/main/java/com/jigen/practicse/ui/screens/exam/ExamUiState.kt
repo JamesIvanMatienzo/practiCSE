@@ -26,7 +26,10 @@ sealed class ExamUiState {
 		val currentScore: Int = 0,
 		val remainingTimeMillis: Long = 0L,
 		val sessionTrack: String? = null,
-		val sessionCategory: String? = null
+		val sessionCategory: String? = null,
+		val selectedAnswers: Map<Int, String> = emptyMap(),
+		val evaluatedQuestions: Set<Int> = emptySet(),
+		val flaggedQuestionIds: Set<Int> = emptySet()
 	) : ExamUiState() {
 		val currentQuestion: QuestionUiState?
 			get() = if (currentIndex < questions.size) questions[currentIndex] else null
@@ -36,6 +39,40 @@ sealed class ExamUiState {
 		
 		val isLastQuestion: Boolean
 			get() = currentIndex >= totalQuestions - 1
+
+		val answeredCount: Int
+			get() = evaluatedQuestions.size
+		
+		val correctCount: Int
+			get() {
+				var count = 0
+				evaluatedQuestions.forEach { questionId ->
+					val question = questions.find { it.id == questionId }
+					val selectedAnswer = selectedAnswers[questionId]
+					if (question != null && selectedAnswer != null && 
+						selectedAnswer.equals(question.correctAnswer, ignoreCase = true)) {
+						count++
+					}
+				}
+				return count
+			}
+		
+		val wrongCount: Int
+			get() {
+				var count = 0
+				evaluatedQuestions.forEach { questionId ->
+					val question = questions.find { it.id == questionId }
+					val selectedAnswer = selectedAnswers[questionId]
+					if (question != null && selectedAnswer != null && 
+						!selectedAnswer.equals(question.correctAnswer, ignoreCase = true)) {
+						count++
+					}
+				}
+				return count
+			}
+		
+		val skippedCount: Int
+			get() = totalQuestions - evaluatedQuestions.size
 	}
 
 	/**

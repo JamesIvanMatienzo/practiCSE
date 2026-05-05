@@ -35,7 +35,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -144,12 +146,20 @@ private fun StudyCategoryCard(
 	modifier: Modifier = Modifier,
 	onClick: () -> Unit
 ) {
+	val iconRes = when {
+		category.title.contains("Numerical", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_numerical_ability
+		category.title.contains("Verbal", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_verbal_ability
+		category.title.contains("General", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_general_information
+		else -> com.jigen.practicse.R.drawable.ic_app_icon
+	}
+
 	Card(
 		modifier = modifier
+			.shadow(elevation = 4.dp, shape = RoundedCornerShape(16.dp))
 			.clickable(onClick = onClick),
 		shape = RoundedCornerShape(16.dp),
 		colors = CardDefaults.cardColors(containerColor = Color.White),
-		elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+		elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
 	) {
 		Column(
 			modifier = Modifier
@@ -160,25 +170,26 @@ private fun StudyCategoryCard(
 		) {
 			Box(
 				modifier = Modifier
-					.size(54.dp)
-					.clip(CircleShape)
+					.size(72.dp)
+					.clip(RoundedCornerShape(16.dp))
 					.background(AccentBackground),
 				contentAlignment = Alignment.Center
 			) {
-				Text(
-					text = category.title.split(" ").mapNotNull { it.firstOrNull()?.toString() }.joinToString(""),
-					fontWeight = FontWeight.Bold,
-					color = PrimaryBlue
+				Icon(
+					painter = painterResource(id = iconRes),
+					contentDescription = category.title,
+					modifier = Modifier.size(48.dp),
+					tint = PrimaryBlue
 				)
 			}
-			Spacer(modifier = Modifier.height(10.dp))
+			Spacer(modifier = Modifier.height(12.dp))
 			Text(
 				text = category.title,
 				fontSize = 15.sp,
 				fontWeight = FontWeight.SemiBold,
 				color = TextColor
 			)
-			Spacer(modifier = Modifier.height(4.dp))
+			Spacer(modifier = Modifier.height(6.dp))
 			Text(
 				text = "${category.questionCount} questions",
 				fontSize = 12.sp,

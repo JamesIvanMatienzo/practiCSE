@@ -4,6 +4,7 @@ build/
 
 # Local configuration
 local.properties
+.env.local
 supabase/supabase.properties
 app/google-services.json
 

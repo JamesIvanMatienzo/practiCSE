@@ -19,6 +19,9 @@ interface QuestionDao {
 	@Query("SELECT * FROM questions ORDER BY id ASC")
 	suspend fun getAllQuestions(): List<QuestionEntity>
 
+	@Query("SELECT * FROM questions WHERE id = :questionId LIMIT 1")
+	suspend fun getQuestionById(questionId: Int): QuestionEntity?
+
 	@Query("SELECT * FROM questions ORDER BY id ASC")
 	fun observeAllQuestions(): Flow<List<QuestionEntity>>
 }

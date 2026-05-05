@@ -2,6 +2,7 @@ package com.jigen.practicse.repository
 
 import android.content.Context
 import com.google.gson.Gson
+import com.jigen.practicse.BuildConfig
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +15,8 @@ class RankingRepository(private val context: Context) {
     private val gson = Gson()
 
     suspend fun fetchGlobalTop(limit: Int = 100): List<LeaderboardEntryEntity> = withContext(Dispatchers.IO) {
-        val endpoint = System.getenv("SCORES_LIST_ENDPOINT") ?: ""
-        val apiKey = System.getenv("SCORES_API_KEY") ?: ""
+        val endpoint = BuildConfig.SCORES_LIST_ENDPOINT
+        val apiKey = BuildConfig.SCORES_API_KEY
 
         if (endpoint.isBlank()) {
             // fallback to local cache

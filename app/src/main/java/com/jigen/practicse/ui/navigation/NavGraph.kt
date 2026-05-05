@@ -16,6 +16,7 @@ import com.jigen.practicse.ui.screens.result.ResultScreen
 import com.jigen.practicse.ui.screens.profile.ProfileScreen
 import com.jigen.practicse.ui.screens.settings.SettingsScreen
 import com.jigen.practicse.ui.screens.about.AboutScreen
+import com.jigen.practicse.ui.screens.deepdive.DeepDiveScreen
 import com.jigen.practicse.ui.screens.study_library.StudyLibraryScreen
 
 @Composable
@@ -75,7 +76,13 @@ fun NavGraph(
 			arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
 		) { backStackEntry ->
 			val sessionId = backStackEntry.arguments?.getString("sessionId") ?: "new"
-			ExamScreen(context = context, sessionId = sessionId)
+			ExamScreen(
+				context = context,
+				sessionId = sessionId,
+				onDeepDive = { questionId ->
+					navController.navigate(Screen.DeepDive.createRoute(questionId))
+				}
+			)
 		}
 
 		composable(
@@ -112,6 +119,7 @@ fun NavGraph(
 
 		composable(Screen.Settings.route) {
 			SettingsScreen(
+				context = context,
 				onBack = {
 					navController.popBackStack()
 				}
@@ -135,6 +143,18 @@ fun NavGraph(
 				onStartPractice = { categoryKey ->
 					navController.navigate(Screen.Exam.createRoute("new@$categoryKey"))
 				}
+			)
+		}
+
+		composable(
+			Screen.DeepDive.route,
+			arguments = listOf(navArgument("questionId") { type = NavType.StringType })
+		) { backStackEntry ->
+			val questionId = backStackEntry.arguments?.getString("questionId") ?: ""
+			DeepDiveScreen(
+				context = context,
+				questionId = questionId,
+				onBack = { navController.popBackStack() }
 			)
 		}
 	}

@@ -17,3 +17,64 @@ Client integration:
 Security:
 - Do not send PII. `user_name` should be a display name or pseudonym.
 - Store Supabase keys in CI or device secure storage. Use authenticated user's JWT (not service role) for updates.
+
+Scores List Endpoint (Edge Function)
+
+This repo includes a ready-to-deploy function at `supabase/functions/scores-list/index.ts`.
+It returns exactly what the Android app expects:
+
+```json
+[
+	{
+		"userName": "sample_user",
+		"totalScore": 99,
+		"lastUpdatedMillis": 1778012345000
+	}
+]
+```
+
+Quick setup (copy/paste)
+
+1. Login and link your project:
+
+```bash
+supabase login
+supabase link --project-ref <your-project-ref>
+```
+
+2. Deploy the function:
+
+```bash
+supabase functions deploy scores-list
+```
+
+3. (Optional but recommended) Set a bearer key used by the app:
+
+```bash
+supabase secrets set SCORES_API_KEY=<your-strong-random-token>
+```
+
+4. Test it:
+
+Without key:
+
+```bash
+curl "https://<your-project-ref>.functions.supabase.co/scores-list?limit=50"
+```
+
+With key:
+
+```bash
+curl -H "Authorization: Bearer <your-strong-random-token>" "https://<your-project-ref>.functions.supabase.co/scores-list?limit=50"
+```
+
+Android `.env.local` values
+
+Set these in project root `.env.local`:
+
+```env
+SCORES_LIST_ENDPOINT=https://<your-project-ref>.functions.supabase.co/scores-list?limit=100
+SCORES_API_KEY=<your-strong-random-token>
+```
+
+Then rebuild app so `BuildConfig` is regenerated.

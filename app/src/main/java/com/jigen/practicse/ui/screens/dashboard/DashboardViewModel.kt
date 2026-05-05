@@ -48,7 +48,7 @@ class DashboardViewModel(
 
 				// Check if there's a session to resume
 				val session = sessionDao.getSession()
-				val hasSessionToResume = session != null
+				val hasSessionToResume = session != null && session.examEndTimeMillis == null
 
 				// Check connectivity
 				val isOffline = !isNetworkConnected()

@@ -48,6 +48,14 @@ val supabaseProperties = Properties().apply {
 	}
 }
 
+// Load local AI/runtime environment values from a gitignored file.
+val localEnvProperties = Properties().apply {
+	val localEnvFile = rootProject.file(".env.local")
+	if (localEnvFile.exists()) {
+		localEnvFile.inputStream().use { load(it) }
+	}
+}
+
 fun resolveSupabaseValue(propertyName: String): String {
 	fun normalize(raw: String): String {
 		val value = raw.trim()
@@ -64,14 +72,40 @@ fun resolveSupabaseValue(propertyName: String): String {
 	return normalize(gradleValue?.trim().orEmpty())
 }
 
+fun resolveLocalEnvValue(propertyName: String): String {
+	fun normalize(raw: String): String {
+		val value = raw.trim()
+		return if (value.length >= 2 && value.first() == '"' && value.last() == '"') {
+			value.substring(1, value.length - 1)
+		} else {
+			value
+		}
+	}
+
+	val localValue = localEnvProperties.getProperty(propertyName)?.trim().orEmpty()
+	if (localValue.isNotEmpty()) return normalize(localValue)
+	val gradleValue = project.findProperty(propertyName) as String?
+	return normalize(gradleValue?.trim().orEmpty())
+}
+
 val supabaseUrl = resolveSupabaseValue("SUPABASE_URL")
 val supabaseKey = resolveSupabaseValue("SUPABASE_KEY")
+val grokApiKey = resolveLocalEnvValue("GROK_API_KEY")
+val grokBaseUrl = resolveLocalEnvValue("GROK_BASE_URL")
+val grokModel = resolveLocalEnvValue("GROK_MODEL")
+val scoresListEndpoint = resolveLocalEnvValue("SCORES_LIST_ENDPOINT")
+val scoresApiKey = resolveLocalEnvValue("SCORES_API_KEY")
 
 // Apply BuildConfig fields for Supabase
 android {
 	defaultConfig {
 		buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
 		buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
+		buildConfigField("String", "GROK_API_KEY", "\"$grokApiKey\"")
+		buildConfigField("String", "GROK_BASE_URL", "\"$grokBaseUrl\"")
+		buildConfigField("String", "GROK_MODEL", "\"$grokModel\"")
+		buildConfigField("String", "SCORES_LIST_ENDPOINT", "\"$scoresListEndpoint\"")
+		buildConfigField("String", "SCORES_API_KEY", "\"$scoresApiKey\"")
 	}
 }
 
