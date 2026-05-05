@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.ui.screens.login.LoginScreen
+import com.jigen.practicse.ui.screens.login.SignUpScreen
 import com.jigen.practicse.ui.screens.dashboard.DashboardScreen
 import com.jigen.practicse.ui.screens.exam.ExamScreen
 import com.jigen.practicse.ui.screens.onboarding.OnboardingScreen
@@ -37,6 +38,22 @@ fun NavGraph(
 		composable(Screen.Login.route) {
 			LoginScreen(
 				onContinue = {
+					navController.navigate(Screen.Onboarding.route) {
+						popUpTo(Screen.Login.route) { inclusive = true }
+					}
+				},
+				onSignUp = {
+					navController.navigate(Screen.SignUp.route)
+				}
+			)
+		}
+
+		composable(Screen.SignUp.route) {
+			SignUpScreen(
+				onBack = {
+					navController.popBackStack()
+				},
+				onSignUpComplete = {
 					navController.navigate(Screen.Onboarding.route) {
 						popUpTo(Screen.Login.route) { inclusive = true }
 					}

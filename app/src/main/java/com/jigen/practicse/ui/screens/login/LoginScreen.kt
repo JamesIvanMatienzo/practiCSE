@@ -20,6 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoginScreen(onContinue: () -> Unit) {
+fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 	var email by remember { mutableStateOf("") }
 	var password by remember { mutableStateOf("") }
 
@@ -136,13 +137,17 @@ fun LoginScreen(onContinue: () -> Unit) {
 				}
 			}
 
-			Text(
-				"Don't have an account? Sign Up",
-				fontSize = 14.sp,
-				color = Color(0xFF1976D2),
-				textAlign = TextAlign.Center,
+			TextButton(
+				onClick = onSignUp,
 				modifier = Modifier.padding(bottom = 12.dp)
-			)
+			) {
+				Text(
+					"Don't have an account? Sign Up",
+					fontSize = 14.sp,
+					color = Color(0xFF1976D2),
+					textAlign = TextAlign.Center
+				)
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@ package com.jigen.practicse.ui.navigation
 
 sealed class Screen(val route: String) {
 	object Login : Screen("login")
+	object SignUp : Screen("signup")
 	object Onboarding : Screen("onboarding")
 	object Dashboard : Screen("dashboard")
 	object Exam : Screen("exam/{sessionId}") {
