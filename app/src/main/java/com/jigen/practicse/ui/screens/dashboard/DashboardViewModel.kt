@@ -61,7 +61,7 @@ class DashboardViewModel(
 					?: appPreferencesStore.getActiveTrackLabel()
 
 				// Check connectivity
-				val isOffline = !isNetworkConnected()
+				val isOffline = !safeIsNetworkConnected()
 				val availableQuestionCount = questionDao.countQuestions()
 
 				_uiState.value = DashboardUiState.Success(
@@ -79,11 +79,13 @@ class DashboardViewModel(
 		}
 	}
 
-	private fun isNetworkConnected(): Boolean {
-		val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-		val network = connectivityManager.activeNetwork ?: return false
-		val caps = connectivityManager.getNetworkCapabilities(network) ?: return false
-		return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+	private fun safeIsNetworkConnected(): Boolean {
+		return runCatching {
+			val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+			val network = connectivityManager.activeNetwork ?: return false
+			val caps = connectivityManager.getNetworkCapabilities(network) ?: return false
+			caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+		}.getOrDefault(false)
 	}
 
 	private fun normalizeCategoryKey(category: String): String {

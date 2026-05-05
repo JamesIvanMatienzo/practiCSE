@@ -163,7 +163,7 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 				Icon(
 					painter = painterResource(id = com.jigen.practicse.R.drawable.ic_practicse_logo),
 					contentDescription = null,
-					tint = Color.Unspecified,
+					tint = PrimaryBlue,
 					modifier = Modifier.size(24.dp)
 				)
 			}
@@ -175,7 +175,7 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 					text = "practiCSE",
 					fontSize = 20.sp,
 					fontWeight = FontWeight.Bold,
-					color = TextColor
+					color = PrimaryBlue
 				)
 				Text(
 					text = "Civil Service exam reviewer",

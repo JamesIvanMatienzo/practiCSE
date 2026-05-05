@@ -160,11 +160,11 @@ fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
 				}
 			}
 
-			ProfileField(label = "Surname", value = surname, onValueChange = { surname = it }, placeholder = "Enter surname")
 			ProfileField(label = "First Name", value = firstName, onValueChange = { firstName = it }, placeholder = "Enter first name")
 			ProfileField(label = "Middle Name", value = middleName, onValueChange = { middleName = it }, placeholder = "Enter middle name (optional)")
-			ProfileField(label = "Age", value = age, onValueChange = { age = it.filter(Char::isDigit) }, placeholder = "Enter age")
+			ProfileField(label = "Surname", value = surname, onValueChange = { surname = it }, placeholder = "Enter surname")
 			ProfileField(label = "School", value = school, onValueChange = { school = it }, placeholder = "Enter your school or institution")
+			ProfileField(label = "Age", value = age, onValueChange = { age = it.filter(Char::isDigit) }, placeholder = "Enter age")
 
 			Button(
 				onClick = {

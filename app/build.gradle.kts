@@ -49,10 +49,20 @@ val supabaseProperties = Properties().apply {
 }
 
 // Load local AI/runtime environment values from a gitignored file.
-val localEnvProperties = Properties().apply {
+
+val localEnvProperties = mutableMapOf<String, String>().apply {
 	val localEnvFile = rootProject.file(".env.local")
 	if (localEnvFile.exists()) {
-		localEnvFile.inputStream().use { load(it) }
+		localEnvFile.readLines().forEach { rawLine ->
+			val line = rawLine.trim()
+			if (line.isBlank() || line.startsWith("#") || !line.contains("=")) return@forEach
+			val separatorIndex = line.indexOf('=')
+			val key = line.substring(0, separatorIndex).trim()
+			val value = line.substring(separatorIndex + 1).trim()
+			if (key.isNotEmpty() && value.isNotEmpty() && !containsKey(key)) {
+				put(key, value)
+			}
+		}
 	}
 }
 
@@ -82,7 +92,7 @@ fun resolveLocalEnvValue(propertyName: String): String {
 		}
 	}
 
-	val localValue = localEnvProperties.getProperty(propertyName)?.trim().orEmpty()
+	val localValue = localEnvProperties[propertyName].orEmpty().trim()
 	if (localValue.isNotEmpty()) return normalize(localValue)
 	val gradleValue = project.findProperty(propertyName) as String?
 	return normalize(gradleValue?.trim().orEmpty())

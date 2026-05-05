@@ -16,7 +16,7 @@ import com.jigen.practicse.data.local.entity.UserProgressEntity
 
 @Database(
 	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class, com.jigen.practicse.data.local.entity.LeaderboardEntryEntity::class],
-	version = 3,
+	version = 4,
 	exportSchema = false
 )	
 @TypeConverters(Converters::class)

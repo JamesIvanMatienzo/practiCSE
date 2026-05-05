@@ -1,5 +1,6 @@
 package com.jigen.practicse.ui.screens.login
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
@@ -32,13 +35,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jigen.practicse.data.local.AppPreferencesStore
+import com.jigen.practicse.data.local.UserProfileState
 
 @Composable
-fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
+fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> Unit) {
+	var fullName by remember { mutableStateOf("") }
 	var email by remember { mutableStateOf("") }
 	var password by remember { mutableStateOf("") }
 	var confirmPassword by remember { mutableStateOf("") }
-	var displayName by remember { mutableStateOf("") }
+	var school by remember { mutableStateOf("") }
+	var age by remember { mutableStateOf("") }
 
 	Box(
 		modifier = Modifier
@@ -47,7 +54,9 @@ fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
 			.padding(24.dp)
 	) {
 		Column(
-			modifier = Modifier.fillMaxSize(),
+			modifier = Modifier
+				.fillMaxSize()
+				.verticalScroll(rememberScrollState()),
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			// Back button
@@ -84,12 +93,36 @@ fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
 
 			Spacer(modifier = Modifier.height(32.dp))
 
-			// Display Name
+			// Full Name
 			OutlinedTextField(
-				value = displayName,
-				onValueChange = { displayName = it },
+				value = fullName,
+				onValueChange = { fullName = it },
 				modifier = Modifier.fillMaxWidth(),
 				placeholder = { Text("Full Name") },
+				singleLine = true,
+				shape = RoundedCornerShape(14.dp)
+			)
+
+			Spacer(modifier = Modifier.height(14.dp))
+
+			// School
+			OutlinedTextField(
+				value = school,
+				onValueChange = { school = it },
+				modifier = Modifier.fillMaxWidth(),
+				placeholder = { Text("School or Institution") },
+				singleLine = true,
+				shape = RoundedCornerShape(14.dp)
+			)
+
+			Spacer(modifier = Modifier.height(14.dp))
+
+			// Age
+			OutlinedTextField(
+				value = age,
+				onValueChange = { age = it.filter(Char::isDigit) },
+				modifier = Modifier.fillMaxWidth(),
+				placeholder = { Text("Age") },
 				singleLine = true,
 				shape = RoundedCornerShape(14.dp)
 			)
@@ -139,7 +172,31 @@ fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
 
 			Button(
 				onClick = {
-					if (email.isNotBlank() && password.isNotBlank() && password == confirmPassword && displayName.isNotBlank()) {
+					if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword) {
+						// Parse full name into parts
+						val nameParts = fullName.trim().split("\\s+".toRegex())
+						val firstName = nameParts.getOrNull(0) ?: ""
+						val lastName = nameParts.getOrNull(nameParts.size - 1) ?: ""
+						val middleName = if (nameParts.size > 2) {
+							nameParts.subList(1, nameParts.size - 1).joinToString(" ")
+						} else {
+							""
+						}
+						val surname = if (nameParts.size > 1) lastName else ""
+
+						// Save profile
+						val store = AppPreferencesStore(context)
+						store.saveProfile(
+							UserProfileState(
+								firstName = firstName,
+								middleName = middleName,
+								surname = surname,
+								age = age,
+								school = school,
+								photoUri = null
+							)
+						)
+
 						onSignUpComplete()
 					}
 				},
@@ -147,14 +204,14 @@ fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
 					.fillMaxWidth()
 					.height(56.dp),
 				colors = ButtonDefaults.buttonColors(
-					containerColor = if (email.isNotBlank() && password.isNotBlank() && password == confirmPassword && displayName.isNotBlank()) {
+					containerColor = if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword && school.isNotBlank()) {
 						Color(0xFF1976D2)
 					} else {
 						Color(0xFFBDBDBD)
 					}
 				),
 				shape = RoundedCornerShape(14.dp),
-				enabled = email.isNotBlank() && password.isNotBlank() && password == confirmPassword && displayName.isNotBlank()
+				enabled = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword && school.isNotBlank()
 			) {
 				Text("Create Account", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.White)
 			}
@@ -167,6 +224,8 @@ fun SignUpScreen(onBack: () -> Unit, onSignUpComplete: () -> Unit) {
 				color = Color(0xFF1976D2),
 				modifier = Modifier.padding(top = 8.dp)
 			)
+
+			Spacer(modifier = Modifier.height(32.dp))
 		}
 	}
 }

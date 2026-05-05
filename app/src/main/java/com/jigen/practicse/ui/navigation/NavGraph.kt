@@ -50,6 +50,7 @@ fun NavGraph(
 
 		composable(Screen.SignUp.route) {
 			SignUpScreen(
+				context = context,
 				onBack = {
 					navController.popBackStack()
 				},
