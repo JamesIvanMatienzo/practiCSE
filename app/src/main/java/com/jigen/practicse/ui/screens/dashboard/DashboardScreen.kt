@@ -3,10 +3,10 @@ package com.jigen.practicse.ui.screens.dashboard
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Info
@@ -201,7 +200,6 @@ private fun DashboardBody(
 		icon = Icons.Filled.Info,
 		title = "Start a New Exam",
 		description = "Test yourself with a fresh set of questions",
-		contentColor = TextColor,
 		iconBackground = PrimaryBlue,
 		onClick = onStartNewExam
 	)
@@ -212,7 +210,6 @@ private fun DashboardBody(
 		icon = Icons.Filled.PlayArrow,
 		title = "Continue Last Session",
 		description = "Pick up where you left off",
-		contentColor = TextColor,
 		iconBackground = PrimaryBlue,
 		enabled = state.hasSessionToResume,
 		onClick = onContinueSession
@@ -357,57 +354,47 @@ private fun ActionCard(
 	icon: androidx.compose.ui.graphics.vector.ImageVector,
 	title: String,
 	description: String,
-	contentColor: Color,
 	iconBackground: Color,
 	enabled: Boolean = true,
 	onClick: () -> Unit
 ) {
 	Card(
-		modifier = Modifier.fillMaxWidth(),
+		modifier = Modifier
+			.fillMaxWidth()
+			.clickable(enabled = enabled, onClick = onClick),
 		shape = RoundedCornerShape(18.dp),
 		colors = CardDefaults.cardColors(containerColor = Color.White),
 		elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 	) {
-		Button(
-			onClick = onClick,
-			enabled = enabled,
-			modifier = Modifier.fillMaxWidth(),
-			shape = RoundedCornerShape(18.dp),
-			contentPadding = PaddingValues(16.dp),
-			colors = ButtonDefaults.buttonColors(
-				containerColor = Color.White,
-				disabledContainerColor = Color.White,
-				contentColor = contentColor,
-				disabledContentColor = contentColor
-			)
+		Row(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(18.dp),
+			verticalAlignment = Alignment.CenterVertically
 		) {
-			Row(
-				modifier = Modifier.fillMaxWidth(),
-				verticalAlignment = Alignment.CenterVertically
+			Box(
+				modifier = Modifier
+					.size(54.dp)
+					.clip(CircleShape)
+					.background(iconBackground),
+				contentAlignment = Alignment.Center
 			) {
-				Box(
-					modifier = Modifier
-						.size(46.dp)
-						.clip(CircleShape)
-						.background(iconBackground),
-					contentAlignment = Alignment.Center
-				) {
-					Icon(icon, contentDescription = null, tint = Color.White)
-				}
+				Icon(icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(26.dp))
+			}
 
-				Spacer(modifier = Modifier.width(14.dp))
+			Spacer(modifier = Modifier.width(16.dp))
 
-				Column(modifier = Modifier.weight(1f)) {
-					Text(title, fontWeight = FontWeight.Bold, color = TextColor, fontSize = 15.sp)
-					Spacer(modifier = Modifier.height(2.dp))
-					Text(
-						description,
-						color = MutedText,
-						fontSize = 12.sp,
-						maxLines = 2,
-						overflow = TextOverflow.Ellipsis
-					)
-				}
+			Column(modifier = Modifier.weight(1f)) {
+				Text(title, fontWeight = FontWeight.Bold, color = TextColor, fontSize = 16.sp)
+				Spacer(modifier = Modifier.height(4.dp))
+				Text(
+					description,
+					color = MutedText,
+					fontSize = 13.sp,
+					lineHeight = 18.sp,
+					maxLines = 2,
+					overflow = TextOverflow.Ellipsis
+				)
 			}
 		}
 	}
