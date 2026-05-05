@@ -49,10 +49,19 @@ val supabaseProperties = Properties().apply {
 }
 
 fun resolveSupabaseValue(propertyName: String): String {
+	fun normalize(raw: String): String {
+		val value = raw.trim()
+		return if (value.length >= 2 && value.first() == '"' && value.last() == '"') {
+			value.substring(1, value.length - 1)
+		} else {
+			value
+		}
+	}
+
 	val localValue = supabaseProperties.getProperty(propertyName)?.trim().orEmpty()
-	if (localValue.isNotEmpty()) return localValue
+	if (localValue.isNotEmpty()) return normalize(localValue)
 	val gradleValue = project.findProperty(propertyName) as String?
-	return gradleValue?.trim().orEmpty()
+	return normalize(gradleValue?.trim().orEmpty())
 }
 
 val supabaseUrl = resolveSupabaseValue("SUPABASE_URL")
@@ -70,7 +79,9 @@ android {
 dependencies {
 	// Android Core
 	implementation("androidx.core:core-ktx:1.13.1")
+	implementation("androidx.appcompat:appcompat:1.7.0")
 	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+	implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
 
 	// Room Database
 	implementation("androidx.room:room-runtime:2.6.1")

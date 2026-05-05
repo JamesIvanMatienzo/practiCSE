@@ -165,7 +165,7 @@ fun DashboardScreen(
 							elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 						) {
 							Button(
-								onClick = if (state.hasSessionToResume) onContinueSession else {},
+								onClick = { if (state.hasSessionToResume) onContinueSession() },
 								modifier = Modifier
 									.fillMaxWidth()
 									.padding(0.dp),

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -48,6 +50,7 @@ private val TextColor = Color(0xFF202124)
 private val SuccessGreen = Color(0xFF188038)
 private val ErrorRed = Color(0xFFD93025)
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ExamScreen(
 	viewModel: ExamViewModel,
@@ -147,6 +150,7 @@ fun ExamScreen(
 
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 private fun ExamTopBar(remainingTimeMillis: Long) {
 	TopAppBar(
 		title = {
@@ -168,6 +172,7 @@ private fun ExamTopBar(remainingTimeMillis: Long) {
 }
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 private fun ExamPagerContent(
 	questions: List<QuestionEntity>,
 	currentQuestionIndex: Int,
