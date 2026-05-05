@@ -51,6 +51,9 @@ fun NavGraph(
 		composable(Screen.Dashboard.route) {
 			DashboardScreen(
 				context = context,
+				onProfileClick = {
+					navController.navigate(Screen.Profile.route)
+				},
 				onStartNewExam = {
 					navController.navigate(Screen.Exam.createRoute("new"))
 				},

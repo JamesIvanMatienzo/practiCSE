@@ -1,49 +1,67 @@
 package com.jigen.practicse.ui.screens.dashboard
 
+import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import android.content.Context
 
-// Color Palette
 private val SurfaceColor = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1976D2)
+private val PrimaryBlueSoft = Color(0xFFEAF2FF)
 private val TextColor = Color(0xFF202124)
+private val MutedText = Color(0xFF6C757D)
+private val BorderColor = Color(0xFFE6E8EC)
+private val CardShadow = Color(0x14000000)
 private val SuccessGreen = Color(0xFF188038)
 private val OfflineGray = Color(0xFF9CA3AF)
 
 @Composable
 fun DashboardScreen(
 	context: Context,
+	onProfileClick: () -> Unit = {},
 	onStartNewExam: () -> Unit = {},
 	onContinueSession: () -> Unit = {},
 	onRanking: () -> Unit = {},
@@ -54,232 +72,65 @@ fun DashboardScreen(
 
 	Column(
 		modifier = Modifier
-			.fillMaxWidth()
+			.fillMaxSize()
 			.background(SurfaceColor)
+			.verticalScroll(rememberScrollState())
+			.padding(horizontal = 20.dp)
+			.padding(top = 14.dp, bottom = 20.dp)
 	) {
-		// Offline Mode Indicator
+		DashboardHeader(onProfileClick = onProfileClick)
+
+		Spacer(modifier = Modifier.height(14.dp))
+
 		when (val state = uiState) {
-			is DashboardUiState.Success -> {
-				if (state.isOffline) {
-					AssistChip(
-						onClick = {},
-						label = {
-							Text("Offline Mode", fontSize = 12.sp, color = TextColor)
-						},
-						modifier = Modifier
-							.height(32.dp)
-							.padding(16.dp),
-						colors = AssistChipDefaults.assistChipColors(
-							containerColor = Color(0xFFE8EAED)
-						)
+			is DashboardUiState.Loading -> {
+				Column(
+					modifier = Modifier
+						.fillMaxWidth()
+						.height(420.dp),
+					horizontalAlignment = Alignment.CenterHorizontally,
+					verticalArrangement = Arrangement.Center
+				) {
+					CircularProgressIndicator(color = PrimaryBlue)
+					Spacer(modifier = Modifier.height(16.dp))
+					Text(
+						"Loading your progress...",
+						color = TextColor,
+						fontSize = 14.sp
 					)
 				}
 			}
-			else -> {}
-		}
 
-		Scaffold(
-			containerColor = SurfaceColor
-		) { paddingValues ->
-			when (val state = uiState) {
-				is DashboardUiState.Loading -> {
-					Column(
-						modifier = Modifier
-							.fillMaxWidth()
-							.padding(paddingValues)
-							.padding(16.dp),
-						horizontalAlignment = Alignment.CenterHorizontally,
-						verticalArrangement = Arrangement.Center
-					) {
-						CircularProgressIndicator(color = PrimaryBlue)
-						Spacer(modifier = Modifier.height(16.dp))
-						Text("Loading your progress...", color = TextColor)
-					}
-				}
+			is DashboardUiState.Success -> {
+				DashboardBody(
+					state = state,
+					onStartNewExam = onStartNewExam,
+					onContinueSession = onContinueSession,
+					onRanking = onRanking,
+					onStudyLibrary = onStudyLibrary
+				)
+			}
 
-				is DashboardUiState.Success -> {
-					Column(
-						modifier = Modifier
-							.fillMaxWidth()
-							.verticalScroll(rememberScrollState())
-							.padding(paddingValues)
-							.padding(16.dp),
-						verticalArrangement = Arrangement.spacedBy(16.dp)
-					) {
-						// Action Cards Section
-						Row(
-							modifier = Modifier
-								.fillMaxWidth(),
-							horizontalArrangement = Arrangement.spacedBy(12.dp)
-						) {
-							// Start New Exam Card
-							Card(
-								modifier = Modifier
-									.weight(1f)
-									.height(120.dp),
-								colors = CardDefaults.cardColors(containerColor = PrimaryBlue),
-								elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-							) {
-								Button(
-									onClick = onStartNewExam,
-									modifier = Modifier
-										.fillMaxWidth()
-										.padding(0.dp),
-									colors = ButtonDefaults.buttonColors(
-										containerColor = PrimaryBlue,
-										contentColor = Color.White
-									)
-								) {
-									Column(
-										horizontalAlignment = Alignment.CenterHorizontally,
-										verticalArrangement = Arrangement.Center,
-										modifier = Modifier.fillMaxWidth()
-									) {
-										Text(
-											"Start New",
-											fontSize = 14.sp,
-											fontWeight = FontWeight.Bold
-										)
-										Text("Exam", fontSize = 12.sp)
-									}
-								}
-							}
-
-							// Continue Last Session Card
-							Card(
-								modifier = Modifier
-									.weight(1f)
-									.height(120.dp),
-								colors = CardDefaults.cardColors(
-									containerColor = if (state.hasSessionToResume) Color(0xFF4285F4) else Color(0xFFCED4DA)
-								),
-								elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-							) {
-								Button(
-									onClick = { if (state.hasSessionToResume) onContinueSession() },
-									modifier = Modifier
-										.fillMaxWidth()
-										.padding(0.dp),
-									enabled = state.hasSessionToResume,
-									colors = ButtonDefaults.buttonColors(
-										containerColor = if (state.hasSessionToResume) Color(0xFF4285F4) else Color(0xFFCED4DA),
-										contentColor = Color.White,
-										disabledContentColor = Color(0xFF6C757D)
-									)
-								) {
-									Column(
-										horizontalAlignment = Alignment.CenterHorizontally,
-										verticalArrangement = Arrangement.Center,
-										modifier = Modifier.fillMaxWidth()
-									) {
-										Text(
-											"Continue",
-											fontSize = 14.sp,
-											fontWeight = FontWeight.Bold
-										)
-										Text(
-											"Session",
-											fontSize = 12.sp
-										)
-									}
-								}
-							}
-						}
-
-						Spacer(modifier = Modifier.height(8.dp))
-
-						// Secondary Navigation
-						Row(
-							modifier = Modifier
-								.fillMaxWidth(),
-							horizontalArrangement = Arrangement.spacedBy(12.dp)
-						) {
-							Button(
-								onClick = onRanking,
-								modifier = Modifier
-									.weight(1f)
-									.height(48.dp),
-								colors = ButtonDefaults.buttonColors(
-									containerColor = Color(0xFFF0F3F7),
-									contentColor = PrimaryBlue
-								)
-							) {
-								Text("Ranking", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-							}
-
-							Button(
-								onClick = onStudyLibrary,
-								modifier = Modifier
-									.weight(1f)
-									.height(48.dp),
-								colors = ButtonDefaults.buttonColors(
-									containerColor = Color(0xFFF0F3F7),
-									contentColor = PrimaryBlue
-								)
-							) {
-								Text("Study Library", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-							}
-						}
-
-						Spacer(modifier = Modifier.height(16.dp))
-
-						// Progress Section Header
-						Text(
-							"Progress by Category",
-							fontSize = 16.sp,
-							fontWeight = FontWeight.Bold,
-							color = TextColor,
-							modifier = Modifier.padding(top = 8.dp)
-						)
-
-						Text(
-							"Total Attempts: ${state.totalAttempts}",
-							fontSize = 12.sp,
-							color = Color(0xFF6C757D),
-							modifier = Modifier.padding(bottom = 8.dp)
-						)
-
-						// Progress Indicators by Category
-						if (state.categoryScores.isEmpty()) {
-							Card(
-								modifier = Modifier
-									.fillMaxWidth()
-									.padding(8.dp),
-								colors = CardDefaults.cardColors(containerColor = Color(0xFFF8F9FA))
-							) {
-								Text(
-									"No progress yet. Start an exam to begin!",
-									modifier = Modifier
-										.fillMaxWidth()
-										.padding(16.dp),
-									fontSize = 14.sp,
-									color = Color(0xFF6C757D),
-									textAlign = TextAlign.Center
-								)
-							}
-						} else {
-							state.categoryScores.forEach { score ->
-								CategoryProgressCard(score)
-							}
-						}
-
-						Spacer(modifier = Modifier.height(32.dp))
-					}
-				}
-
-				is DashboardUiState.Error -> {
-					Column(
-						modifier = Modifier
-							.fillMaxWidth()
-							.padding(paddingValues)
-							.padding(16.dp),
-						horizontalAlignment = Alignment.CenterHorizontally,
-						verticalArrangement = Arrangement.Center
-					) {
-						Text("Error loading dashboard", color = TextColor, fontWeight = FontWeight.Bold)
-						Spacer(modifier = Modifier.height(8.dp))
-						Text(state.message, color = Color(0xFF6C757D), fontSize = 12.sp)
-					}
+			is DashboardUiState.Error -> {
+				Column(
+					modifier = Modifier
+						.fillMaxWidth()
+						.height(420.dp),
+					horizontalAlignment = Alignment.CenterHorizontally,
+					verticalArrangement = Arrangement.Center
+				) {
+					Text(
+						"Error loading dashboard",
+						color = TextColor,
+						fontWeight = FontWeight.Bold
+					)
+					Spacer(modifier = Modifier.height(8.dp))
+					Text(
+						state.message,
+						color = MutedText,
+						fontSize = 12.sp,
+						textAlign = TextAlign.Center
+					)
 				}
 			}
 		}
@@ -287,61 +138,344 @@ fun DashboardScreen(
 }
 
 @Composable
-private fun CategoryProgressCard(score: CategoryScore) {
-	Card(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(vertical = 4.dp),
-		colors = CardDefaults.cardColors(containerColor = Color.White),
-		elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+private fun DashboardHeader(onProfileClick: () -> Unit) {
+	Row(
+		modifier = Modifier.fillMaxWidth(),
+		horizontalArrangement = Arrangement.SpaceBetween,
+		verticalAlignment = Alignment.CenterVertically
 	) {
-		Column(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(12.dp)
-		) {
-			Row(
-				modifier = Modifier
-					.fillMaxWidth(),
-				horizontalArrangement = Arrangement.SpaceBetween,
-				verticalAlignment = Alignment.CenterVertically
-			) {
-				Text(
-					text = score.category,
-					fontSize = 13.sp,
-					fontWeight = FontWeight.SemiBold,
-					color = TextColor
-				)
+		Text(
+			text = "practiCSE",
+			fontSize = 20.sp,
+			fontWeight = FontWeight.Bold,
+			color = PrimaryBlue
+		)
 
-				Text(
-					text = "${score.correctCount}/${score.totalCount}",
-					fontSize = 11.sp,
-					color = Color(0xFF6C757D)
+		Row(
+			modifier = Modifier
+				.clickable(onClick = onProfileClick)
+				.clip(RoundedCornerShape(28.dp))
+				.border(1.dp, BorderColor, RoundedCornerShape(28.dp))
+				.background(Color.White)
+				.padding(horizontal = 10.dp, vertical = 8.dp),
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Box(
+				modifier = Modifier
+					.size(28.dp)
+					.clip(CircleShape)
+					.background(PrimaryBlueSoft),
+				contentAlignment = Alignment.Center
+			) {
+				Icon(
+					imageVector = Icons.Filled.AccountCircle,
+					contentDescription = null,
+					tint = PrimaryBlue,
+					modifier = Modifier.size(22.dp)
 				)
 			}
 
-			Spacer(modifier = Modifier.height(6.dp))
+			Spacer(modifier = Modifier.width(10.dp))
 
-			// Progress Bar with color based on percentage
-			val progressColor = if (score.percentage >= 75f) SuccessGreen else PrimaryBlue
+			Text(
+				text = "Profile",
+				fontSize = 12.sp,
+				fontWeight = FontWeight.SemiBold,
+				color = TextColor
+			)
+		}
+	}
+}
+
+@Composable
+private fun DashboardBody(
+	state: DashboardUiState.Success,
+	onStartNewExam: () -> Unit,
+	onContinueSession: () -> Unit,
+	onRanking: () -> Unit,
+	onStudyLibrary: () -> Unit
+) {
+	Spacer(modifier = Modifier.height(12.dp))
+
+	ActionCard(
+		icon = Icons.Filled.Info,
+		title = "Start a New Exam",
+		description = "Test yourself with a fresh set of questions",
+		contentColor = TextColor,
+		iconBackground = PrimaryBlue,
+		onClick = onStartNewExam
+	)
+
+	Spacer(modifier = Modifier.height(14.dp))
+
+	ActionCard(
+		icon = Icons.Filled.PlayArrow,
+		title = "Continue Last Session",
+		description = "Pick up where you left off",
+		contentColor = TextColor,
+		iconBackground = PrimaryBlue,
+		enabled = state.hasSessionToResume,
+		onClick = onContinueSession
+	)
+
+	Spacer(modifier = Modifier.height(10.dp))
+
+	StatusPill(
+		text = "Active Path: Professional Track",
+		textColor = PrimaryBlue,
+		icon = Icons.Filled.Star,
+		iconTint = PrimaryBlue
+	)
+
+	Spacer(modifier = Modifier.height(16.dp))
+
+	Text(
+		text = "PROGRESS TRACKER — SUBJECT PERFORMANCE",
+		fontSize = 11.sp,
+		fontWeight = FontWeight.SemiBold,
+		letterSpacing = 1.sp,
+		color = MutedText
+	)
+
+	Spacer(modifier = Modifier.height(12.dp))
+
+	if (state.categoryScores.isEmpty()) {
+		Card(
+			modifier = Modifier.fillMaxWidth(),
+			colors = CardDefaults.cardColors(containerColor = Color.White),
+			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+			shape = RoundedCornerShape(16.dp)
+		) {
+			Column(modifier = Modifier.padding(18.dp)) {
+				Text("No progress yet", fontWeight = FontWeight.SemiBold, color = TextColor)
+				Spacer(modifier = Modifier.height(4.dp))
+				Text("Start an exam to begin tracking performance.", color = MutedText, fontSize = 12.sp)
+			}
+		}
+	} else {
+		state.categoryScores.take(3).forEachIndexed { index, score ->
+			Spacer(modifier = Modifier.height(if (index == 0) 0.dp else 10.dp))
+			ProgressCard(score = score, showRecentActivity = index == 2)
+		}
+	}
+
+	Spacer(modifier = Modifier.height(14.dp))
+
+	Row(
+		modifier = Modifier.fillMaxWidth(),
+		horizontalArrangement = Arrangement.spacedBy(12.dp)
+	) {
+		OutlinedActionButton(
+			icon = Icons.Filled.Star,
+			label = "Ranking",
+			onClick = onRanking,
+			modifier = Modifier.weight(1f)
+		)
+
+		OutlinedActionButton(
+			icon = Icons.Filled.Info,
+			label = "Study Library",
+			onClick = onStudyLibrary,
+			modifier = Modifier.weight(1f)
+		)
+	}
+
+	Spacer(modifier = Modifier.height(14.dp))
+
+	Card(
+		modifier = Modifier.fillMaxWidth(),
+		colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+		elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+		shape = RoundedCornerShape(18.dp)
+	) {
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				.background(
+					Brush.horizontalGradient(
+						listOf(Color(0xFFE8F1FF), Color(0xFFF4ECFF))
+					)
+				)
+				.padding(18.dp)
+		) {
+			Row(verticalAlignment = Alignment.CenterVertically) {
+				Box(
+					modifier = Modifier
+						.size(42.dp)
+						.clip(CircleShape)
+						.background(Color.White),
+					contentAlignment = Alignment.Center
+				) {
+					Icon(Icons.Filled.Info, contentDescription = null, tint = PrimaryBlue)
+				}
+
+				Spacer(modifier = Modifier.width(12.dp))
+
+				Column {
+					Text("Keep it up!", fontWeight = FontWeight.Bold, color = TextColor)
+					Text("You're making great progress", color = MutedText, fontSize = 12.sp)
+				}
+			}
+		}
+	}
+
+	Spacer(modifier = Modifier.height(14.dp))
+
+	StatusPill(
+		text = "Offline Mode Active",
+		textColor = TextColor,
+		icon = Icons.Filled.Star,
+		iconTint = OfflineGray
+	)
+
+	Spacer(modifier = Modifier.height(18.dp))
+}
+
+@Composable
+private fun StatusPill(
+	text: String,
+	textColor: Color,
+	icon: androidx.compose.ui.graphics.vector.ImageVector,
+	iconTint: Color
+) {
+	Row(
+		modifier = Modifier
+			.clip(RoundedCornerShape(999.dp))
+			.border(1.dp, BorderColor, RoundedCornerShape(999.dp))
+			.background(Color.White)
+			.padding(horizontal = 12.dp, vertical = 7.dp),
+			verticalAlignment = Alignment.CenterVertically
+	) {
+		Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(14.dp))
+		Spacer(modifier = Modifier.width(6.dp))
+		Text(text, color = textColor, fontSize = 11.sp)
+	}
+}
+
+@Composable
+private fun ActionCard(
+	icon: androidx.compose.ui.graphics.vector.ImageVector,
+	title: String,
+	description: String,
+	contentColor: Color,
+	iconBackground: Color,
+	enabled: Boolean = true,
+	onClick: () -> Unit
+) {
+	Card(
+		modifier = Modifier.fillMaxWidth(),
+		shape = RoundedCornerShape(18.dp),
+		colors = CardDefaults.cardColors(containerColor = Color.White),
+		elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+	) {
+		Button(
+			onClick = onClick,
+			enabled = enabled,
+			modifier = Modifier.fillMaxWidth(),
+			shape = RoundedCornerShape(18.dp),
+			contentPadding = PaddingValues(16.dp),
+			colors = ButtonDefaults.buttonColors(
+				containerColor = Color.White,
+				disabledContainerColor = Color.White,
+				contentColor = contentColor,
+				disabledContentColor = contentColor
+			)
+		) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Box(
+					modifier = Modifier
+						.size(46.dp)
+						.clip(CircleShape)
+						.background(iconBackground),
+					contentAlignment = Alignment.Center
+				) {
+					Icon(icon, contentDescription = null, tint = Color.White)
+				}
+
+				Spacer(modifier = Modifier.width(14.dp))
+
+				Column(modifier = Modifier.weight(1f)) {
+					Text(title, fontWeight = FontWeight.Bold, color = TextColor, fontSize = 15.sp)
+					Spacer(modifier = Modifier.height(2.dp))
+					Text(
+						description,
+						color = MutedText,
+						fontSize = 12.sp,
+						maxLines = 2,
+						overflow = TextOverflow.Ellipsis
+					)
+				}
+			}
+		}
+	}
+}
+
+@Composable
+private fun OutlinedActionButton(
+	icon: androidx.compose.ui.graphics.vector.ImageVector,
+	label: String,
+	onClick: () -> Unit,
+	modifier: Modifier = Modifier
+) {
+	Button(
+		onClick = onClick,
+		modifier = modifier.height(50.dp),
+		shape = RoundedCornerShape(16.dp),
+		border = androidx.compose.foundation.BorderStroke(1.5.dp, PrimaryBlue),
+		colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = PrimaryBlue)
+	) {
+		Icon(icon, contentDescription = null, tint = PrimaryBlue)
+		Spacer(modifier = Modifier.width(8.dp))
+		Text(label, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+	}
+}
+
+@Composable
+private fun ProgressCard(
+	score: CategoryScore,
+	showRecentActivity: Boolean
+) {
+	val progressColor = if (score.percentage >= 75f) SuccessGreen else PrimaryBlue
+
+	Card(
+		modifier = Modifier.fillMaxWidth(),
+		shape = RoundedCornerShape(16.dp),
+		colors = CardDefaults.cardColors(containerColor = Color.White),
+		elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+	) {
+		Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp)) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				horizontalArrangement = Arrangement.SpaceBetween,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Text(score.category, color = TextColor, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+				Text(
+					text = "${String.format("%.0f", score.percentage)}%",
+					color = progressColor,
+					fontWeight = FontWeight.Bold,
+					fontSize = 12.sp
+				)
+			}
+
+			Spacer(modifier = Modifier.height(8.dp))
 
 			LinearProgressIndicator(
 				progress = { score.percentage / 100f },
 				modifier = Modifier
 					.fillMaxWidth()
 					.height(6.dp),
-				trackColor = Color(0xFFE8EAED),
+				trackColor = Color(0xFFE5E7EB),
 				color = progressColor
 			)
 
-			Spacer(modifier = Modifier.height(4.dp))
-
-			Text(
-				text = "${String.format("%.0f", score.percentage)}%",
-				fontSize = 10.sp,
-				color = if (score.percentage >= 75f) SuccessGreen else PrimaryBlue,
-				fontWeight = FontWeight.SemiBold
-			)
+			if (showRecentActivity) {
+				Spacer(modifier = Modifier.height(6.dp))
+				Text("Recent activity", color = MutedText, fontSize = 11.sp)
+			}
 		}
 	}
 }
