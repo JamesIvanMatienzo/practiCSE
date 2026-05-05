@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jigen.practicse.data.local.entity.QuestionEntity
+import com.jigen.practicse.data.local.PractiCSEDatabase
 import kotlinx.coroutines.flow.collectLatest
 
 import android.content.Context
@@ -60,7 +61,15 @@ fun ExamScreen(
 	sessionId: String = "new",
 	modifier: Modifier = Modifier
 ) {
-	val viewModel: ExamViewModel = viewModel(factory = ExamViewModel.factory(context, sessionId))
+	val database = PractiCSEDatabase.getInstance(context)
+	val viewModel: ExamViewModel = viewModel(
+		factory = ExamViewModel.factory(
+			questionDao = database.questionDao(),
+			sessionDao = database.sessionDao(),
+			progressDao = database.progressDao(),
+			errorReportDao = database.errorReportDao()
+		)
+	)
 	val uiState by viewModel.uiState.collectAsState()
 
 	when (val state = uiState) {
