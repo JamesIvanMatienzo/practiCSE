@@ -44,6 +44,9 @@ import androidx.compose.ui.unit.sp
 import com.jigen.practicse.data.local.entity.QuestionEntity
 import kotlinx.coroutines.flow.collectLatest
 
+import android.content.Context
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 private val ScreenBackground = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1A73E8)
 private val TextColor = Color(0xFF202124)
@@ -53,9 +56,11 @@ private val ErrorRed = Color(0xFFD93025)
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ExamScreen(
-	viewModel: ExamViewModel,
+	context: Context,
+	sessionId: String = "new",
 	modifier: Modifier = Modifier
 ) {
+	val viewModel: ExamViewModel = viewModel(factory = ExamViewModel.factory(context, sessionId))
 	val uiState by viewModel.uiState.collectAsState()
 
 	when (val state = uiState) {
