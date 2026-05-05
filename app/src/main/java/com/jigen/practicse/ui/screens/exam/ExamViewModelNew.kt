@@ -117,13 +117,15 @@ class ExamViewModelNew(
 			
 			if (mode == "resume") {
 				if (existingSession != null && existingSession.examEndTimeMillis == null) {
+					// Only resume if session is active (not completed)
 					startingIndex = existingSession.lastQuestionIndex.coerceIn(0, uiQuestions.lastIndex.coerceAtLeast(0))
 					startingScore = computeCurrentScore(uiQuestions)
 				} else {
+					// Session is completed or doesn't exist, create a new one
 					createNewSession(sessionCategory, activeTrackKey)
 				}
 			} else {
-				// Create new session
+				// Create new session for a fresh exam
 				createNewSession(sessionCategory, activeTrackKey)
 			}
 
@@ -143,6 +145,9 @@ class ExamViewModelNew(
 	}
 
 	private suspend fun createNewSession(sessionCategory: String, trackKey: String) {
+		// Clear any existing completed sessions or old sessions
+		sessionDao.clearCompletedSessions()
+		
 		val newSession = SessionEntity(
 			id = 1,
 			lastScore = 0,

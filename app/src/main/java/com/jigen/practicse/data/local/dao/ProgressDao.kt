@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jigen.practicse.data.local.entity.UserProgressEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProgressDao {
@@ -17,8 +18,14 @@ interface ProgressDao {
 	@Query("SELECT * FROM user_progress")
 	suspend fun getAllProgress(): List<UserProgressEntity>
 
+	@Query("SELECT * FROM user_progress")
+	fun observeAllProgress(): Flow<List<UserProgressEntity>>
+
 	@Query("SELECT category, COUNT(*) as total, SUM(CASE WHEN isCorrect THEN 1 ELSE 0 END) as correct FROM user_progress GROUP BY category")
 	suspend fun getProgressByCategory(): List<CategoryProgress>
+
+	@Query("SELECT category, COUNT(*) as total, SUM(CASE WHEN isCorrect THEN 1 ELSE 0 END) as correct FROM user_progress GROUP BY category")
+	fun observeProgressByCategory(): Flow<List<CategoryProgress>>
 }
 
 data class CategoryProgress(

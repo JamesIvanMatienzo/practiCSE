@@ -14,6 +14,7 @@ import com.jigen.practicse.data.local.dao.SessionDao
 import com.jigen.practicse.data.local.trackKeyToLabel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlin.comparisons.compareByDescending
 
@@ -30,49 +31,51 @@ class DashboardViewModel(
 	val uiState: StateFlow<DashboardUiState> = _uiState
 
 	init {
-		loadDashboardData()
+		observeDashboardData()
 	}
 
-	private fun loadDashboardData() {
+	private fun observeDashboardData() {
 		viewModelScope.launch {
 			try {
-				// Fetch all progress entries
-				val allProgress = progressDao.getAllProgress()
-				val totalAttempts = allProgress.size
+				// Combine reactive streams from progress and session data
+				progressDao.observeAllProgress().combine(sessionDao.observeSession()) { allProgress, session ->
+					val totalAttempts = allProgress.size
 
-				// Group by category and calculate percentages
-				val categoryScores = allProgress
-					.groupBy { normalizeCategoryKey(it.category) }
-					.map { (categoryKey, entries) ->
-						val correctCount = entries.count { it.isCorrect }
-						CategoryScore(
-							categoryKey = categoryKey,
-							categoryLabel = categoryLabel(categoryKey),
-							correctCount = correctCount,
-							totalCount = entries.size
-						)
-					}
-					.sortedWith(compareByDescending<CategoryScore> { it.percentage }.thenByDescending { it.correctCount })
+					// Group by category and calculate percentages
+					val categoryScores = allProgress
+						.groupBy { normalizeCategoryKey(it.category) }
+						.map { (categoryKey, entries) ->
+							val correctCount = entries.count { it.isCorrect }
+							CategoryScore(
+								categoryKey = categoryKey,
+								categoryLabel = categoryLabel(categoryKey),
+								correctCount = correctCount,
+								totalCount = entries.size
+							)
+						}
+						.sortedWith(compareByDescending<CategoryScore> { it.percentage }.thenByDescending { it.correctCount })
 
-				// Check if there's a session to resume
-				val session = sessionDao.getSession()
-				val hasSessionToResume = session != null && session.examEndTimeMillis == null
-				val activeTrackLabel = session?.lastTrack?.let(::trackKeyToLabel)
-					?: appPreferencesStore.getActiveTrackLabel()
+					// Check if there's a session to resume (must be active, not completed)
+					val hasSessionToResume = session != null && session.examEndTimeMillis == null
+					val activeTrackLabel = session?.lastTrack?.let(::trackKeyToLabel)
+						?: appPreferencesStore.getActiveTrackLabel()
 
-				// Check connectivity
-				val isOffline = !safeIsNetworkConnected()
-				val availableQuestionCount = questionDao.countQuestions()
+					// Check connectivity
+					val isOffline = !safeIsNetworkConnected()
+					val availableQuestionCount = questionDao.countQuestions()
 
-				_uiState.value = DashboardUiState.Success(
-					categoryScores = categoryScores,
-					activeTrackLabel = activeTrackLabel,
-					hasSessionToResume = hasSessionToResume,
-					lastQuestionIndex = session?.lastQuestionIndex ?: 0,
-					isOffline = isOffline,
-					totalAttempts = totalAttempts,
-					availableQuestionCount = availableQuestionCount
-				)
+					DashboardUiState.Success(
+						categoryScores = categoryScores,
+						activeTrackLabel = activeTrackLabel,
+						hasSessionToResume = hasSessionToResume,
+						lastQuestionIndex = session?.lastQuestionIndex ?: 0,
+						isOffline = isOffline,
+						totalAttempts = totalAttempts,
+						availableQuestionCount = availableQuestionCount
+					)
+				}.collect { state ->
+					_uiState.value = state
+				}
 			} catch (e: Exception) {
 				_uiState.value = DashboardUiState.Error("Failed to load dashboard: ${e.message}")
 			}
