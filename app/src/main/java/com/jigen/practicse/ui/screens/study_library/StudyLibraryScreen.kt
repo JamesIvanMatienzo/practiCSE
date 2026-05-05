@@ -270,7 +270,7 @@ private fun QuestionCountDialog(
 			}
 		},
 		confirmButton = {
-			TextButton(onClick = { if (isValid && parsed != null) onConfirm(parsed) }, enabled = isValid) {
+			TextButton(onClick = { if (isValid) onConfirm(parsed ?: 1) }, enabled = isValid) {
 				Text("Start")
 			}
 		},
