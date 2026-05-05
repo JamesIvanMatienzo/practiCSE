@@ -44,6 +44,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -51,13 +52,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jigen.practicse.ui.screens.exam.ExamViewModelNew.ExamEffect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private val ScreenBackground = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1A73E8)
@@ -65,6 +66,7 @@ private val TextColor = Color(0xFF202124)
 private val SuccessGreen = Color(0xFF188038)
 private val ErrorRed = Color(0xFFD93025)
 private val MutedGray = Color(0xFF6C757D)
+private val FlagYellow = Color(0xFFF9AB00)
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -138,7 +140,6 @@ totalQuestions = state.totalQuestions,
 answeredCount = state.answeredCount,
 correctCount = state.correctCount,
 wrongCount = state.wrongCount,
-skippedCount = state.skippedCount,
 currentQuestion = state.currentQuestion,
 flaggedQuestionIds = state.flaggedQuestionIds,
 onToggleFlag = { viewModel.toggleFlagCurrentQuestion() }
@@ -158,8 +159,7 @@ onAnswerSelected = viewModel::selectAnswer,
 onDeepDive = onDeepDive,
 onReportError = viewModel::reportCurrentQuestion,
 onPrevious = viewModel::previousQuestion,
-onNext = viewModel::nextQuestion,
-onJumpToQuestion = viewModel::goToQuestion
+onNext = viewModel::nextQuestion
 )
 }
 }
@@ -203,7 +203,6 @@ totalQuestions: Int,
 answeredCount: Int,
 correctCount: Int,
 wrongCount: Int,
-skippedCount: Int,
 currentQuestion: QuestionUiState?,
 flaggedQuestionIds: Set<Int>,
 onToggleFlag: () -> Unit
@@ -218,7 +217,7 @@ Button(
 onClick = onToggleFlag,
 modifier = Modifier.padding(end = 8.dp),
 colors = ButtonDefaults.buttonColors(
-containerColor = if (currentQuestion?.id in flaggedQuestionIds) ErrorRed else Color(0xFFE8F0FE)
+containerColor = if (currentQuestion?.id in flaggedQuestionIds) FlagYellow else Color(0xFFE8F0FE)
 ),
 shape = RoundedCornerShape(12.dp)
 ) {
@@ -260,7 +259,6 @@ horizontalArrangement = Arrangement.spacedBy(12.dp)
 ) {
 CompactStatChip(label = "Correct", value = correctCount, bgColor = SuccessGreen)
 CompactStatChip(label = "Wrong", value = wrongCount, bgColor = ErrorRed)
-CompactStatChip(label = "Skip", value = skippedCount, bgColor = MutedGray)
 }
 }
 }
@@ -282,10 +280,10 @@ onAnswerSelected: (String) -> Unit,
 onDeepDive: (String) -> Unit,
 onReportError: () -> Unit,
 onPrevious: () -> Unit,
-onNext: () -> Unit,
-onJumpToQuestion: (Int) -> Unit
+onNext: () -> Unit
 ) {
 var showReportDialog by remember { mutableStateOf(false) }
+val scope = rememberCoroutineScope()
 
 // Auto-dismiss dialog after 3 seconds
 LaunchedEffect(reportStatusMessage) {
@@ -341,20 +339,27 @@ modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp)
 horizontalArrangement = Arrangement.spacedBy(6.dp)
 ) {
 itemsIndexed(questions) { index, question ->
-val isCurrent = index == currentQuestionIndex
-val isAnswered = question.id in evaluatedQuestions
+val isCurrent = index == pagerState.currentPage
+val selected = selectedAnswers[question.id]
+val isAnsweredCorrectly = question.id in evaluatedQuestions && answersMatch(selected, question.correctAnswer)
+val isAnsweredWrong = question.id in evaluatedQuestions && !answersMatch(selected, question.correctAnswer)
 val isFlagged = question.id in flaggedQuestionIds
 val bgColor = when {
 isCurrent -> PrimaryBlue
-isFlagged -> ErrorRed
-isAnswered -> SuccessGreen
+isFlagged -> FlagYellow
+isAnsweredCorrectly -> SuccessGreen
+isAnsweredWrong -> ErrorRed
 else -> Color(0xFFE8EAED)
 }
 
 Card(
 shape = RoundedCornerShape(8.dp),
 colors = CardDefaults.cardColors(containerColor = bgColor),
-onClick = { onJumpToQuestion(index) }
+onClick = {
+scope.launch {
+pagerState.animateScrollToPage(index)
+}
+}
 ) {
 Text(
 text = "${index + 1}",
@@ -432,7 +437,7 @@ Spacer(modifier = Modifier.height(14.dp))
 
 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 if (isFlagged) {
-Box(modifier = Modifier.size(8.dp).background(ErrorRed, CircleShape))
+Box(modifier = Modifier.size(8.dp).background(FlagYellow, CircleShape))
 }
 Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = TextColor)
 }
@@ -440,17 +445,17 @@ Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = T
 Spacer(modifier = Modifier.height(20.dp))
 
 question.shuffledOptions.forEach { option ->
-val isSelected = selectedAnswer == option
-val isCorrect = option == question.correctAnswer
+val isSelected = answersMatch(selectedAnswer, option)
+val isSelectedCorrect = answersMatch(selectedAnswer, question.correctAnswer)
 val background = when {
-isEvaluated && isCorrect -> Color(0xFFE7F5EA)
-isEvaluated && isSelected && !isCorrect -> Color(0xFFFDECEC)
+isEvaluated && isSelected && isSelectedCorrect -> Color(0xFFE7F5EA)
+isEvaluated && isSelected && !isSelectedCorrect -> Color(0xFFFDECEC)
 isSelected -> Color(0xFFEAF2FF)
 else -> Color(0xFFF1F3F4)
 }
 val borderColor = when {
-isEvaluated && isCorrect -> SuccessGreen
-isEvaluated && isSelected && !isCorrect -> ErrorRed
+isEvaluated && isSelected && isSelectedCorrect -> SuccessGreen
+isEvaluated && isSelected && !isSelectedCorrect -> ErrorRed
 isSelected -> PrimaryBlue
 else -> Color.Transparent
 }
@@ -474,12 +479,12 @@ textColor = TextColor
 
 if (isEvaluated) {
 Text(
-text = if (selectedAnswer == question.correctAnswer) {
+text = if (answersMatch(selectedAnswer, question.correctAnswer)) {
 "Correct answer. Great job."
 } else {
 "That answer is incorrect. Correct answer: ${question.correctAnswer}"
 },
-color = if (selectedAnswer == question.correctAnswer) SuccessGreen else ErrorRed,
+color = if (answersMatch(selectedAnswer, question.correctAnswer)) SuccessGreen else ErrorRed,
 fontSize = 12.sp,
 fontWeight = FontWeight.SemiBold,
 modifier = Modifier.padding(bottom = 10.dp)
@@ -525,11 +530,15 @@ Text(
 text = text,
 style = MaterialTheme.typography.bodyLarge,
 color = textColor,
-maxLines = 4,
-overflow = TextOverflow.Ellipsis,
 modifier = Modifier.weight(1f)
 )
 }
+}
+
+private fun answersMatch(left: String?, right: String?): Boolean {
+	val l = left?.trim()
+	val r = right?.trim()
+	return !l.isNullOrEmpty() && !r.isNullOrEmpty() && l.equals(r, ignoreCase = true)
 }
 
 @Composable
