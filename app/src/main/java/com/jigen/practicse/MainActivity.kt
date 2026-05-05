@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.jigen.practicse.ui.navigation.NavGraph
 import com.jigen.practicse.ui.navigation.Screen
@@ -46,55 +47,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainApp(context: ComponentActivity) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     var showMenu by remember { mutableStateOf(false) }
+    val showTopBar = currentRoute == Screen.Dashboard.route
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "practiCSE",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1976D2)
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "Menu")
-                    }
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("Profile") },
-                            onClick = {
-                                showMenu = false
-                                navController.navigate(Screen.Profile.route)
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Settings") },
-                            onClick = {
-                                showMenu = false
-                                navController.navigate(Screen.Settings.route)
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("About") },
-                            onClick = {
-                                showMenu = false
-                                navController.navigate(Screen.About.route)
-                            }
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                    actionIconContentColor = Color(0xFF202124)
+            if (showTopBar) {
+                DashboardTopBar(
+                    showMenu = showMenu,
+                    onMenuChange = { showMenu = it },
+                    onNavigate = { route -> navController.navigate(route) }
                 )
-            )
+            }
         }
     ) { paddingValues ->
         Box(
@@ -105,8 +71,62 @@ fun MainApp(context: ComponentActivity) {
             NavGraph(
                 navController = navController,
                 context = context,
-                startDestination = Screen.Dashboard.route
+                startDestination = Screen.Login.route
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DashboardTopBar(
+    showMenu: Boolean,
+    onMenuChange: (Boolean) -> Unit,
+    onNavigate: (String) -> Unit
+) {
+    TopAppBar(
+        title = {
+            Text(
+                "practiCSE",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1976D2)
+            )
+        },
+        actions = {
+            IconButton(onClick = { onMenuChange(true) }) {
+                Icon(Icons.Filled.MoreVert, contentDescription = "Menu")
+            }
+            DropdownMenu(
+                expanded = showMenu,
+                onDismissRequest = { onMenuChange(false) }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Profile") },
+                    onClick = {
+                        onMenuChange(false)
+                        onNavigate(Screen.Profile.route)
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Settings") },
+                    onClick = {
+                        onMenuChange(false)
+                        onNavigate(Screen.Settings.route)
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("About") },
+                    onClick = {
+                        onMenuChange(false)
+                        onNavigate(Screen.About.route)
+                    }
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White,
+            actionIconContentColor = Color(0xFF202124)
+        )
+    )
 }

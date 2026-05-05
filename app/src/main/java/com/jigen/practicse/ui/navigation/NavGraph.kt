@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.jigen.practicse.ui.screens.login.LoginScreen
 import com.jigen.practicse.ui.screens.dashboard.DashboardScreen
 import com.jigen.practicse.ui.screens.exam.ExamScreen
 import com.jigen.practicse.ui.screens.onboarding.OnboardingScreen
@@ -20,12 +21,22 @@ import com.jigen.practicse.ui.screens.about.AboutScreen
 fun NavGraph(
 	navController: NavHostController,
 	context: Context,
-	startDestination: String = Screen.Dashboard.route
+	startDestination: String = Screen.Login.route
 ) {
 	NavHost(
 		navController = navController,
 		startDestination = startDestination
 	) {
+		composable(Screen.Login.route) {
+			LoginScreen(
+				onContinue = {
+					navController.navigate(Screen.Onboarding.route) {
+						popUpTo(Screen.Login.route) { inclusive = true }
+					}
+				}
+			)
+		}
+
 		composable(Screen.Onboarding.route) {
 			OnboardingScreen(
 				context = context,
