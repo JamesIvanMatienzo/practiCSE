@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jigen.practicse.data.local.entity.QuestionEntity
+import com.jigen.practicse.data.entity.QuestionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

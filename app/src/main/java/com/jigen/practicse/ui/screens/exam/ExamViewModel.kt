@@ -1,8 +1,11 @@
 package com.jigen.practicse.ui.screens.exam
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jigen.practicse.data.entity.QuestionEntity
+import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.dao.ErrorReportDao
 import com.jigen.practicse.data.local.dao.ProgressDao
 import com.jigen.practicse.data.local.dao.QuestionDao
@@ -35,204 +38,154 @@ class ExamViewModel(
 
 	private var timerJob: Job? = null
 
-	init {
-		viewModelScope.launch {
-			resumeSession()
-		}
-	}
+	companion object {
+		private const val DEFAULT_EXAM_DURATION_MILLIS = 165L * 60_000L
 
-	suspend fun resumeSession() {
-		val session = sessionDao.getSession()
-		val allQuestions = questionDao.getAllQuestions()
-		val filteredQuestions = filterQuestions(
-			questions = allQuestions,
-			track = session?.lastTrack,
-			category = session?.lastCategory
-		)
-		val safeIndex = (session?.lastQuestionIndex ?: 0).coerceIn(0, filteredQuestions.lastIndex.coerceAtLeast(0))
-
-		_uiState.value = ExamUiState.Success(
-			questions = filteredQuestions,
-			currentQuestionIndex = safeIndex,
-			selectedAnswerIndex = null,
-			isSelectionLocked = false,
-			remainingTimeMillis = remainingTime(session?.examEndTimeMillis),
-			sessionTrack = session?.lastTrack,
-			sessionCategory = session?.lastCategory
-		)
-
-		startTimer(session?.examEndTimeMillis)
-	}
-
-	fun startSession(
-		track: String? = null,
-		category: String? = null,
-		totalDurationMillis: Long = DEFAULT_MOCK_EXAM_DURATION_MILLIS
-	) {
-		viewModelScope.launch {
-			val questions = filterQuestions(questionDao.getAllQuestions(), track, category)
-			val endTime = System.currentTimeMillis() + totalDurationMillis
-			sessionDao.upsert(
-				SessionEntity(
-					lastTrack = track,
-					lastCategory = category,
-					lastQuestionIndex = 0,
-					examEndTimeMillis = endTime
-				)
-			)
-
-			_uiState.value = ExamUiState.Success(
-				questions = questions,
-				currentQuestionIndex = 0,
-				remainingTimeMillis = totalDurationMillis,
-				sessionTrack = track,
-				sessionCategory = category
-			)
-
-			startTimer(endTime)
-		}
-	}
-
-	fun selectAnswer(choiceIndex: Int) {
-		val currentState = _uiState.value as? ExamUiState.Success ?: return
-		val question = currentState.questions.getOrNull(currentState.currentQuestionIndex) ?: return
-		if (currentState.isSelectionLocked) return
-
-		viewModelScope.launch {
-			_uiState.value = currentState.copy(
-				selectedAnswerIndex = choiceIndex,
-				isSelectionLocked = true
-			)
-
-			progressDao.upsert(
-				UserProgressEntity(
-					questionId = question.id,
-					selectedIndex = choiceIndex,
-					isCorrect = choiceIndex == question.correctIndex,
-					answeredAtMillis = System.currentTimeMillis(),
-					track = currentState.sessionTrack ?: question.track,
-					category = currentState.sessionCategory ?: question.category
-				)
-			)
-
-			delay(300)
-
-			val nextIndex = currentState.currentQuestionIndex + 1
-			sessionDao.upsert(
-				SessionEntity(
-					lastTrack = currentState.sessionTrack ?: question.track,
-					lastCategory = currentState.sessionCategory ?: question.category,
-					lastQuestionIndex = nextIndex.coerceAtMost(currentState.questions.lastIndex.coerceAtLeast(0)),
-					examEndTimeMillis = (sessionDao.getSession()?.examEndTimeMillis)
-				)
-			)
-
-			if (nextIndex <= currentState.questions.lastIndex) {
-				_uiState.value = currentState.copy(
-					currentQuestionIndex = nextIndex,
-					selectedAnswerIndex = null,
-					isSelectionLocked = false
-				)
-				_effects.tryEmit(ExamEffect.NavigateToPage(nextIndex))
-			} else {
-				_effects.tryEmit(ExamEffect.ExamCompleted)
+		fun factory(context: Context): ViewModelProvider.Factory {
+			return object : ViewModelProvider.Factory {
+				override fun <T : ViewModel> create(modelClass: Class<T>): T {
+					if (modelClass.isAssignableFrom(ExamViewModel::class.java)) {
+						val database = PractiCSEDatabase.getInstance(context)
+						@Suppress("UNCHECKED_CAST")
+						return ExamViewModel(
+							database.questionDao(),
+							database.sessionDao(),
+							database.progressDao(),
+							database.errorReportDao()
+						) as T
+					}
+					throw IllegalArgumentException("Unknown ViewModel class")
+				}
 			}
 		}
 	}
 
-	fun fetchLastQuestionIndex() {
+	init {
 		viewModelScope.launch {
-			val session = sessionDao.getSession() ?: return@launch
-			val currentState = _uiState.value as? ExamUiState.Success ?: return@launch
-			_uiState.value = currentState.copy(currentQuestionIndex = session.lastQuestionIndex)
+			loadExam()
 		}
 	}
 
-	fun updateRemainingTimeFromSystem() {
+	private suspend fun loadExam() {
+		try {
+			val questions = questionDao.getAllQuestions()
+			if (questions.isEmpty()) {
+				_uiState.value = ExamUiState.Error("No questions available")
+				return
+			}
+
+			val uiQuestions = questions.map { entity ->
+				QuestionUiState(
+					id = entity.id,
+					text = entity.questionText,
+					referenceText = entity.referenceText,
+					shuffledOptions = entity.getShuffledOptions(),
+					correctAnswer = entity.correctAnswer
+				)
+			}
+
+			_uiState.value = ExamUiState.Success(
+				questions = uiQuestions,
+				currentIndex = 0,
+				currentScore = 0,
+				remainingTimeMillis = DEFAULT_EXAM_DURATION_MILLIS
+			)
+
+			startTimer()
+		} catch (e: Exception) {
+			_uiState.value = ExamUiState.Error(e.message ?: "Unknown error")
+		}
+	}
+
+	fun selectAnswer(selectedText: String) {
+		val currentState = _uiState.value
+		if (currentState !is ExamUiState.Success) return
+
+		val question = currentState.currentQuestion ?: return
+
 		viewModelScope.launch {
-			val session = sessionDao.getSession()
-			val currentState = _uiState.value as? ExamUiState.Success ?: return@launch
-			_uiState.value = currentState.copy(remainingTimeMillis = remainingTime(session?.examEndTimeMillis))
+			val isCorrect = selectedText.equals(question.correctAnswer, ignoreCase = true)
+			val newScore = if (isCorrect) currentState.currentScore + 1 else currentState.currentScore
+
+			try {
+				progressDao.upsert(
+					UserProgressEntity(
+						questionId = question.id,
+						selectedIndex = -1,
+						isCorrect = isCorrect,
+						answeredAtMillis = System.currentTimeMillis(),
+						track = "Professional",
+						category = currentState.sessionCategory ?: "General"
+					)
+				)
+			} catch (e: Exception) {
+				// Log but continue
+			}
+
+			if (currentState.isLastQuestion) {
+				stopTimer()
+				_uiState.value = ExamUiState.Completed(
+					totalScore = newScore,
+					totalQuestions = currentState.totalQuestions
+				)
+				_effects.tryEmit(ExamEffect.ExamCompleted)
+			} else {
+				_uiState.value = currentState.copy(
+					currentIndex = currentState.currentIndex + 1,
+					currentScore = newScore
+				)
+				_effects.tryEmit(ExamEffect.NavigateToPage(currentState.currentIndex + 1))
+			}
 		}
 	}
 
 	fun reportCurrentQuestion() {
 		val currentState = _uiState.value as? ExamUiState.Success ?: return
-		val question = currentState.questions.getOrNull(currentState.currentQuestionIndex) ?: return
+		val currentQuestion = currentState.currentQuestion ?: return
 
 		viewModelScope.launch {
-			errorReportDao.insert(
-				ErrorReportEntity(
-					questionId = question.id,
-					reportedAtMillis = System.currentTimeMillis()
+			try {
+				errorReportDao.insert(
+					ErrorReportEntity(
+						questionId = currentQuestion.id,
+						reportedAtMillis = System.currentTimeMillis()
+					)
 				)
-			)
+				_effects.tryEmit(ExamEffect.QuestionReported)
+			} catch (e: Exception) {
+				// Log but don't interrupt exam
+			}
 		}
+	}
+
+	private fun startTimer() {
+		timerJob = viewModelScope.launch {
+			var remaining = 165L * 60_000L
+			while (remaining > 0) {
+				delay(1000)
+				remaining -= 1000
+				val state = _uiState.value
+				if (state is ExamUiState.Success) {
+					_uiState.value = state.copy(remainingTimeMillis = remaining)
+				}
+			}
+		}
+	}
+
+	private fun stopTimer() {
+		timerJob?.cancel()
+		timerJob = null
 	}
 
 	override fun onCleared() {
 		super.onCleared()
-		timerJob?.cancel()
-	}
-
-	private fun startTimer(examEndTimeMillis: Long?) {
-		timerJob?.cancel()
-		timerJob = viewModelScope.launch {
-			while (true) {
-				val currentState = _uiState.value as? ExamUiState.Success ?: break
-				val remaining = remainingTime(examEndTimeMillis)
-				_uiState.value = currentState.copy(remainingTimeMillis = remaining)
-
-				if (remaining <= 0L) {
-					_effects.tryEmit(ExamEffect.TimeExpired)
-					break
-				}
-
-				delay(1_000)
-			}
-		}
-	}
-
-	private fun remainingTime(examEndTimeMillis: Long?): Long {
-		if (examEndTimeMillis == null) return DEFAULT_MOCK_EXAM_DURATION_MILLIS
-		return (examEndTimeMillis - System.currentTimeMillis()).coerceAtLeast(0L)
-	}
-
-	private fun filterQuestions(
-		questions: List<com.jigen.practicse.data.local.entity.QuestionEntity>,
-		track: String?,
-		category: String?
-	): List<com.jigen.practicse.data.local.entity.QuestionEntity> {
-		return questions.filter { question ->
-			(track.isNullOrBlank() || question.track.equals(track, ignoreCase = true)) &&
-				(category.isNullOrBlank() || question.category.equals(category, ignoreCase = true))
-		}
+		stopTimer()
 	}
 
 	sealed class ExamEffect {
-		data class NavigateToPage(val pageIndex: Int) : ExamEffect()
-		data object ExamCompleted : ExamEffect()
-		data object TimeExpired : ExamEffect()
-	}
-
-	companion object {
-		private const val DEFAULT_MOCK_EXAM_DURATION_MILLIS = 165L * 60_000L
-
-		fun factory(
-			questionDao: QuestionDao,
-			sessionDao: SessionDao,
-			progressDao: ProgressDao,
-			errorReportDao: ErrorReportDao
-		): ViewModelProvider.Factory {
-			return object : ViewModelProvider.Factory {
-				override fun <T : ViewModel> create(modelClass: Class<T>): T {
-					if (modelClass.isAssignableFrom(ExamViewModel::class.java)) {
-						@Suppress("UNCHECKED_CAST")
-						return ExamViewModel(questionDao, sessionDao, progressDao, errorReportDao) as T
-					}
-					throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-				}
-			}
-		}
+		data class NavigateToPage(val index: Int) : ExamEffect()
+		object ExamCompleted : ExamEffect()
+		object TimeExpired : ExamEffect()
+		object QuestionReported : ExamEffect()
 	}
 }

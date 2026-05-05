@@ -10,15 +10,15 @@ import com.jigen.practicse.data.local.dao.ProgressDao
 import com.jigen.practicse.data.local.dao.QuestionDao
 import com.jigen.practicse.data.local.dao.SessionDao
 import com.jigen.practicse.data.local.entity.ErrorReportEntity
-import com.jigen.practicse.data.local.entity.QuestionEntity
+import com.jigen.practicse.data.entity.QuestionEntity
 import com.jigen.practicse.data.local.entity.SessionEntity
 import com.jigen.practicse.data.local.entity.UserProgressEntity
 
 @Database(
 	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class, com.jigen.practicse.data.local.entity.LeaderboardEntryEntity::class],
-	version = 2,
+	version = 3,
 	exportSchema = false
-)
+)	
 @TypeConverters(Converters::class)
 abstract class PractiCSEDatabase : RoomDatabase() {
 

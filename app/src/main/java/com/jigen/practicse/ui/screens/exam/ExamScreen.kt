@@ -41,8 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jigen.practicse.data.local.entity.QuestionEntity
-import com.jigen.practicse.data.local.PractiCSEDatabase
+import com.jigen.practicse.ui.screens.exam.ExamViewModel.ExamEffect
 import kotlinx.coroutines.flow.collectLatest
 
 import android.content.Context
@@ -61,14 +60,8 @@ fun ExamScreen(
 	sessionId: String = "new",
 	modifier: Modifier = Modifier
 ) {
-	val database = PractiCSEDatabase.getInstance(context)
 	val viewModel: ExamViewModel = viewModel(
-		factory = ExamViewModel.factory(
-			questionDao = database.questionDao(),
-			sessionDao = database.sessionDao(),
-			progressDao = database.progressDao(),
-			errorReportDao = database.errorReportDao()
-		)
+		factory = ExamViewModel.factory(context)
 	)
 	val uiState by viewModel.uiState.collectAsState()
 
@@ -101,29 +94,27 @@ fun ExamScreen(
 
 		is ExamUiState.Success -> {
 			val pagerState = rememberPagerState(
-				initialPage = state.currentQuestionIndex,
+				initialPage = state.currentIndex,
 				pageCount = { state.questions.size.coerceAtLeast(1) }
 			)
-			val currentQuestion = remember(state.questions, state.currentQuestionIndex) {
-				state.questions.getOrNull(state.currentQuestionIndex)
-			}
 
-			LaunchedEffect(state.currentQuestionIndex) {
-				if (pagerState.currentPage != state.currentQuestionIndex && state.questions.isNotEmpty()) {
-					pagerState.scrollToPage(state.currentQuestionIndex)
+			LaunchedEffect(state.currentIndex) {
+				if (pagerState.currentPage != state.currentIndex && state.questions.isNotEmpty()) {
+					pagerState.scrollToPage(state.currentIndex)
 				}
 			}
 
 			LaunchedEffect(Unit) {
 				viewModel.effects.collectLatest { effect ->
 					when (effect) {
-						is ExamViewModel.ExamEffect.NavigateToPage -> {
+						is ExamEffect.NavigateToPage -> {
 							if (state.questions.isNotEmpty()) {
-								pagerState.animateScrollToPage(effect.pageIndex)
+								pagerState.animateScrollToPage(effect.index)
 							}
 						}
-						ExamViewModel.ExamEffect.ExamCompleted -> Unit
-						ExamViewModel.ExamEffect.TimeExpired -> Unit
+						ExamEffect.ExamCompleted -> Unit
+						ExamEffect.TimeExpired -> Unit
+						ExamEffect.QuestionReported -> Unit
 					}
 				}
 			}
@@ -147,16 +138,53 @@ fun ExamScreen(
 			) { innerPadding ->
 					ExamPagerContent(
 						questions = state.questions,
-						currentQuestionIndex = state.currentQuestionIndex,
-						selectedAnswerIndex = state.selectedAnswerIndex,
-						isSelectionLocked = state.isSelectionLocked,
+						currentQuestionIndex = state.currentIndex,
 						pagerState = pagerState,
-						currentQuestion = currentQuestion,
 						modifier = Modifier
 							.fillMaxSize()
 							.padding(innerPadding),
 						onAnswerSelected = viewModel::selectAnswer
 					)
+			}
+		}
+
+		is ExamUiState.Completed -> {
+			Surface(modifier = modifier.fillMaxSize(), color = ScreenBackground) {
+				Box(
+					modifier = Modifier
+						.fillMaxSize()
+						.padding(24.dp),
+					contentAlignment = Alignment.Center
+				) {
+					Column(
+						horizontalAlignment = Alignment.CenterHorizontally,
+						verticalArrangement = Arrangement.Center
+					) {
+						Text(
+							text = "Exam Complete!",
+							style = MaterialTheme.typography.headlineMedium,
+							color = TextColor
+						)
+						Spacer(modifier = Modifier.height(16.dp))
+						Text(
+							text = "Score: ${state.totalScore} / ${state.totalQuestions}",
+							style = MaterialTheme.typography.titleLarge,
+							color = PrimaryBlue
+						)
+						Spacer(modifier = Modifier.height(8.dp))
+						Text(
+							text = "Percentage: ${state.percentage.toInt()}%",
+							style = MaterialTheme.typography.bodyLarge,
+							color = if (state.isPassed) SuccessGreen else ErrorRed
+						)
+						Spacer(modifier = Modifier.height(16.dp))
+						Text(
+							text = if (state.isPassed) "PASSED" else "FAILED",
+							style = MaterialTheme.typography.headlineSmall,
+							color = if (state.isPassed) SuccessGreen else ErrorRed
+						)
+					}
+				}
 			}
 		}
 	}
@@ -188,21 +216,18 @@ private fun ExamTopBar(remainingTimeMillis: Long) {
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 private fun ExamPagerContent(
-	questions: List<QuestionEntity>,
+	questions: List<QuestionUiState>,
 	currentQuestionIndex: Int,
-	selectedAnswerIndex: Int?,
-	isSelectionLocked: Boolean,
 	pagerState: androidx.compose.foundation.pager.PagerState,
-	currentQuestion: QuestionEntity?,
 	modifier: Modifier = Modifier,
-	onAnswerSelected: (Int) -> Unit
+	onAnswerSelected: (String) -> Unit
 ) {
 	Column(
 		modifier = modifier,
 		verticalArrangement = Arrangement.Top
 	) {
 		PassageHeader(
-			question = currentQuestion,
+			question = questions.getOrNull(currentQuestionIndex),
 			modifier = Modifier.fillMaxWidth()
 		)
 
@@ -216,8 +241,7 @@ private fun ExamPagerContent(
 			val pageQuestion = questions.getOrNull(page)
 			QuestionPage(
 				question = pageQuestion,
-				selectedAnswerIndex = if (page == currentQuestionIndex) selectedAnswerIndex else null,
-				isLocked = page == currentQuestionIndex && isSelectionLocked,
+				isCurrentQuestion = page == currentQuestionIndex,
 				onAnswerSelected = onAnswerSelected
 			)
 		}
@@ -225,10 +249,10 @@ private fun ExamPagerContent(
 }
 @Composable
 private fun PassageHeader(
-	question: QuestionEntity?,
+	question: QuestionUiState?,
 	modifier: Modifier = Modifier
 ) {
-	if (question?.passage.isNullOrBlank()) {
+	if (question?.referenceText.isNullOrBlank()) {
 		Spacer(modifier = Modifier.height(8.dp))
 		return
 	}
@@ -241,13 +265,13 @@ private fun PassageHeader(
 	) {
 		Column(modifier = Modifier.padding(16.dp)) {
 			Text(
-				text = question.category,
+				text = "Reference Text",
 				style = MaterialTheme.typography.labelLarge,
 				color = PrimaryBlue
 			)
 			Spacer(modifier = Modifier.height(8.dp))
 			Text(
-				text = question.passage.orEmpty(),
+				text = question?.referenceText.orEmpty(),
 				style = MaterialTheme.typography.bodyLarge,
 				color = TextColor,
 				modifier = Modifier.verticalScroll(rememberScrollState())
@@ -258,10 +282,9 @@ private fun PassageHeader(
 
 @Composable
 private fun QuestionPage(
-	question: QuestionEntity?,
-	selectedAnswerIndex: Int?,
-	isLocked: Boolean,
-	onAnswerSelected: (Int) -> Unit
+	question: QuestionUiState?,
+	isCurrentQuestion: Boolean,
+	onAnswerSelected: (String) -> Unit
 ) {
 	if (question == null) {
 		Box(
@@ -287,26 +310,16 @@ private fun QuestionPage(
 				.padding(20.dp)
 		) {
 			Text(
-				text = question.questionText,
+				text = question.text,
 				style = MaterialTheme.typography.bodyLarge,
 				color = TextColor
 			)
 			Spacer(modifier = Modifier.height(20.dp))
 
-			question.options.forEachIndexed { index, option ->
-				val isSelected = selectedAnswerIndex == index
-				val isCorrect = index == question.correctIndex
-				val background = when {
-					isLocked && isSelected && isCorrect -> SuccessGreen.copy(alpha = 0.12f)
-					isLocked && isSelected && !isCorrect -> ErrorRed.copy(alpha = 0.12f)
-					else -> Color(0xFFF1F3F4)
-				}
-				val borderColor = when {
-					isLocked && isSelected && isCorrect -> SuccessGreen
-					isLocked && isSelected && !isCorrect -> ErrorRed
-					isSelected -> PrimaryBlue
-					else -> Color.Transparent
-				}
+			question.shuffledOptions.forEach { option ->
+				val isSelected = option == question.correctAnswer // For feedback display (if needed)
+				val background = Color(0xFFF1F3F4)
+				val borderColor = Color.Transparent
 
 				Card(
 					modifier = Modifier
@@ -315,15 +328,15 @@ private fun QuestionPage(
 					shape = RoundedCornerShape(18.dp),
 					colors = CardDefaults.cardColors(containerColor = background),
 					border = androidx.compose.foundation.BorderStroke(1.dp, borderColor),
-					onClick = { if (!isLocked) onAnswerSelected(index) }
+					onClick = { if (isCurrentQuestion) onAnswerSelected(option) }
 				) {
 					Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
 						Column(modifier = Modifier.fillMaxWidth()) {
 							RowWithRadio(
-								selected = isSelected,
+								selected = false,
 								text = option,
 								textColor = TextColor,
-								accent = if (isLocked && isSelected && !isCorrect) ErrorRed else if (isLocked && isSelected && isCorrect) SuccessGreen else PrimaryBlue
+								accent = PrimaryBlue
 							)
 						}
 					}

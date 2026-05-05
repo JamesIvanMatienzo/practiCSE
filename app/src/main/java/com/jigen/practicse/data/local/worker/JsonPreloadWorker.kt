@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.jigen.practicse.data.local.PractiCSEDatabase
-import com.jigen.practicse.data.local.entity.QuestionEntity
+import com.jigen.practicse.data.entity.QuestionEntity
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -18,6 +18,7 @@ class JsonPreloadWorker(
             val database = PractiCSEDatabase.getInstance(applicationContext)
             val questionDao = database.questionDao()
 
+            // If we already have questions, don't overwrite them
             if (questionDao.countQuestions() > 0) {
                 return Result.success()
             }
@@ -34,71 +35,46 @@ class JsonPreloadWorker(
     }
 
     private fun loadSeedQuestions(): List<QuestionEntity> {
-        val unifiedQuestions = readQuestionsFromAsset("questions.json", null)
-        if (unifiedQuestions.isNotEmpty()) {
-            return unifiedQuestions
-        }
-
-        return readQuestionsFromAsset("question_bank/professional.json", "Professional") +
-            readQuestionsFromAsset("question_bank/sub_professional.json", "Sub-Professional")
-    }
-
-    private fun readQuestionsFromAsset(
-        assetPath: String,
-        defaultTrack: String?
-    ): List<QuestionEntity> {
         val rawJson = runCatching {
-            applicationContext.assets.open(assetPath).bufferedReader().use { it.readText() }
+            applicationContext.assets.open("question_bank/questions.json").bufferedReader().use { it.readText() }
         }.getOrNull()?.trim().orEmpty()
 
-        if (rawJson.isBlank()) {
-            return emptyList()
-        }
+        if (rawJson.isBlank()) return emptyList()
 
-        val questionsArray = when {
-            rawJson.startsWith("[") -> JSONArray(rawJson)
-            rawJson.startsWith("{") -> JSONObject(rawJson).optJSONArray("questions") ?: JSONArray()
-            else -> JSONArray(rawJson)
-        }
+        val questionsArray = JSONArray(rawJson)
 
         return buildList {
             for (index in 0 until questionsArray.length()) {
                 val item = questionsArray.optJSONObject(index) ?: continue
-                item.toQuestionEntity(index + 1, defaultTrack)?.let(::add)
+                // Give it a sequential ID starting at 1
+                item.toQuestionEntity(index + 1)?.let(::add)
             }
         }
     }
 
-    private fun JSONObject.toQuestionEntity(
-        fallbackId: Int,
-        defaultTrack: String?
-    ): QuestionEntity? {
-        val questionText = optString("questionText")
-            .takeIf { it.isNotBlank() }
-            ?: optString("question_text").takeIf { it.isNotBlank() }
-            ?: return null
-
-        val optionsArray = optJSONArray("options") ?: JSONArray()
-        val options = buildList {
-            for (index in 0 until optionsArray.length()) {
-                optionsArray.optString(index).takeIf { it.isNotBlank() }?.let(::add)
+    private fun JSONObject.toQuestionEntity(assignedId: Int): QuestionEntity? {
+        val questionText = optString("questionText").takeIf { it.isNotBlank() } ?: return null
+        val correctAnswer = optString("correctAnswer").takeIf { it.isNotBlank() } ?: return null
+        
+        val wrongChoicesArray = optJSONArray("wrongChoices") ?: JSONArray()
+        val wrongChoices = buildList {
+            for (index in 0 until wrongChoicesArray.length()) {
+                wrongChoicesArray.optString(index).takeIf { it.isNotBlank() }?.let(::add)
             }
         }
 
-        if (options.isEmpty()) {
-            return null
-        }
+        if (wrongChoices.isEmpty()) return null
+
+        val refText = optString("referenceText")
 
         return QuestionEntity(
-            id = optInt("id", fallbackId),
-            track = optString("track").takeIf { it.isNotBlank() } ?: defaultTrack ?: "Professional",
-            category = optString("category").takeIf { it.isNotBlank() } ?: "General",
-            passage = optString("passage").takeIf { it.isNotBlank() },
+            id = assignedId,
+            category = optString("category", "General"),
+            subCategory = optString("subCategory", "General"),
             questionText = questionText,
-            options = options,
-            correctIndex = optInt("correctIndex", optInt("correct_index", 0)),
-            aiLogic = optString("aiLogic").takeIf { it.isNotBlank() }
-                ?: optString("ai_logic").takeIf { it.isNotBlank() }
+            referenceText = if (refText == "null" || refText.isBlank()) null else refText,
+            correctAnswer = correctAnswer,
+            wrongChoices = wrongChoices
         )
     }
 }
