@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -75,12 +76,12 @@ class DeepDiveViewModel(
 	}
 
 	private suspend fun generateExplanation(question: QuestionEntity): String = withContext(Dispatchers.IO) {
-		val apiKey = BuildConfig.GROK_API_KEY.trim()
-		val baseUrl = BuildConfig.GROK_BASE_URL.trim().ifBlank { "https://api.x.ai/v1" }
-		val model = BuildConfig.GROK_MODEL.trim().ifBlank { "grok-3-mini" }
+		val apiKey = BuildConfig.GROQ_API_KEY.trim()
+		val baseUrl = BuildConfig.GROQ_BASE_URL.trim().ifBlank { "https://api.groq.com/openai/v1" }
+		val model = BuildConfig.GROQ_MODEL.trim().ifBlank { "openai/gpt-oss-120b" }
 
 		if (apiKey.isBlank()) {
-			return@withContext "Add GROK_API_KEY in .env.local to generate an AI explanation for this question.\n\nCorrect answer: ${question.correctAnswer}"
+			return@withContext "Add GROQ_API_KEY in .env.local to generate an AI explanation for this question.\n\nCorrect answer: ${question.correctAnswer}"
 		}
 
 		val options = (question.wrongChoices + question.correctAnswer).distinct()
@@ -101,16 +102,20 @@ class DeepDiveViewModel(
 			put("model", model)
 			put(
 				"messages",
-				listOf(
-					mapOf(
-						"role" to "system",
-						"content" to "You are a helpful exam tutor."
-					),
-					mapOf(
-						"role" to "user",
-						"content" to prompt
+				JSONArray().apply {
+					put(
+						JSONObject().apply {
+							put("role", "system")
+							put("content", "You are a helpful exam tutor.")
+						}
 					)
-				)
+					put(
+						JSONObject().apply {
+							put("role", "user")
+							put("content", prompt)
+						}
+					)
+				}
 			)
 			put("temperature", 0.2)
 		}
@@ -137,7 +142,11 @@ class DeepDiveViewModel(
 			}
 
 			if (responseText.isBlank()) {
-				return@withContext "No explanation was returned from Grok (HTTP $responseCode). Correct answer: ${question.correctAnswer}"
+				return@withContext "No explanation was returned from AI (HTTP $responseCode). Correct answer: ${question.correctAnswer}"
+			}
+
+			if (responseCode !in 200..299) {
+				return@withContext "AI request failed (HTTP $responseCode): $responseText\n\nCorrect answer: ${question.correctAnswer}"
 			}
 
 			try {
@@ -147,7 +156,7 @@ class DeepDiveViewModel(
 				if (root.has("error")) {
 					val errorObj = root.optJSONObject("error")
 					val errorMsg = errorObj?.optString("message") ?: root.optString("error").toString()
-					return@withContext "Grok API Error: $errorMsg\n\nCorrect answer: ${question.correctAnswer}"
+					return@withContext "AI API Error: $errorMsg\n\nCorrect answer: ${question.correctAnswer}"
 				}
 				
 				val choices = root.optJSONArray("choices")
@@ -161,20 +170,55 @@ class DeepDiveViewModel(
 					return@withContext "Invalid message format in Grok response. Correct answer: ${question.correctAnswer}"
 				}
 				
-				val content = message.optString("content", "").trim()
+				val content = extractContent(message)
 				
 				if (content.isNotBlank()) {
-					content
+					sanitizeAiOutput(content)
 				} else {
-					"Grok returned an empty explanation. Correct answer: ${question.correctAnswer}"
+					"AI returned an empty explanation. Correct answer: ${question.correctAnswer}"
 				}
 			} catch (jsonError: Exception) {
 				"Failed to parse Grok response: ${jsonError.message}\n\nCorrect answer: ${question.correctAnswer}"
 			}
 		} catch (e: Exception) {
-			"Network error while contacting Grok: ${e.message}\n\nCorrect answer: ${question.correctAnswer}"
+			"Network error while contacting AI: ${e.message}\n\nCorrect answer: ${question.correctAnswer}"
 		} finally {
 			connection.disconnect()
 		}
+	}
+
+	private fun sanitizeAiOutput(raw: String): String {
+		return raw
+			.replace("\r", "")
+			.replace(Regex("(?m)^\\s*#{1,6}\\s*"), "")
+			.replace("**", "")
+			.replace("__", "")
+			.replace(Regex("(?m)^\\s*[\\-*+]\\s+"), "")
+			.replace(Regex("(?m)^\\s*\\|?\\s*:?-{3,}.*$"), "")
+			.replace("|", " ")
+			.replace(Regex("[ \\t]{2,}"), " ")
+			.replace(Regex("\\n{3,}"), "\\n\\n")
+			.trim()
+	}
+
+	private fun extractContent(message: JSONObject): String {
+		val raw = message.opt("content")
+		if (raw is String) return raw.trim()
+		if (raw is JSONArray) {
+			val text = buildString {
+				for (i in 0 until raw.length()) {
+					val part = raw.opt(i)
+					when (part) {
+						is String -> append(part)
+						is JSONObject -> {
+							val nestedText = part.optString("text", "")
+							if (nestedText.isNotBlank()) append(nestedText)
+						}
+					}
+				}
+			}
+			return text.trim()
+		}
+		return ""
 	}
 }

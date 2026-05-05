@@ -15,7 +15,8 @@ sealed class DashboardUiState {
 		val hasSessionToResume: Boolean = false,
 		val lastQuestionIndex: Int = 0,
 		val isOffline: Boolean = false,
-		val totalAttempts: Int = 0
+		val totalAttempts: Int = 0,
+		val availableQuestionCount: Int = 0
 	) : DashboardUiState()
 
 	data class Error(val message: String) : DashboardUiState()

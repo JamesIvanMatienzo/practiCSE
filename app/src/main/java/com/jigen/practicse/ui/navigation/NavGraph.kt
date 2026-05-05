@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.ui.screens.login.LoginScreen
 import com.jigen.practicse.ui.screens.dashboard.DashboardScreen
 import com.jigen.practicse.ui.screens.exam.ExamScreen
@@ -25,6 +26,8 @@ fun NavGraph(
 	context: Context,
 	startDestination: String = Screen.Login.route
 ) {
+	val configStore = ExamConfigStore(context)
+
 	NavHost(
 		navController = navController,
 		startDestination = startDestination
@@ -56,7 +59,8 @@ fun NavGraph(
 				onProfileClick = {
 					navController.navigate(Screen.Profile.route)
 				},
-				onStartNewExam = {
+				onStartNewExam = { requested ->
+					configStore.setAllExamCount(requested)
 					navController.navigate(Screen.Exam.createRoute("new"))
 				},
 				onContinueSession = {
@@ -140,7 +144,12 @@ fun NavGraph(
 				onBack = {
 					navController.popBackStack()
 				},
-				onStartPractice = { categoryKey ->
+				onStartPractice = { categoryKey, requested ->
+					when (categoryKey) {
+						"numerical_ability" -> configStore.setNumericalCount(requested)
+						"verbal_ability" -> configStore.setVerbalCount(requested)
+						"general_information" -> configStore.setGeneralCount(requested)
+					}
 					navController.navigate(Screen.Exam.createRoute("new@$categoryKey"))
 				}
 			)

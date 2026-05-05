@@ -13,31 +13,40 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,10 +63,11 @@ private val AccentBackground = Color(0xFFEAF1FE)
 fun StudyLibraryScreen(
 	context: Context,
 	onBack: () -> Unit = {},
-	onStartPractice: (String) -> Unit = {}
+	onStartPractice: (String, Int) -> Unit = { _, _ -> }
 ) {
 	val viewModel: StudyLibraryViewModel = viewModel(factory = StudyLibraryViewModel.factory(context))
 	val state by viewModel.uiState.collectAsState()
+	var pendingCategory by remember { mutableStateOf<StudyCategoryItem?>(null) }
 
 	Scaffold(
 		containerColor = SurfaceColor,
@@ -110,7 +120,7 @@ fun StudyLibraryScreen(
 								StudyCategoryCard(
 									category = category,
 									modifier = Modifier.weight(1f),
-									onClick = { onStartPractice(category.categoryKey) }
+									onClick = { pendingCategory = category }
 								)
 							}
 							if (row.size == 1) {
@@ -137,6 +147,19 @@ fun StudyLibraryScreen(
 				}
 			}
 		}
+
+		pendingCategory?.let { selected ->
+			QuestionCountDialog(
+				title = selected.title,
+				helper = "How many random questions do you want for this category?",
+				maxAllowed = selected.questionCount,
+				onDismiss = { pendingCategory = null },
+				onConfirm = { requested ->
+					onStartPractice(selected.categoryKey, requested)
+					pendingCategory = null
+				}
+			)
+		}
 	}
 }
 
@@ -147,10 +170,10 @@ private fun StudyCategoryCard(
 	onClick: () -> Unit
 ) {
 	val iconRes = when {
-		category.title.contains("Numerical", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_numerical_ability
-		category.title.contains("Verbal", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_verbal_ability
-		category.title.contains("General", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_general_information
-		else -> com.jigen.practicse.R.drawable.ic_app_icon
+		category.title.contains("Numerical", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_numerical
+		category.title.contains("Verbal", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_verbal
+		category.title.contains("General", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_general
+		else -> com.jigen.practicse.R.drawable.ic_study_general
 	}
 
 	Card(
@@ -178,25 +201,83 @@ private fun StudyCategoryCard(
 				Icon(
 					painter = painterResource(id = iconRes),
 					contentDescription = category.title,
-					modifier = Modifier.size(48.dp),
+					modifier = Modifier.size(44.dp),
 					tint = PrimaryBlue
 				)
 			}
 			Spacer(modifier = Modifier.height(12.dp))
 			Text(
 				text = category.title,
-				fontSize = 15.sp,
+				fontSize = 14.sp,
 				fontWeight = FontWeight.SemiBold,
-				color = TextColor
+				color = TextColor,
+				lineHeight = 18.sp,
+				textAlign = TextAlign.Center,
+				modifier = Modifier.fillMaxWidth()
 			)
 			Spacer(modifier = Modifier.height(6.dp))
 			Text(
 				text = "${category.questionCount} questions",
 				fontSize = 12.sp,
-				color = MutedText
+				color = MutedText,
+				textAlign = TextAlign.Center,
+				modifier = Modifier.fillMaxWidth()
 			)
 		}
 	}
+}
+
+@Composable
+private fun QuestionCountDialog(
+	title: String,
+	helper: String,
+	maxAllowed: Int,
+	onDismiss: () -> Unit,
+	onConfirm: (Int) -> Unit
+) {
+	var input by remember { mutableStateOf(if (maxAllowed >= 10) "10" else maxAllowed.coerceAtLeast(1).toString()) }
+	val parsed = input.toIntOrNull()
+	val isValid = parsed != null && parsed in 1..maxAllowed
+	val errorText = when {
+		maxAllowed <= 0 -> "No questions available in this category."
+		input.isBlank() -> "Enter a number between 1 and $maxAllowed"
+		parsed == null -> "Numbers only"
+		parsed < 1 -> "Minimum is 1"
+		parsed > maxAllowed -> "Maximum is $maxAllowed"
+		else -> null
+	}
+
+	AlertDialog(
+		onDismissRequest = onDismiss,
+		title = { Text(title, fontWeight = FontWeight.Bold) },
+		text = {
+			Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+				Text(helper, color = MutedText, fontSize = 13.sp)
+				OutlinedTextField(
+					value = input,
+					onValueChange = { value ->
+						input = value.filter { it.isDigit() }
+					},
+					label = { Text("Question count") },
+					singleLine = true,
+					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+					isError = errorText != null,
+					modifier = Modifier.fillMaxWidth()
+				)
+				if (errorText != null) {
+					Text(errorText, color = Color(0xFFD93025), fontSize = 12.sp)
+				}
+			}
+		},
+		confirmButton = {
+			TextButton(onClick = { if (isValid && parsed != null) onConfirm(parsed) }, enabled = isValid) {
+				Text("Start")
+			}
+		},
+		dismissButton = {
+			TextButton(onClick = onDismiss) { Text("Cancel") }
+		}
+	)
 }
 
 data class StudyCategoryItem(

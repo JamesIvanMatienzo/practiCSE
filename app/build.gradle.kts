@@ -90,9 +90,9 @@ fun resolveLocalEnvValue(propertyName: String): String {
 
 val supabaseUrl = resolveSupabaseValue("SUPABASE_URL")
 val supabaseKey = resolveSupabaseValue("SUPABASE_KEY")
-val grokApiKey = resolveLocalEnvValue("GROK_API_KEY")
-val grokBaseUrl = resolveLocalEnvValue("GROK_BASE_URL")
-val grokModel = resolveLocalEnvValue("GROK_MODEL")
+val groqApiKey = resolveLocalEnvValue("GROQ_API_KEY").ifBlank { resolveLocalEnvValue("GROK_API_KEY") }
+val groqBaseUrl = resolveLocalEnvValue("GROQ_BASE_URL").ifBlank { resolveLocalEnvValue("GROK_BASE_URL") }
+val groqModel = resolveLocalEnvValue("GROQ_MODEL").ifBlank { resolveLocalEnvValue("GROK_MODEL") }
 val scoresListEndpoint = resolveLocalEnvValue("SCORES_LIST_ENDPOINT")
 val scoresApiKey = resolveLocalEnvValue("SCORES_API_KEY")
 
@@ -101,9 +101,9 @@ android {
 	defaultConfig {
 		buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
 		buildConfigField("String", "SUPABASE_KEY", "\"$supabaseKey\"")
-		buildConfigField("String", "GROK_API_KEY", "\"$grokApiKey\"")
-		buildConfigField("String", "GROK_BASE_URL", "\"$grokBaseUrl\"")
-		buildConfigField("String", "GROK_MODEL", "\"$grokModel\"")
+		buildConfigField("String", "GROQ_API_KEY", "\"$groqApiKey\"")
+		buildConfigField("String", "GROQ_BASE_URL", "\"$groqBaseUrl\"")
+		buildConfigField("String", "GROQ_MODEL", "\"$groqModel\"")
 		buildConfigField("String", "SCORES_LIST_ENDPOINT", "\"$scoresListEndpoint\"")
 		buildConfigField("String", "SCORES_API_KEY", "\"$scoresApiKey\"")
 	}

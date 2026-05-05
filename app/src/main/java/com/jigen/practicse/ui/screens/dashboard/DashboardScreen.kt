@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -31,10 +33,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,6 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 private val SurfaceColor = Color(0xFFF8F9FA)
@@ -61,7 +69,7 @@ private val OfflineGray = Color(0xFF9CA3AF)
 fun DashboardScreen(
 	context: Context,
 	onProfileClick: () -> Unit = {},
-	onStartNewExam: () -> Unit = {},
+	onStartNewExam: (Int) -> Unit = {},
 	onContinueSession: () -> Unit = {},
 	onRanking: () -> Unit = {},
 	onStudyLibrary: () -> Unit = {}
@@ -189,11 +197,13 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 @Composable
 private fun DashboardBody(
 	state: DashboardUiState.Success,
-	onStartNewExam: () -> Unit,
+	onStartNewExam: (Int) -> Unit,
 	onContinueSession: () -> Unit,
 	onRanking: () -> Unit,
 	onStudyLibrary: () -> Unit
 ) {
+	var showQuestionDialog by remember { mutableStateOf(false) }
+
 	Spacer(modifier = Modifier.height(12.dp))
 
 	ActionCard(
@@ -201,8 +211,21 @@ private fun DashboardBody(
 		title = "Start a New Exam",
 		description = "Test yourself with a fresh set of questions",
 		iconBackground = PrimaryBlue,
-		onClick = onStartNewExam
+		onClick = { showQuestionDialog = true }
 	)
+
+	if (showQuestionDialog) {
+		QuestionCountDialog(
+			title = "Start New Exam",
+			helper = "How many random questions do you want?",
+			maxAllowed = state.availableQuestionCount,
+			onDismiss = { showQuestionDialog = false },
+			onConfirm = { requested ->
+				showQuestionDialog = false
+				onStartNewExam(requested)
+			}
+		)
+	}
 
 	Spacer(modifier = Modifier.height(14.dp))
 
@@ -308,9 +331,14 @@ private fun DashboardBody(
 
 				Spacer(modifier = Modifier.width(12.dp))
 
-				Column {
+				Column(modifier = Modifier.weight(1f)) {
 					Text("Keep it up!", fontWeight = FontWeight.Bold, color = TextColor)
-					Text("You're making great progress", color = MutedText, fontSize = 12.sp)
+					Text(
+						"You're making great progress.",
+						color = MutedText,
+						fontSize = 12.sp,
+						lineHeight = 16.sp
+					)
 				}
 			}
 		}
@@ -319,9 +347,9 @@ private fun DashboardBody(
 	Spacer(modifier = Modifier.height(14.dp))
 
 	StatusPill(
-		text = "Offline Mode Active",
+		text = "Offline Mode: Active",
 		textColor = TextColor,
-		icon = Icons.Filled.Star,
+		icon = Icons.Filled.Info,
 		iconTint = OfflineGray
 	)
 
@@ -345,8 +373,61 @@ private fun StatusPill(
 	) {
 		Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(14.dp))
 		Spacer(modifier = Modifier.width(6.dp))
-		Text(text, color = textColor, fontSize = 11.sp)
+		Text(text, color = textColor, fontSize = 11.sp, lineHeight = 14.sp)
 	}
+}
+
+@Composable
+private fun QuestionCountDialog(
+	title: String,
+	helper: String,
+	maxAllowed: Int,
+	onDismiss: () -> Unit,
+	onConfirm: (Int) -> Unit
+) {
+	var input by remember { mutableStateOf(if (maxAllowed >= 10) "10" else maxAllowed.coerceAtLeast(1).toString()) }
+	val parsed = input.toIntOrNull()
+	val isValid = parsed != null && parsed in 1..maxAllowed
+	val errorText = when {
+		maxAllowed <= 0 -> "No questions available in the database."
+		input.isBlank() -> "Enter a number between 1 and $maxAllowed"
+		parsed == null -> "Numbers only"
+		parsed < 1 -> "Minimum is 1"
+		parsed > maxAllowed -> "Maximum is $maxAllowed"
+		else -> null
+	}
+
+	AlertDialog(
+		onDismissRequest = onDismiss,
+		title = { Text(title, fontWeight = FontWeight.Bold) },
+		text = {
+			Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+				Text(helper, color = MutedText, fontSize = 13.sp)
+				OutlinedTextField(
+					value = input,
+					onValueChange = { value ->
+						input = value.filter { it.isDigit() }
+					},
+					label = { Text("Question count") },
+					singleLine = true,
+					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+					isError = errorText != null,
+					modifier = Modifier.fillMaxWidth()
+				)
+				if (errorText != null) {
+					Text(errorText, color = Color(0xFFD93025), fontSize = 12.sp)
+				}
+			}
+		},
+		confirmButton = {
+			TextButton(onClick = { if (isValid && parsed != null) onConfirm(parsed) }, enabled = isValid) {
+				Text("Start")
+			}
+		},
+		dismissButton = {
+			TextButton(onClick = onDismiss) { Text("Cancel") }
+		}
+	)
 }
 
 @Composable
@@ -416,7 +497,15 @@ private fun OutlinedActionButton(
 	) {
 		Icon(icon, contentDescription = null, tint = PrimaryBlue)
 		Spacer(modifier = Modifier.width(8.dp))
-		Text(label, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+		Text(
+			text = label,
+			fontWeight = FontWeight.SemiBold,
+			fontSize = 12.sp,
+			maxLines = 1,
+			overflow = TextOverflow.Ellipsis,
+			textAlign = TextAlign.Center,
+			modifier = Modifier.weight(1f)
+		)
 	}
 }
 

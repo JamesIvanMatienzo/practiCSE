@@ -162,22 +162,8 @@ class ExamViewModelNew(
 			return filtered.shuffled().take(examConfig.countForCategoryKey(activeCategoryKey))
 		}
 
-		val numerical = allQuestions
-			.filter { matchesCategory(it, "numerical_ability") }
-			.shuffled()
-			.take(examConfig.numericalCount)
-
-		val verbal = allQuestions
-			.filter { matchesCategory(it, "verbal_ability") }
-			.shuffled()
-			.take(examConfig.verbalCount)
-
-		val general = allQuestions
-			.filter { matchesCategory(it, "general_information") }
-			.shuffled()
-			.take(examConfig.generalCount)
-
-		return (numerical + verbal + general).shuffled()
+		val requested = examConfig.allExamCount.coerceAtLeast(1)
+		return allQuestions.shuffled().take(minOf(requested, allQuestions.size))
 	}
 
 	private suspend fun ensureQuestionsSeeded() {
@@ -239,7 +225,7 @@ class ExamViewModelNew(
 		if (question.id in currentState.evaluatedQuestions) return
 
 		viewModelScope.launch {
-			val isCorrect = selectedText.equals(question.correctAnswer, ignoreCase = true)
+			val isCorrect = selectedText.trim().equals(question.correctAnswer.trim(), ignoreCase = true)
 			val newScore = if (isCorrect) currentState.currentScore + 1 else currentState.currentScore
 			val updatedAnswers = currentState.selectedAnswers.toMutableMap().apply {
 				put(question.id, selectedText)

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +24,6 @@ class StudyLibraryViewModel(
 		viewModelScope.launch {
 			try {
 				val database = PractiCSEDatabase.getInstance(context)
-				val config = ExamConfigStore(context).getConfig()
 				val questions = database.questionDao().getAllQuestions()
 				val countsByCategory = questions
 					.groupingBy { normalizeCategoryKey(it.category) }
@@ -35,17 +33,17 @@ class StudyLibraryViewModel(
 					StudyCategoryItem(
 						title = "Numerical Ability",
 						categoryKey = "numerical_ability",
-						questionCount = minOf(config.numericalCount, countsByCategory["numerical_ability"] ?: 0)
+						questionCount = countsByCategory["numerical_ability"] ?: 0
 					),
 					StudyCategoryItem(
 						title = "Verbal Ability",
 						categoryKey = "verbal_ability",
-						questionCount = minOf(config.verbalCount, countsByCategory["verbal_ability"] ?: 0)
+						questionCount = countsByCategory["verbal_ability"] ?: 0
 					),
 					StudyCategoryItem(
 						title = "General Information",
 						categoryKey = "general_information",
-						questionCount = minOf(config.generalCount, countsByCategory["general_information"] ?: 0)
+						questionCount = countsByCategory["general_information"] ?: 0
 					)
 				)
 

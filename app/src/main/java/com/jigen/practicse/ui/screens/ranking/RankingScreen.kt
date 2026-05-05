@@ -33,7 +33,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -64,7 +63,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_leaderboard),
+                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_rank_leaderboard),
                             contentDescription = "Ranking",
                             modifier = Modifier.size(24.dp),
                             tint = PrimaryBlue
@@ -160,11 +159,15 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(bottom = 12.dp),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
                                 verticalAlignment = Alignment.Bottom
                             ) {
                                 top3.forEachIndexed { index, entry ->
-                                    PodiumItem(rank = index + 1, entry = entry)
+                                    PodiumItem(
+                                        rank = index + 1,
+                                        entry = entry,
+                                        modifier = Modifier.weight(1f)
+                                    )
                                 }
                             }
                         }
@@ -243,8 +246,8 @@ private fun LeaderboardRow(rank: Int, name: String, score: Int) {
 }
 
 @Composable
-private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity, modifier: Modifier = Modifier) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
                 .size(if (rank == 1) 64.dp else 54.dp)
@@ -264,7 +267,9 @@ private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity) {
             color = TextColor,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,
-            maxLines = 1
+            maxLines = 1,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
         Text(
             text = entry.totalScore.toString(),

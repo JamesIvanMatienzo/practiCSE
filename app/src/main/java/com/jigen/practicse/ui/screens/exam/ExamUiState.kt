@@ -49,8 +49,8 @@ sealed class ExamUiState {
 				evaluatedQuestions.forEach { questionId ->
 					val question = questions.find { it.id == questionId }
 					val selectedAnswer = selectedAnswers[questionId]
-					if (question != null && selectedAnswer != null && 
-						selectedAnswer.equals(question.correctAnswer, ignoreCase = true)) {
+					if (question != null && selectedAnswer != null &&
+						selectedAnswer.trim().equals(question.correctAnswer.trim(), ignoreCase = true)) {
 						count++
 					}
 				}
@@ -63,8 +63,8 @@ sealed class ExamUiState {
 				evaluatedQuestions.forEach { questionId ->
 					val question = questions.find { it.id == questionId }
 					val selectedAnswer = selectedAnswers[questionId]
-					if (question != null && selectedAnswer != null && 
-						!selectedAnswer.equals(question.correctAnswer, ignoreCase = true)) {
+					if (question != null && selectedAnswer != null &&
+						!selectedAnswer.trim().equals(question.correctAnswer.trim(), ignoreCase = true)) {
 						count++
 					}
 				}
