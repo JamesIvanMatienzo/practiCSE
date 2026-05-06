@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783509303361",
+    "project_id": "practicse-production",
+    "storage_bucket": "practicse-production.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783509303361:android:706c93edf932307d67d6c0",
+        "android_client_info": {
+          "package_name": "com.jigen.practicse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpiEmABlLS34-peWzsYcsjKPCwljP-umo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
