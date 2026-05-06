@@ -47,6 +47,9 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 	var school by remember { mutableStateOf("") }
 	var age by remember { mutableStateOf("") }
 
+	val isEmailValid = email.contains("@") && email.contains(".") && email.substringAfterLast("@").contains(".")
+	val showEmailError = email.isNotEmpty() && !isEmailValid
+
 	Box(
 		modifier = Modifier
 			.fillMaxSize()
@@ -130,15 +133,27 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 			Spacer(modifier = Modifier.height(14.dp))
 
 			// Email
-			OutlinedTextField(
-				value = email,
-				onValueChange = { email = it },
-				modifier = Modifier.fillMaxWidth(),
-				placeholder = { Text("Email") },
-				leadingIcon = { Icon(Icons.Filled.Email, contentDescription = null) },
-				singleLine = true,
-				shape = RoundedCornerShape(14.dp)
-			)
+			Column {
+				OutlinedTextField(
+					value = email,
+					onValueChange = { email = it },
+					modifier = Modifier.fillMaxWidth(),
+					placeholder = { Text("Email") },
+					leadingIcon = { Icon(Icons.Filled.Email, contentDescription = null) },
+					singleLine = true,
+					shape = RoundedCornerShape(14.dp),
+					isError = showEmailError
+				)
+
+				if (showEmailError) {
+					Text(
+						"Invalid email address - must contain @ and domain",
+						fontSize = 12.sp,
+						color = Color.Red,
+						modifier = Modifier.padding(top = 4.dp, start = 16.dp)
+					)
+				}
+			}
 
 			Spacer(modifier = Modifier.height(14.dp))
 
@@ -172,7 +187,7 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 
 			Button(
 				onClick = {
-					if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword) {
+					if (fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword) {
 						// Parse full name into parts
 						val nameParts = fullName.trim().split("\\s+".toRegex())
 						val firstName = nameParts.getOrNull(0) ?: ""
@@ -204,26 +219,35 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 					.fillMaxWidth()
 					.height(56.dp),
 				colors = ButtonDefaults.buttonColors(
-					containerColor = if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword && school.isNotBlank()) {
+					containerColor = if (fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword && school.isNotBlank()) {
 						Color(0xFF1976D2)
 					} else {
 						Color(0xFFBDBDBD)
 					}
 				),
 				shape = RoundedCornerShape(14.dp),
-				enabled = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password == confirmPassword && school.isNotBlank()
+				enabled = fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword && school.isNotBlank()
 			) {
 				Text("Create Account", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.White)
 			}
 
 			Spacer(modifier = Modifier.height(16.dp))
 
-			Text(
-				"Already have an account? Sign In",
-				fontSize = 14.sp,
-				color = Color(0xFF1976D2),
-				modifier = Modifier.padding(top = 8.dp)
-			)
+			Button(
+				onClick = onBack,
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(horizontal = 0.dp),
+				colors = ButtonDefaults.buttonColors(
+					containerColor = Color.Transparent,
+					contentColor = Color(0xFF1976D2)
+				)
+			) {
+				Text(
+					"Already have an account? Sign In",
+					fontSize = 14.sp
+				)
+			}
 
 			Spacer(modifier = Modifier.height(32.dp))
 		}
