@@ -90,14 +90,14 @@ fun NavGraph(
 					navController.navigate(Screen.Exam.createRoute("resume"))
 				},
 				onRanking = {
-						navController.navigate(Screen.Ranking.route) {
-							launchSingleTop = true
-						}
+					navController.navigate(Screen.Ranking.route) {
+						launchSingleTop = true
+					}
 				},
 				onStudyLibrary = {
-						navController.navigate(Screen.StudyLibrary.route) {
-							launchSingleTop = true
-						}
+					navController.navigate(Screen.StudyLibrary.route) {
+						launchSingleTop = true
+					}
 				}
 			)
 		}
@@ -112,6 +112,11 @@ fun NavGraph(
 				sessionId = sessionId,
 				onDeepDive = { questionId ->
 					navController.navigate(Screen.DeepDive.createRoute(questionId))
+				},
+				onBack = {
+					navController.navigate(Screen.Dashboard.route) {
+						popUpTo(Screen.Dashboard.route) { inclusive = false }
+					}
 				}
 			)
 		}
