@@ -170,10 +170,10 @@ private fun StudyCategoryCard(
 	onClick: () -> Unit
 ) {
 	val iconRes = when {
-		category.title.contains("Numerical", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_numerical
-		category.title.contains("Verbal", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_verbal
-		category.title.contains("General", ignoreCase = true) -> com.jigen.practicse.R.drawable.ic_study_general
-		else -> com.jigen.practicse.R.drawable.ic_study_general
+		category.categoryKey == "numerical_ability" -> com.jigen.practicse.R.drawable.ic_numerical_ability
+		category.categoryKey == "verbal_ability" -> com.jigen.practicse.R.drawable.ic_verbal_ability
+		category.categoryKey == "general_information" -> com.jigen.practicse.R.drawable.ic_general_information
+		else -> com.jigen.practicse.R.drawable.ic_general_information
 	}
 
 	Card(
@@ -202,7 +202,7 @@ private fun StudyCategoryCard(
 					painter = painterResource(id = iconRes),
 					contentDescription = category.title,
 					modifier = Modifier.size(44.dp),
-					tint = PrimaryBlue
+					tint = Color.Unspecified
 				)
 			}
 			Spacer(modifier = Modifier.height(12.dp))
