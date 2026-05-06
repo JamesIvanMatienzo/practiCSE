@@ -116,13 +116,13 @@ Numerical_Ability_Index,Numerical Ability,Answers,Wrong Answers (from choices)
 115,850 is 40% of what number?,2125,"340, 6800, 5600, 212.5"
 116,1 1/5 of what number is 1 3/8?,1 7/48,"55/48, 1 13/20, 48/55, 11/24"
 117,120% of what number is 72?,60,"400, 700, 900, 1500, 2500"
-118,There are 96 students in a class 1/6 is enrolled in swimming 1/2 in karate and the rest in voice lessons. How many are enrolled in voice lessons?,32,
-119,How much money was borrowed at 16% annual interest for 9 months if the interest paid was 3000?,"25,000",
-120,"The average of four numbers is 24. If you take a certain number out of four, the new average will be 28. Find the number.",12,
-121,"In a dormitory, where 40 students live only 5% are males. 50% of females are working and rest are students, how many females are studying?",38,
+118,There are 96 students in a class 1/6 is enrolled in swimming 1/2 in karate and the rest in voice lessons. How many are enrolled in voice lessons?,32, "33, 34, None of the Above"
+119,How much money was borrowed at 16% annual interest for 9 months if the interest paid was 3000?,"25,000","30,000, 32,000, 33,000, 34,000, None of the Above"
+120,"The average of four numbers is 24. If you take a certain number out of four, the new average will be 28. Find the number.",12,"10, 8, 9, None of the Above"
+121,"In a dormitory, where 40 students live only 5% are males. 50% of females are working and rest are students, how many females are studying?",38,"39, 40, 41, None of the Above"
 122,Change 13.5% to its fraction form,27/200,"27/2, 0.135, 27/20, 24/125"
 123,"If -6/(a-3)=3/(a+2), then a=_",-1/3,"1/3, 2, -1/2, 3"
-124,"In a group of 80 students, 25 are taking Algebra, 40 are taking Biology, and 15 are taking both Algebra and Biology. If a student, chosen at random, is taking Algebra, what is the probability that he/she is taking Biology?",60%,
+124,"In a group of 80 students, 25 are taking Algebra, 40 are taking Biology, and 15 are taking both Algebra and Biology. If a student, chosen at random, is taking Algebra, what is the probability that he/she is taking Biology?",60%, "40%, 35%, 55%"
 125,"Put these numbers in order from least to greatest. 8.75, 8.00, 8.44, 8.04","8.00, 8.04, 8.44, 8.75","8.75, 8.44, 8.04, 8.00, 8.75, 8.00, 8.04, 8.44, 8.04, 8.00, 8.44, 8.75"
 126,"Rogie went to a store. He bought 6.4 kgs of mangoes and oranges. If 5.43 kgs were mangoes, how many kilos were oranges?",0.97 kgs,"11.83 kgs, 1.03 kgs, 1.97 kgs, 1.03 kgs"
 127,"The mean median and mode of 9 numbers are equal. The numbers are 12, 22, 10, 15, 14, 11, 19, 17. What is the 9th number?",15,"14, 12, 18, 11"
