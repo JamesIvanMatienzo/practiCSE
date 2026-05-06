@@ -119,7 +119,9 @@ fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
 				elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 			) {
 				Column(
-					modifier = Modifier.padding(20.dp),
+					modifier = Modifier
+						.fillMaxWidth()
+						.padding(20.dp),
 					horizontalAlignment = Alignment.CenterHorizontally,
 					verticalArrangement = Arrangement.spacedBy(12.dp)
 				) {
