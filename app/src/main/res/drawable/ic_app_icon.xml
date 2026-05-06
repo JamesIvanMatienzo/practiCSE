@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
-    <size android:width="108dp" android:height="108dp" />
-    <solid android:color="#1976D2" />
-</shape>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Bold P icon -->
+    <g>
+        <!-- Main P shape -->
+        <path
+            android:pathData="M32,20L32,88L55,88C75,88 82,76 82,63C82,50 75,38 55,38L46,38L46,20Z"
+            android:fillColor="#1A73E8"/>
+        <!-- White inner cutout for P bowl -->
+        <path
+            android:pathData="M46,38C46,38 46,70 55,70C68,70 72,62 72,54C72,46 68,38 55,38Z"
+            android:fillColor="#FFFFFF"/>
+    </g>
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,0h108v108h-108z" />
+</vector>

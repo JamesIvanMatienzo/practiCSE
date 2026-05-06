@@ -153,20 +153,12 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 		verticalAlignment = Alignment.CenterVertically
 	) {
 		Row(verticalAlignment = Alignment.CenterVertically) {
-			Box(
-				modifier = Modifier
-					.size(34.dp)
-					.clip(RoundedCornerShape(10.dp))
-					.background(PrimaryBlueSoft),
-				contentAlignment = Alignment.Center
-			) {
-				Icon(
-					painter = painterResource(id = com.jigen.practicse.R.drawable.ic_practicse_logo),
-					contentDescription = null,
-					tint = PrimaryBlue,
-					modifier = Modifier.size(24.dp)
-				)
-			}
+			Icon(
+				painter = painterResource(id = com.jigen.practicse.R.drawable.ic_logo_p),
+				contentDescription = null,
+				tint = PrimaryBlue,
+				modifier = Modifier.size(32.dp)
+			)
 
 			Spacer(modifier = Modifier.width(10.dp))
 
@@ -233,8 +225,8 @@ private fun DashboardBody(
 
 	Spacer(modifier = Modifier.height(12.dp))
 
-	ActionCard(
-		icon = Icons.Filled.Info,
+	ActionCardDrawable(
+		iconRes = com.jigen.practicse.R.drawable.ic_action_start_exam,
 		title = "Start a New Exam",
 		description = "Test yourself with a fresh set of questions",
 		iconBackground = PrimaryBlue,
@@ -488,6 +480,62 @@ private fun ActionCard(
 				contentAlignment = Alignment.Center
 			) {
 				Icon(icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(26.dp))
+			}
+
+			Spacer(modifier = Modifier.width(16.dp))
+
+			Column(modifier = Modifier.weight(1f)) {
+				Text(title, fontWeight = FontWeight.Bold, color = TextColor, fontSize = 16.sp)
+				Spacer(modifier = Modifier.height(4.dp))
+				Text(
+					description,
+					color = MutedText,
+					fontSize = 13.sp,
+					lineHeight = 18.sp,
+					maxLines = 2,
+					overflow = TextOverflow.Ellipsis
+				)
+			}
+		}
+	}
+}
+
+@Composable
+private fun ActionCardDrawable(
+	iconRes: Int,
+	title: String,
+	description: String,
+	iconBackground: Color,
+	enabled: Boolean = true,
+	onClick: () -> Unit
+) {
+	Card(
+		modifier = Modifier
+			.fillMaxWidth()
+			.clickable(enabled = enabled, onClick = onClick),
+		shape = RoundedCornerShape(18.dp),
+		colors = CardDefaults.cardColors(containerColor = Color.White),
+		elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+	) {
+		Row(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(18.dp),
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Box(
+				modifier = Modifier
+					.size(54.dp)
+					.clip(CircleShape)
+					.background(iconBackground),
+				contentAlignment = Alignment.Center
+			) {
+				Icon(
+					painter = painterResource(id = iconRes),
+					contentDescription = null,
+					tint = Color.White,
+					modifier = Modifier.size(26.dp)
+				)
 			}
 
 			Spacer(modifier = Modifier.width(16.dp))

@@ -194,8 +194,7 @@ private fun StudyCategoryCard(
 			Box(
 				modifier = Modifier
 					.size(72.dp)
-					.clip(RoundedCornerShape(16.dp))
-					.background(AccentBackground),
+					.clip(RoundedCornerShape(16.dp)),
 				contentAlignment = Alignment.Center
 			) {
 				Icon(

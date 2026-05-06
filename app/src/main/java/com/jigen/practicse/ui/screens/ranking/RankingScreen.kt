@@ -2,6 +2,7 @@ package com.jigen.practicse.ui.screens.ranking
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -33,6 +35,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,8 +48,14 @@ import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 
 private val SurfaceColor = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1A73E8)
-private val TextColor = Color(0xFF202124)
-private val MutedText = Color(0xFF6C757D)
+        private val PrimaryBlueDeep = Color(0xFF0D47A1)
+        private val PrimaryBlueSoft = Color(0xFFEAF2FF)
+        private val BorderColor = Color(0xFFDCE7FA)
+        private val Gold = Color(0xFFF4B400)
+        private val Silver = Color(0xFF9AA0A6)
+        private val Bronze = Color(0xFFB06D3B)
+        private val TextColor = Color(0xFF202124)
+        private val MutedText = Color(0xFF6C757D)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,6 +105,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
             is RankingUiState.Success -> {
                 val top3 = s.top.take(3)
                 val others = s.top.drop(3)
+                val totalEntries = s.top.size
 
                 LazyColumn(
                     modifier = Modifier
@@ -102,6 +113,56 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         .padding(padding)
                         .padding(horizontal = 16.dp, vertical = 12.dp)
                 ) {
+                    item {
+                        Card(
+                            shape = RoundedCornerShape(22.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .border(1.dp, BorderColor, RoundedCornerShape(22.dp))
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(44.dp)
+                                        .clip(CircleShape)
+                                        .background(Brush.linearGradient(listOf(PrimaryBlue, PrimaryBlueDeep))),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = com.jigen.practicse.R.drawable.ic_rank_leaderboard),
+                                        contentDescription = null,
+                                        tint = Color.White,
+                                        modifier = Modifier.size(22.dp)
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "${totalEntries} ranked players",
+                                        color = TextColor,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp
+                                    )
+                                    Text(
+                                        text = if (s.isPlaceholder) {
+                                            "Offline sample data is shown here."
+                                        } else {
+                                            "Updated from the latest leaderboard sync."
+                                        },
+                                        color = MutedText,
+                                        fontSize = 12.sp
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+
                     if (s.isPlaceholder) {
                         item {
                             Card(

@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <!-- White circle background -->
+  <path
+      android:pathData="M54,0C83.8,0 108,24.2 108,54C108,83.8 83.8,108 54,108C24.2,108 0,83.8 0,54C0,24.2 24.2,0 54,0Z"
+      android:fillColor="#FFFFFF"/>
+  <!-- Bold P with accent -->
+  <g>
+    <!-- Main P shape -->
+    <path
+        android:pathData="M32,20L32,88L55,88C75,88 82,76 82,63C82,50 75,38 55,38L46,38L46,20Z"
+        android:fillColor="#1A73E8"/>
+    <!-- White inner cutout for P bowl -->
+    <path
+        android:pathData="M46,38C46,38 46,70 55,70C68,70 72,62 72,54C72,46 68,38 55,38Z"
+        android:fillColor="#FFFFFF"/>
+  </g>
+</vector>
