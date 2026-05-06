@@ -220,7 +220,8 @@ class ExamViewModelNew(
 			}
 		}
 
-		if (wrongChoices.isEmpty()) return null
+		// Require at least 3 wrong choices so every question has 4+ total options
+		if (wrongChoices.size < 3) return null
 
 		val refText = optString("referenceText")
 
