@@ -10,6 +10,8 @@ import com.jigen.practicse.repository.RankingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 
 class RankingViewModel(private val repository: RankingRepository, private val context: Context) : ViewModel() {
 
@@ -39,12 +41,18 @@ class RankingViewModel(private val repository: RankingRepository, private val co
                 val sorted = list.sortedByDescending { it.totalScore }
                 val isPlaceholder = offlineMode
                 val withFallback = when {
-                    offlineMode -> placeholderEntries(userName)
-                    sorted.isEmpty() -> {
-                        // Online but no data yet — show only the current user
-                        val now = System.currentTimeMillis()
-                        listOf(LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now))
+                    offlineMode -> {
+                        val db = com.jigen.practicse.data.local.PractiCSEDatabase.getInstance(context)
+                        val progress = withContext(Dispatchers.IO) { db.progressDao().getAllProgress() }
+                        if (progress.isEmpty()) {
+                            emptyList()
+                        } else {
+                            val totalScore = progress.count { it.isCorrect }
+                            val now = System.currentTimeMillis()
+                            listOf(LeaderboardEntryEntity(userName = userName, totalScore = totalScore, lastUpdatedMillis = now))
+                        }
                     }
+                    sorted.isEmpty() -> placeholderEntries(userName)
                     else -> sorted
                 }
                 val userEntry = withFallback.find { it.userName == userName }
@@ -63,11 +71,18 @@ class RankingViewModel(private val repository: RankingRepository, private val co
 
                 val isPlaceholder = offlineMode
                 val withFallback = when {
-                    offlineMode -> placeholderEntries(userName)
-                    sorted.isEmpty() -> {
-                        val now = System.currentTimeMillis()
-                        listOf(LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now))
+                    offlineMode -> {
+                        val db = com.jigen.practicse.data.local.PractiCSEDatabase.getInstance(context)
+                        val progress = withContext(Dispatchers.IO) { db.progressDao().getAllProgress() }
+                        if (progress.isEmpty()) {
+                            emptyList()
+                        } else {
+                            val totalScore = progress.count { it.isCorrect }
+                            val now = System.currentTimeMillis()
+                            listOf(LeaderboardEntryEntity(userName = userName, totalScore = totalScore, lastUpdatedMillis = now))
+                        }
                     }
+                    sorted.isEmpty() -> placeholderEntries(userName)
                     else -> sorted
                 }
 

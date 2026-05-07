@@ -56,6 +56,8 @@ import androidx.compose.ui.unit.sp
 import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.UserProfileState
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 private val SurfaceColor = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1976D2)
@@ -66,21 +68,17 @@ private val BorderColor = Color(0xFFE6E8EC)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
+fun ProfileScreen(
+	onBack: () -> Unit,
+	onLogout: () -> Unit = {},
+	viewModel: ProfileViewModel = viewModel(factory = ProfileViewModel.factory(LocalContext.current))
+) {
 	val context = LocalContext.current
-	val store = remember(context) { AppPreferencesStore(context) }
-	val initialProfile = remember { store.loadProfile() }
+	val profile by viewModel.profileState.collectAsState()
 
-	var firstName by rememberSaveable { mutableStateOf(initialProfile.firstName) }
-	var middleName by rememberSaveable { mutableStateOf(initialProfile.middleName) }
-	var surname by rememberSaveable { mutableStateOf(initialProfile.surname) }
-	var age by rememberSaveable { mutableStateOf(initialProfile.age) }
-	var school by rememberSaveable { mutableStateOf(initialProfile.school) }
-	var photoUri by rememberSaveable { mutableStateOf(initialProfile.photoUri) }
-
-	val imageBitmap = remember(photoUri) { loadBitmapFromUri(context, photoUri) }
+	val imageBitmap = remember(profile.photoUri) { loadBitmapFromUri(context, profile.photoUri) }
 	val pickPhotoLauncher = rememberLauncherForActivityResult(GetContent()) { uri: Uri? ->
-		photoUri = uri?.toString()
+		viewModel.updatePhotoUri(uri?.toString())
 	}
 
 	Scaffold(
@@ -94,7 +92,7 @@ fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
 				},
 				actions = {
 					TextButton(onClick = {
-						store.clearProfile()
+						viewModel.logout()
 						onLogout()
 					}) {
 						Text("Logout")
@@ -151,7 +149,14 @@ fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
 					}
 
 					Text(
-						text = "${store.getActiveTrackLabel()}",
+						text = profile.displayName,
+						fontWeight = FontWeight.Bold,
+						fontSize = 18.sp,
+						color = TextColor
+					)
+
+					Text(
+						text = profile.activeTrackLabel,
 						fontWeight = FontWeight.SemiBold,
 						color = PrimaryBlue
 					)
@@ -162,25 +167,15 @@ fun ProfileScreen(onBack: () -> Unit, onLogout: () -> Unit = {}) {
 				}
 			}
 
-			ProfileField(label = "First Name", value = firstName, onValueChange = { firstName = it }, placeholder = "Enter first name")
-			ProfileField(label = "Middle Name", value = middleName, onValueChange = { middleName = it }, placeholder = "Enter middle name (optional)")
-			ProfileField(label = "Surname", value = surname, onValueChange = { surname = it }, placeholder = "Enter surname")
-			ProfileField(label = "School", value = school, onValueChange = { school = it }, placeholder = "Enter your school or institution")
-			ProfileField(label = "Age", value = age, onValueChange = { age = it.filter(Char::isDigit) }, placeholder = "Enter age")
+			ProfileField(label = "First Name", value = profile.firstName, onValueChange = viewModel::updateFirstName, placeholder = "Enter first name")
+			ProfileField(label = "Middle Name", value = profile.middleName, onValueChange = viewModel::updateMiddleName, placeholder = "Enter middle name (optional)")
+			ProfileField(label = "Surname", value = profile.surname, onValueChange = viewModel::updateSurname, placeholder = "Enter surname")
+			ProfileField(label = "School", value = profile.school, onValueChange = viewModel::updateSchool, placeholder = "Enter your school or institution")
+			ProfileField(label = "Age", value = profile.age, onValueChange = { viewModel.updateAge(it.filter(Char::isDigit)) }, placeholder = "Enter age")
 
 			Button(
 				onClick = {
-					store.saveProfile(
-						UserProfileState(
-							firstName = firstName,
-							middleName = middleName,
-							surname = surname,
-							age = age,
-							school = school,
-							photoUri = photoUri,
-							activeTrack = store.getActiveTrackKey()
-						)
-					)
+					viewModel.saveProfile()
 					onBack()
 				},
 				modifier = Modifier
