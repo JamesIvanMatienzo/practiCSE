@@ -9,8 +9,9 @@ sealed class Screen(val route: String) {
 	object Exam : Screen("exam/{sessionId}") {
 		fun createRoute(sessionId: String) = "exam/$sessionId"
 	}
-	object Result : Screen("result/{sessionId}") {
-		fun createRoute(sessionId: String) = "result/$sessionId"
+	object Result : Screen("result/{sessionId}/{score}/{totalQuestions}") {
+		fun createRoute(sessionId: String, score: Int, totalQuestions: Int) =
+			"result/$sessionId/$score/$totalQuestions"
 	}
 	object DeepDive : Screen("deepdive/{questionId}") {
 		fun createRoute(questionId: String) = "deepdive/$questionId"

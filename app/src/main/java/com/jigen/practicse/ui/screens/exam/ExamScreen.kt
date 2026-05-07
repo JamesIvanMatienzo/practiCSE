@@ -81,6 +81,7 @@ fun ExamScreen(
 	sessionId: String = "new",
 	onDeepDive: (String) -> Unit = {},
 	onBack: () -> Unit = {},
+	onResult: (score: Int, totalQuestions: Int) -> Unit = { _, _ -> },
 ) {
 	val viewModel: ExamViewModelNew = viewModel(
 		factory = ExamViewModelNew.factory(context, sessionMode = sessionId)
@@ -194,27 +195,21 @@ fun ExamScreen(
 		}
 
 		is ExamUiState.Completed -> {
+			// Navigate to the ResultScreen automatically
+			LaunchedEffect(state) {
+				onResult(state.totalScore, state.totalQuestions)
+			}
+
+			// Fallback UI shown briefly while navigating
 			Surface(modifier = modifier.fillMaxSize(), color = ScreenBackground) {
 				Box(modifier = Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
 					Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-						Text(text = "Exam Complete!", style = MaterialTheme.typography.headlineMedium, color = TextColor)
+						CircularProgressIndicator(color = PrimaryBlue)
 						Spacer(modifier = Modifier.height(16.dp))
 						Text(
-							text = "Score: ${state.totalScore} / ${state.totalQuestions}",
-							style = MaterialTheme.typography.titleLarge,
-							color = PrimaryBlue
-						)
-						Spacer(modifier = Modifier.height(8.dp))
-						Text(
-							text = "Percentage: ${state.percentage.toInt()}%",
+							text = "Preparing your results…",
 							style = MaterialTheme.typography.bodyLarge,
-							color = if (state.isPassed) SuccessGreen else ErrorRed
-						)
-						Spacer(modifier = Modifier.height(16.dp))
-						Text(
-							text = if (state.isPassed) "PASSED" else "FAILED",
-							style = MaterialTheme.typography.headlineSmall,
-							color = if (state.isPassed) SuccessGreen else ErrorRed
+							color = TextColor
 						)
 					}
 				}
