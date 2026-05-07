@@ -85,17 +85,14 @@ class DeepDiveViewModel(
 		}
 
 		val options = (question.wrongChoices + question.correctAnswer).distinct()
+		
 		val prompt = buildString {
-			appendLine("You are a concise civil service exam tutor.")
-			appendLine("Explain this multiple-choice question step by step.")
-			appendLine("Keep the answer practical, clear, and under 250 words.")
 			appendLine("Question: ${question.questionText}")
 			question.referenceText?.takeIf { it.isNotBlank() }?.let {
 				appendLine("Reference text: $it")
 			}
-			appendLine("Correct answer: ${question.correctAnswer}")
 			appendLine("Choices: ${options.joinToString(", ")}")
-			appendLine("Give a short reason why the correct answer is right and why the other choices are wrong.")
+			appendLine("Correct answer: ${question.correctAnswer}")
 		}
 
 		val requestBody = JSONObject().apply {
@@ -106,7 +103,16 @@ class DeepDiveViewModel(
 					put(
 						JSONObject().apply {
 							put("role", "system")
-							put("content", "You are a helpful exam tutor.")
+							put("content", """
+								You are a concise Philippine Civil Service Exam tutor.
+								Provide your explanation following EXACTLY this structure:
+								
+								1. Correct Answer: State the correct answer clearly.
+								2. Explanation: Explain why it is correct and why others are wrong in 2-3 short, easy-to-read sentences.
+								3. Tip: Provide one quick tip or rule to remember for this type of question.
+								
+								Do NOT use complex formatting. Keep it short.
+							""".trimIndent())
 						}
 					)
 					put(
