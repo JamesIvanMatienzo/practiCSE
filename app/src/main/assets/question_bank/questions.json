@@ -6,12 +6,8 @@
         "referenceText": null,
         "correctAnswer": "February 2, 1987",
         "wrongChoices": [
-            "February 25",
-            "1986",
-            "January 17",
-            "1973",
-            "June 12",
-            "1898"
+            "February 25, 1986",
+            "January 17, 1973"
         ]
     },
     {
@@ -425,8 +421,7 @@
             "25",
             "27",
             "30",
-            "33",
-            "None of The Above"
+            "33"
         ]
     },
     {
@@ -1309,8 +1304,7 @@
             "2",
             "4",
             "1",
-            "8",
-            "None of The Above"
+            "8"
         ]
     },
     {
@@ -1686,8 +1680,7 @@
             "25",
             "27",
             "30",
-            "33",
-            "None of The Above"
+            "33"
         ]
     },
     {
@@ -1816,8 +1809,7 @@
             "400",
             "700",
             "900",
-            "1500",
-            "2500"
+            "1500"
         ]
     },
     {
@@ -1842,8 +1834,7 @@
             "30,000",
             "32,000",
             "33,000",
-            "34,000",
-            "None of the Above"
+            "34,000"
         ]
     },
     {
@@ -1917,18 +1908,10 @@
         "referenceText": null,
         "correctAnswer": "8.00, 8.04, 8.44, 8.75",
         "wrongChoices": [
-            "8.75",
-            "8.44",
-            "8.04",
-            "8.00",
-            "8.75",
-            "8.00",
-            "8.04",
-            "8.44",
-            "8.04",
-            "8.00",
-            "8.44",
-            "8.75"
+            "8.75, 8.00, 8.04, 8.44",
+            "8.44, 8.75, 8.00, 8.04",
+            "8.04, 8.44, 8.75, 8.00",
+            "8.00, 8.04, 8.44, 8.75"
         ]
     },
     {
@@ -2336,8 +2319,7 @@
             "30%",
             "50%",
             "40%",
-            "80%",
-            "None of The Above"
+            "80%"
         ]
     },
     {
@@ -2350,8 +2332,7 @@
             "60%",
             "85%",
             "65%",
-            "70%",
-            "None of The Above"
+            "70%"
         ]
     },
     {
@@ -2364,8 +2345,7 @@
             "50%",
             "40%",
             "20%",
-            "80%",
-            "None of The Above"
+            "80%"
         ]
     },
     {
@@ -2391,8 +2371,7 @@
             "1 1/2",
             "5 5/6",
             "7/8",
-            "4/6",
-            "None of The Above"
+            "4/6"
         ]
     },
     {
@@ -2405,8 +2384,7 @@
             "2/12",
             "4/24",
             "1/8",
-            "5/6",
-            "None of The Above"
+            "5/6"
         ]
     },
     {
@@ -2419,8 +2397,7 @@
             "270",
             "2700",
             "1800",
-            "450",
-            "None of The Above"
+            "450"
         ]
     },
     {
@@ -2433,8 +2410,7 @@
             "340",
             "6800",
             "5600",
-            "212.5",
-            "None of The Above"
+            "212.5"
         ]
     },
     {
@@ -2447,8 +2423,7 @@
             "15,000",
             "25",
             "1200",
-            "120",
-            "None of The Above"
+            "120"
         ]
     },
     {
@@ -2461,8 +2436,7 @@
             "700",
             "900",
             "1500",
-            "2500",
-            "None of The Above"
+            "2500"
         ]
     },
     {
@@ -2475,8 +2449,7 @@
             "2/3",
             "20/12",
             "1 4/6",
-            "1 8/12",
-            "None of The Above"
+            "1 8/12"
         ]
     },
     {
@@ -2489,8 +2462,7 @@
             "55/48",
             "1 13/20",
             "48/55",
-            "11/24",
-            "None of The Above"
+            "11/24"
         ]
     },
     {
@@ -2503,8 +2475,7 @@
             "52/6",
             "6/52",
             "8 4/6",
-            "9 1/2",
-            "None of The Above"
+            "9 1/2"
         ]
     },
     {
@@ -2517,8 +2488,7 @@
             "1/3",
             "2",
             "-1/2",
-            "3",
-            "None of The Above"
+            "3"
         ]
     },
     {
@@ -2544,8 +2514,7 @@
             "Adel: 36.35 kg and James 43.55 kg",
             "Adel: 37.75 kg and James 44.95 kg",
             "Adel: 44.95 kg and James 34.50 kg",
-            "Adel: 45.95 kg and James 37.75 kg",
-            "None of The Above"
+            "Adel: 45.95 kg and James 37.75 kg"
         ]
     },
     {
@@ -2558,8 +2527,7 @@
             "14",
             "12",
             "18",
-            "11",
-            "None of The Above"
+            "11"
         ]
     },
     {
@@ -2572,8 +2540,7 @@
             "28",
             "29",
             "25",
-            "18",
-            "None of The Above"
+            "18"
         ]
     },
     {
@@ -2612,8 +2579,7 @@
             "50%",
             "90%",
             "150%",
-            "200%",
-            "None of The Above"
+            "200%"
         ]
     },
     {
@@ -2626,8 +2592,7 @@
             "3,000",
             "5,000",
             "10,000",
-            "20,000",
-            "None of The Above"
+            "20,000"
         ]
     },
     {
@@ -2666,8 +2631,7 @@
             "3°",
             "8°",
             "16°",
-            "24°",
-            "None of The Above"
+            "24°"
         ]
     },
     {
@@ -2771,8 +2735,7 @@
             "1%",
             "10%",
             "100%",
-            "1,000%",
-            "None of The Above"
+            "1,000%"
         ]
     },
     {
@@ -3188,8 +3151,7 @@
             "30% x 120",
             "35% of 100",
             "1/4 of 160",
-            "1/3 x 120",
-            "None of The Above"
+            "1/3 x 120"
         ]
     },
     {
@@ -3202,8 +3164,7 @@
             "1",
             "5/4",
             "7/3",
-            "8/3",
-            "None of The Above"
+            "8/3"
         ]
     },
     {
@@ -3216,8 +3177,7 @@
             "26/42",
             "28/94",
             "42/94",
-            "56/94",
-            "None of The Above"
+            "56/94"
         ]
     },
     {
@@ -3230,8 +3190,7 @@
             "6",
             "8",
             "12",
-            "14",
-            "None of The Above"
+            "14"
         ]
     },
     {
@@ -3244,8 +3203,7 @@
             "60",
             "90",
             "80",
-            "64",
-            "None of The Above"
+            "64"
         ]
     },
     {
@@ -3361,8 +3319,7 @@
             "25%",
             "24%",
             "24.5%",
-            "22%",
-            "None of The Above"
+            "22%"
         ]
     },
     {
@@ -3375,8 +3332,7 @@
             "10",
             "1,000",
             "10,000",
-            "100,000",
-            "None of The Above"
+            "100,000"
         ]
     },
     {
@@ -3389,8 +3345,7 @@
             "10",
             "100",
             "1,000",
-            "100,000",
-            "None of The Above"
+            "100,000"
         ]
     },
     {
@@ -3624,8 +3579,7 @@
             "0.009",
             "0.0009",
             "0.09",
-            "9.0",
-            "None of The Above"
+            "9.0"
         ]
     },
     {
@@ -3911,8 +3865,7 @@
             "30%",
             "50%",
             "40%",
-            "80%",
-            "None of The Above"
+            "80%"
         ]
     },
     {
@@ -3925,8 +3878,7 @@
             "60%",
             "85%",
             "65%",
-            "70%",
-            "None of The Above"
+            "70%"
         ]
     },
     {
@@ -3939,8 +3891,7 @@
             "50%",
             "40%",
             "20%",
-            "80%",
-            "None of The Above"
+            "80%"
         ]
     },
     {
@@ -3966,8 +3917,7 @@
             "1 1/2",
             "5 5/6",
             "7/8",
-            "4/6",
-            "None of The Above"
+            "4/6"
         ]
     },
     {
@@ -3980,8 +3930,7 @@
             "2/12",
             "4/24",
             "1/8",
-            "5/6",
-            "None of The Above"
+            "5/6"
         ]
     },
     {
@@ -3994,8 +3943,7 @@
             "270",
             "2700",
             "1800",
-            "450",
-            "None of The Above"
+            "450"
         ]
     },
     {
@@ -4008,8 +3956,7 @@
             "340",
             "6800",
             "5600",
-            "212.5",
-            "None of The Above"
+            "212.5"
         ]
     },
     {
@@ -4022,8 +3969,7 @@
             "15,000",
             "25",
             "1200",
-            "120",
-            "None of The Above"
+            "120"
         ]
     },
     {
@@ -4036,8 +3982,7 @@
             "700",
             "900",
             "1500",
-            "2500",
-            "None of The Above"
+            "2500"
         ]
     },
     {
@@ -4050,8 +3995,7 @@
             "2/3",
             "20/12",
             "1 4/6",
-            "1 8/12",
-            "None of The Above"
+            "1 8/12"
         ]
     },
     {
@@ -4064,8 +4008,7 @@
             "55/48",
             "1 13/20",
             "48/55",
-            "11/24",
-            "None of The Above"
+            "11/24"
         ]
     },
     {
@@ -4078,8 +4021,7 @@
             "52/6",
             "6/52",
             "8 4/6",
-            "9 1/2",
-            "None of The Above"
+            "9 1/2"
         ]
     },
     {
@@ -4092,8 +4034,7 @@
             "1/3",
             "2",
             "-1/2",
-            "3",
-            "None of The Above"
+            "3"
         ]
     },
     {
@@ -4582,7 +4523,9 @@
         "referenceText": "Mr. Orenstein is a terrific boss.",
         "correctAnswer": "Opinion",
         "wrongChoices": [
-            "Fact"
+            "Fact",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4592,7 +4535,9 @@
         "referenceText": "Many companies have dress-down days on Fridays.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4602,7 +4547,9 @@
         "referenceText": "Dress-down days improve employee morale.",
         "correctAnswer": "Opinion",
         "wrongChoices": [
-            "Fact"
+            "Fact",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4612,7 +4559,9 @@
         "referenceText": "Wednesday is the fourth day of the week.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4622,7 +4571,9 @@
         "referenceText": "Wednesday is the longest day of the week.",
         "correctAnswer": "Opinion",
         "wrongChoices": [
-            "Fact"
+            "Fact",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4632,7 +4583,9 @@
         "referenceText": "There are many different ways to invest your money to provide for a financially secure future.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4642,7 +4595,9 @@
         "referenceText": "Many people invest in stocks and bonds.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4652,7 +4607,9 @@
         "referenceText": "Savings accounts and CDs (certificates of deposit) are the best way to invest your hard-earned money.",
         "correctAnswer": "Opinion",
         "wrongChoices": [
-            "Fact"
+            "Fact",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4662,7 +4619,9 @@
         "referenceText": "Stocks and bonds are often risky investments.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
@@ -4672,7 +4631,9 @@
         "referenceText": "Savings accounts and CDs are fully insured and provide steady, secure interest on your money.",
         "correctAnswer": "Fact",
         "wrongChoices": [
-            "Opinion"
+            "Opinion",
+            "Both Fact and Opinion",
+            "Cannot be determined"
         ]
     },
     {
