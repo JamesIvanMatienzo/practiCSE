@@ -71,7 +71,7 @@ class RankingViewModel(private val repository: RankingRepository, private val co
             LeaderboardEntryEntity(userName = "Emman", totalScore = 8700, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Ivan", totalScore = 1250, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Gem", totalScore = 150, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "James", totalScore = 69, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "James", totalScore = 67, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now)
         ).sortedByDescending { it.totalScore }
     }
