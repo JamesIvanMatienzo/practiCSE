@@ -93,18 +93,18 @@ fun ExamScreen(
 	if (showExitDialog) {
 		AlertDialog(
 			onDismissRequest = { showExitDialog = false },
-			title = { Text("Exit Exam?", fontWeight = FontWeight.Bold, color = TextColor) },
-			text = { Text("Your progress will be saved. You can continue later.", color = MutedGray) },
+			title = { Text("Exit Exam?", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = TextColor) },
+			text = { Text("Your progress will be saved. You can continue later.", style = MaterialTheme.typography.bodyMedium, color = MutedGray) },
 			confirmButton = {
 				Button(
 					onClick = { showExitDialog = false; onBack() },
 					colors = ButtonDefaults.buttonColors(containerColor = ErrorRed),
 					shape = RoundedCornerShape(8.dp)
-				) { Text("Exit", color = Color.White) }
+				) { Text("Exit", style = MaterialTheme.typography.bodyMedium, color = Color.White) }
 			},
 			dismissButton = {
 				androidx.compose.material3.TextButton(onClick = { showExitDialog = false }) {
-					Text("Keep Going", color = PrimaryBlue)
+					Text("Keep Going", style = MaterialTheme.typography.bodyMedium, color = PrimaryBlue)
 				}
 			},
 			containerColor = Color.White
@@ -189,7 +189,8 @@ fun ExamScreen(
 					onDeepDive = onDeepDive,
 					onReportError = viewModel::reportCurrentQuestion,
 					onPrevious = viewModel::previousQuestion,
-					onNext = viewModel::nextQuestion
+					onNext = viewModel::nextQuestion,
+					onReportDismissed = { reportStatusMessage = null }
 				)
 			}
 		}
@@ -258,7 +259,7 @@ private fun ExamTopBar(
 					Text(
 						text = if (currentQuestion?.id in flaggedQuestionIds) "Flagged" else "Flag",
 						color = if (currentQuestion?.id in flaggedQuestionIds) Color.White else PrimaryBlue,
-						fontSize = 11.sp
+						style = MaterialTheme.typography.labelSmall
 					)
 				}
 				Text(
@@ -285,8 +286,7 @@ private fun ExamTopBar(
 				text = "Q${currentIndex + 1}/$totalQuestions",
 				modifier = Modifier,
 				color = TextColor,
-				fontSize = 12.sp,
-				fontWeight = FontWeight.SemiBold
+				style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
 			)
 			Row(
 				horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -314,7 +314,8 @@ private fun ExamPagerContent(
 	onDeepDive: (String) -> Unit,
 	onReportError: () -> Unit,
 	onPrevious: () -> Unit,
-	onNext: () -> Unit
+	onNext: () -> Unit,
+	onReportDismissed: () -> Unit
 ) {
 	var showReportDialog by remember { mutableStateOf(false) }
 	val scope = rememberCoroutineScope()
@@ -325,21 +326,28 @@ private fun ExamPagerContent(
 			showReportDialog = true
 			delay(3000L)
 			showReportDialog = false
+			onReportDismissed()
 		}
 	}
 
 	if (showReportDialog && !reportStatusMessage.isNullOrBlank()) {
 		AlertDialog(
-			onDismissRequest = { showReportDialog = false },
-			title = { Text("Thank You", fontWeight = FontWeight.SemiBold, color = PrimaryBlue) },
-			text = { Text(reportStatusMessage, color = TextColor) },
+			onDismissRequest = { 
+				showReportDialog = false 
+				onReportDismissed()
+			},
+			title = { Text("Thank You", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = PrimaryBlue) },
+			text = { Text(reportStatusMessage, style = MaterialTheme.typography.bodyMedium, color = TextColor) },
 			confirmButton = {
 				Button(
-					onClick = { showReportDialog = false },
+					onClick = { 
+						showReportDialog = false 
+						onReportDismissed()
+					},
 					colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
 					shape = RoundedCornerShape(8.dp)
 				) {
-					Text("OK", color = Color.White)
+					Text("OK", style = MaterialTheme.typography.bodyMedium, color = Color.White)
 				}
 			},
 			containerColor = Color.White
@@ -399,8 +407,7 @@ private fun ExamPagerContent(
 						text = "${index + 1}",
 						modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
 						color = Color.White,
-						fontSize = 11.sp,
-						fontWeight = FontWeight.Bold
+						style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
 					)
 				}
 			}
@@ -461,9 +468,9 @@ private fun QuestionPage(
 					colors = CardDefaults.cardColors(containerColor = Color(0xFFF3F7FE))
 				) {
 					Column(modifier = Modifier.padding(12.dp)) {
-						Text("Reference", color = PrimaryBlue, fontWeight = FontWeight.SemiBold)
+						Text("Reference", style = MaterialTheme.typography.titleMedium, color = PrimaryBlue, fontWeight = FontWeight.SemiBold)
 						Spacer(modifier = Modifier.height(6.dp))
-						Text(text = question.referenceText.orEmpty(), color = TextColor, fontSize = 13.sp)
+						Text(text = question.referenceText.orEmpty(), style = MaterialTheme.typography.bodyMedium, color = TextColor)
 					}
 				}
 				Spacer(modifier = Modifier.height(14.dp))
@@ -519,8 +526,9 @@ private fun QuestionPage(
 						"That answer is incorrect. Correct answer: ${question.correctAnswer}"
 					},
 					color = if (answersMatch(selectedAnswer, question.correctAnswer)) SuccessGreen else ErrorRed,
-					fontSize = 12.sp,
-					fontWeight = FontWeight.SemiBold,
+					style = MaterialTheme.typography.bodyMedium.copy(
+						fontWeight = FontWeight.SemiBold
+					),
 					modifier = Modifier.padding(bottom = 10.dp)
 				)
 			}
@@ -531,7 +539,7 @@ private fun QuestionPage(
 				colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
 				shape = RoundedCornerShape(18.dp)
 			) {
-				Text(text = "Ask AI for Deep Explanation")
+				Text(text = "Ask AI for Deep Explanation", style = MaterialTheme.typography.bodyMedium)
 			}
 
 			Spacer(modifier = Modifier.height(8.dp))
@@ -542,8 +550,7 @@ private fun QuestionPage(
 				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)), 
 				shape = RoundedCornerShape(18.dp)
 			) {
-				// Changed from PrimaryBlue to ErrorRed
-				Text(text = "Report a Problem in this Question", color = ErrorRed) 
+				Text(text = "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = ErrorRed) 
 			}
 		}
 	}
@@ -595,14 +602,12 @@ private fun CompactStatChip(
 		) {
 			Text(
 				text = label,
-				fontSize = 10.sp,
-				fontWeight = FontWeight.SemiBold,
+				style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
 				color = bgColor
 			)
 			Text(
 				text = ": $value",
-				fontSize = 10.sp,
-				fontWeight = FontWeight.Bold,
+				style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
 				color = bgColor
 			)
 		}
