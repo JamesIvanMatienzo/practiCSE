@@ -23,12 +23,18 @@ class RankingViewModel(private val repository: RankingRepository, private val co
     fun refresh() {
         viewModelScope.launch {
             _uiState.value = RankingUiState.Loading
-            val userName = AppPreferencesStore(context).getDisplayName().ifBlank { "You" }
+            val prefs = AppPreferencesStore(context)
+            val userName = prefs.getDisplayName().ifBlank { "You" }
             try {
                 val list = repository.fetchGlobalTop(100)
                 val sorted = list.sortedByDescending { it.totalScore }
-                val withFallback = if (sorted.isEmpty()) placeholderEntries(userName) else sorted
-                val isPlaceholder = sorted.isEmpty()
+                val offlineMode = prefs.isOfflineRankingEnabled()
+                val withFallback = when {
+                    offlineMode -> placeholderEntries(userName)
+                    sorted.isEmpty() -> placeholderEntries(userName)
+                    else -> sorted
+                }
+                val isPlaceholder = offlineMode || sorted.isEmpty()
                 val userEntry = withFallback.find { it.userName == userName }
                 val userRank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
 
@@ -42,8 +48,9 @@ class RankingViewModel(private val repository: RankingRepository, private val co
                 // fallback cached
                 val cached = repository.getCachedTop(100)
                 val sorted = cached.sortedByDescending { it.totalScore }
-                val withFallback = if (sorted.isEmpty()) placeholderEntries(userName) else sorted
-                val isPlaceholder = sorted.isEmpty()
+                val offlineMode = AppPreferencesStore(context).isOfflineRankingEnabled()
+                val withFallback = if (offlineMode) placeholderEntries(userName) else if (sorted.isEmpty()) placeholderEntries(userName) else sorted
+                val isPlaceholder = offlineMode || sorted.isEmpty()
                 val rank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
                 val userEntry = withFallback.find { it.userName == userName }
 
@@ -59,13 +66,12 @@ class RankingViewModel(private val repository: RankingRepository, private val co
 
     private fun placeholderEntries(userName: String): List<LeaderboardEntryEntity> {
         val now = System.currentTimeMillis()
+        // Offline sample entries requested by the user (capitalized)
         return listOf(
-            LeaderboardEntryEntity(userName = "Juan Santos", totalScore = 3120, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "Maria Cruz", totalScore = 2845, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "Ana Reyes", totalScore = 2710, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "Pedro Garcia", totalScore = 2580, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "Sofia Tan", totalScore = 2465, lastUpdatedMillis = now),
-            LeaderboardEntryEntity(userName = "Carlos Lim", totalScore = 2340, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "Emman", totalScore = 8700, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "Ivan", totalScore = 1250, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "Gem", totalScore = 150, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "James", totalScore = 69, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now)
         ).sortedByDescending { it.totalScore }
     }

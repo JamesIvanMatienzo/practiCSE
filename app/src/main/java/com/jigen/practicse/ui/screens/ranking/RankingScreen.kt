@@ -33,18 +33,26 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.material3.Switch
+import com.jigen.practicse.data.local.AppPreferencesStore
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
+
 
 private val SurfaceColor = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1A73E8)
@@ -80,6 +88,33 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         )
                         Text("Leaderboard", fontWeight = FontWeight.Bold, color = TextColor)
                     }
+                },
+                actions = {
+                        // offline toggle + badge
+                        val prefs = AppPreferencesStore(context)
+                        var offlineEnabled by remember { mutableStateOf(prefs.isOfflineRankingEnabled()) }
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            if (offlineEnabled) {
+                                Box(
+                                    modifier = Modifier
+                                        .background(color = PrimaryBlue.copy(alpha = 0.08f), shape = RoundedCornerShape(12.dp))
+                                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                                ) {
+                                    Text("OFFLINE", color = PrimaryBlue, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
+
+                            Text(if (offlineEnabled) "Offline" else "Online", color = MutedText, fontSize = 12.sp)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Switch(checked = offlineEnabled, onCheckedChange = {
+                                offlineEnabled = it
+                                prefs.setOfflineRankingEnabled(it)
+                                // refresh rankings
+                                viewModel.refresh()
+                            })
+                        }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
@@ -197,7 +232,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                     color = PrimaryBlue
                                 )
                                 Text(
-                                    text = s.userEntry?.let { "${it.userName} • ${it.totalScore}" } ?: "No score yet",
+                                    text = s.userEntry?.let { "${displayName(it.userName)} • ${it.totalScore}" } ?: "No score yet",
                                     color = TextColor,
                                     fontSize = 13.sp
                                 )
@@ -296,9 +331,41 @@ private fun LeaderboardRow(rank: Int, name: String, score: Int) {
             ) {
                 Text(rank.toString(), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 12.sp)
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+
+            // avatar (use provided drawables for known sample users)
+            val avatarRes = when (name.lowercase()) {
+                "emman" -> com.jigen.practicse.R.drawable.emman
+                "ivan" -> com.jigen.practicse.R.drawable.ivan
+                "gem" -> com.jigen.practicse.R.drawable.gem
+                "james" -> com.jigen.practicse.R.drawable.james
+                else -> 0
+            }
+
+            if (avatarRes != 0) {
+                Image(
+                    painter = painterResource(id = avatarRes),
+                    contentDescription = "avatar",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(color = PrimaryBlue.copy(alpha = 0.08f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(initials(name), fontWeight = FontWeight.Bold, color = PrimaryBlue)
+                }
+            }
+
+            Spacer(modifier = Modifier.width(10.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(name, fontWeight = FontWeight.SemiBold, color = TextColor)
+                Text(displayName(name), fontWeight = FontWeight.SemiBold, color = TextColor)
                 Text("Score: $score", color = MutedText, fontSize = 12.sp)
             }
             Text(score.toString(), color = PrimaryBlue, fontWeight = FontWeight.Bold)
@@ -315,16 +382,36 @@ private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity, modifier: Modif
                 .background(color = PrimaryBlue.copy(alpha = 0.18f), shape = CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = initials(entry.userName),
-                color = PrimaryBlue,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
+            // Show avatar image for known sample users
+            val avatar = when (entry.userName.lowercase()) {
+                "emman" -> com.jigen.practicse.R.drawable.emman
+                "ivan" -> com.jigen.practicse.R.drawable.ivan
+                "gem" -> com.jigen.practicse.R.drawable.gem
+                "james" -> com.jigen.practicse.R.drawable.james
+                else -> 0
+            }
+
+            if (avatar != 0) {
+                Image(
+                    painter = painterResource(id = avatar),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(if (rank == 1) 56.dp else 46.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Text(
+                    text = initials(entry.userName),
+                    color = PrimaryBlue,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
         }
         Spacer(modifier = Modifier.height(6.dp))
         Text(
-            text = "#$rank ${entry.userName}",
+            text = "#$rank ${displayName(entry.userName)}",
             color = TextColor,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,
@@ -339,6 +426,16 @@ private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity, modifier: Modif
             fontSize = 12.sp
         )
     }
+}
+
+private fun displayName(name: String): String {
+    return name
+        .split(" ")
+        .filter { it.isNotBlank() }
+        .joinToString(" ") { part ->
+            part.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        }
+        .ifBlank { name }
 }
 
 private fun initials(name: String): String {

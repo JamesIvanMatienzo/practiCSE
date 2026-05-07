@@ -11,6 +11,7 @@ private const val KEY_AGE = "profile_age"
 private const val KEY_SCHOOL = "profile_school"
 private const val KEY_PHOTO_URI = "profile_photo_uri"
 private const val KEY_ACTIVE_TRACK = "active_track"
+private const val KEY_OFFLINE_RANKING = "offline_ranking"
 
 private const val TRACK_PROFESSIONAL = "professional"
 private const val TRACK_SUB_PROFESSIONAL = "sub_professional"
@@ -97,7 +98,17 @@ class AppPreferencesStore(context: Context) {
 			.remove(KEY_SCHOOL)
 			.remove(KEY_PHOTO_URI)
 			.remove(KEY_ACTIVE_TRACK)
+			.remove(KEY_OFFLINE_RANKING)
 			.apply()
+	}
+
+	// Offline ranking preference (defaults to true)
+	fun isOfflineRankingEnabled(): Boolean {
+		return prefs.getBoolean(KEY_OFFLINE_RANKING, true)
+	}
+
+	fun setOfflineRankingEnabled(enabled: Boolean) {
+		prefs.edit().putBoolean(KEY_OFFLINE_RANKING, enabled).apply()
 	}
 }
 
