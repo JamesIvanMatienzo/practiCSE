@@ -4,10 +4,11 @@ import android.content.Context
 
 private const val PREFS_NAME = "practicse_prefs"
 private const val KEY_USER_NAME = "user_name"
+private const val KEY_ACCOUNT_EMAIL = "account_email"
+private const val KEY_ACCOUNT_PASSWORD = "account_password"
 private const val KEY_FIRST_NAME = "profile_first_name"
 private const val KEY_MIDDLE_NAME = "profile_middle_name"
 private const val KEY_SURNAME = "profile_surname"
-private const val KEY_AGE = "profile_age"
 private const val KEY_SCHOOL = "profile_school"
 private const val KEY_PHOTO_URI = "profile_photo_uri"
 private const val KEY_ACTIVE_TRACK = "active_track"
@@ -21,7 +22,6 @@ data class UserProfileState(
 	val firstName: String = "",
 	val middleName: String = "",
 	val surname: String = "",
-	val age: String = "",
 	val school: String = "",
 	val photoUri: String? = null,
 	val activeTrack: String = TRACK_PROFESSIONAL
@@ -48,7 +48,6 @@ class AppPreferencesStore(context: Context) {
 			firstName = prefs.getString(KEY_FIRST_NAME, "").orEmpty(),
 			middleName = prefs.getString(KEY_MIDDLE_NAME, "").orEmpty(),
 			surname = prefs.getString(KEY_SURNAME, "").orEmpty(),
-			age = prefs.getString(KEY_AGE, "").orEmpty(),
 			school = prefs.getString(KEY_SCHOOL, "").orEmpty(),
 			photoUri = prefs.getString(KEY_PHOTO_URI, null),
 			activeTrack = getActiveTrackKey()
@@ -60,12 +59,31 @@ class AppPreferencesStore(context: Context) {
 			.putString(KEY_FIRST_NAME, profile.firstName.trim())
 			.putString(KEY_MIDDLE_NAME, profile.middleName.trim())
 			.putString(KEY_SURNAME, profile.surname.trim())
-			.putString(KEY_AGE, profile.age.trim())
 			.putString(KEY_SCHOOL, profile.school.trim())
 			.putString(KEY_PHOTO_URI, profile.photoUri?.trim())
 			.putString(KEY_USER_NAME, profile.displayName)
 			.putString(KEY_ACTIVE_TRACK, normalizeTrackKey(profile.activeTrack))
 			.apply()
+	}
+
+	fun saveAccountCredentials(email: String, password: String) {
+		prefs.edit()
+			.putString(KEY_ACCOUNT_EMAIL, email.trim().lowercase())
+			.putString(KEY_ACCOUNT_PASSWORD, password)
+			.apply()
+	}
+
+	fun hasAccount(): Boolean {
+		val storedEmail = prefs.getString(KEY_ACCOUNT_EMAIL, "").orEmpty().trim()
+		val storedPassword = prefs.getString(KEY_ACCOUNT_PASSWORD, "").orEmpty()
+		return storedEmail.isNotBlank() && storedPassword.isNotBlank()
+	}
+
+	fun validateCredentials(email: String, password: String): Boolean {
+		if (!hasAccount()) return false
+		val storedEmail = prefs.getString(KEY_ACCOUNT_EMAIL, "").orEmpty().trim().lowercase()
+		val storedPassword = prefs.getString(KEY_ACCOUNT_PASSWORD, "").orEmpty()
+		return storedEmail == email.trim().lowercase() && storedPassword == password
 	}
 
 	fun getDisplayName(): String {
@@ -92,10 +110,11 @@ class AppPreferencesStore(context: Context) {
 	fun clearProfile() {
 		prefs.edit()
 			.remove(KEY_USER_NAME)
+			.remove(KEY_ACCOUNT_EMAIL)
+			.remove(KEY_ACCOUNT_PASSWORD)
 			.remove(KEY_FIRST_NAME)
 			.remove(KEY_MIDDLE_NAME)
 			.remove(KEY_SURNAME)
-			.remove(KEY_AGE)
 			.remove(KEY_SCHOOL)
 			.remove(KEY_PHOTO_URI)
 			.remove(KEY_ACTIVE_TRACK)

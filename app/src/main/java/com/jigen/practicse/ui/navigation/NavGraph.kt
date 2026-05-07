@@ -48,10 +48,17 @@ fun NavGraph(
 
 		composable(Screen.Login.route) {
 			LoginScreen(
-				onContinue = {
+				onContinue = { email, password ->
+					if (!appPreferencesStore.hasAccount()) {
+						"No account found. Please create an account first."
+					} else if (!appPreferencesStore.validateCredentials(email, password)) {
+						"Incorrect email or password."
+					} else {
 					appPreferencesStore.setGuest(false)
 					navController.navigate(Screen.Onboarding.route) {
 						popUpTo(Screen.Login.route) { inclusive = true }
+					}
+					null
 					}
 				},
 				onSignUp = {

@@ -169,9 +169,8 @@ fun ProfileScreen(
 
 			ProfileField(label = "First Name", value = profile.firstName, onValueChange = viewModel::updateFirstName, placeholder = "Enter first name")
 			ProfileField(label = "Middle Name", value = profile.middleName, onValueChange = viewModel::updateMiddleName, placeholder = "Enter middle name (optional)")
-			ProfileField(label = "Surname", value = profile.surname, onValueChange = viewModel::updateSurname, placeholder = "Enter surname")
+			ProfileField(label = "Last Name", value = profile.surname, onValueChange = viewModel::updateSurname, placeholder = "Enter last name")
 			ProfileField(label = "School", value = profile.school, onValueChange = viewModel::updateSchool, placeholder = "Enter your school or institution")
-			ProfileField(label = "Age", value = profile.age, onValueChange = { viewModel.updateAge(it.filter(Char::isDigit)) }, placeholder = "Enter age")
 
 			Button(
 				onClick = {

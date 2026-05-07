@@ -40,12 +40,13 @@ import com.jigen.practicse.data.local.UserProfileState
 
 @Composable
 fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> Unit) {
-	var fullName by remember { mutableStateOf("") }
+	var firstName by remember { mutableStateOf("") }
+	var middleName by remember { mutableStateOf("") }
+	var lastName by remember { mutableStateOf("") }
 	var email by remember { mutableStateOf("") }
 	var password by remember { mutableStateOf("") }
 	var confirmPassword by remember { mutableStateOf("") }
 	var school by remember { mutableStateOf("") }
-	var age by remember { mutableStateOf("") }
 
 	val isEmailValid = email.contains("@") && email.contains(".") && email.substringAfterLast("@").contains(".")
 	val showEmailError = email.isNotEmpty() && !isEmailValid
@@ -96,12 +97,36 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 
 			Spacer(modifier = Modifier.height(32.dp))
 
-			// Full Name
+			// First Name
 			OutlinedTextField(
-				value = fullName,
-				onValueChange = { fullName = it },
+				value = firstName,
+				onValueChange = { firstName = it },
 				modifier = Modifier.fillMaxWidth(),
-				placeholder = { Text("Full Name") },
+				placeholder = { Text("First Name") },
+				singleLine = true,
+				shape = RoundedCornerShape(14.dp)
+			)
+
+			Spacer(modifier = Modifier.height(14.dp))
+
+			// Middle Name
+			OutlinedTextField(
+				value = middleName,
+				onValueChange = { middleName = it },
+				modifier = Modifier.fillMaxWidth(),
+				placeholder = { Text("Middle Name (Optional)") },
+				singleLine = true,
+				shape = RoundedCornerShape(14.dp)
+			)
+
+			Spacer(modifier = Modifier.height(14.dp))
+
+			// Last Name
+			OutlinedTextField(
+				value = lastName,
+				onValueChange = { lastName = it },
+				modifier = Modifier.fillMaxWidth(),
+				placeholder = { Text("Last Name") },
 				singleLine = true,
 				shape = RoundedCornerShape(14.dp)
 			)
@@ -114,18 +139,6 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 				onValueChange = { school = it },
 				modifier = Modifier.fillMaxWidth(),
 				placeholder = { Text("School or Institution") },
-				singleLine = true,
-				shape = RoundedCornerShape(14.dp)
-			)
-
-			Spacer(modifier = Modifier.height(14.dp))
-
-			// Age
-			OutlinedTextField(
-				value = age,
-				onValueChange = { age = it.filter(Char::isDigit) },
-				modifier = Modifier.fillMaxWidth(),
-				placeholder = { Text("Age") },
 				singleLine = true,
 				shape = RoundedCornerShape(14.dp)
 			)
@@ -187,30 +200,19 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 
 			Button(
 				onClick = {
-					if (fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword) {
-						// Parse full name into parts
-						val nameParts = fullName.trim().split("\\s+".toRegex())
-						val firstName = nameParts.getOrNull(0) ?: ""
-						val lastName = nameParts.getOrNull(nameParts.size - 1) ?: ""
-						val middleName = if (nameParts.size > 2) {
-							nameParts.subList(1, nameParts.size - 1).joinToString(" ")
-						} else {
-							""
-						}
-						val surname = if (nameParts.size > 1) lastName else ""
-
+					if (firstName.isNotBlank() && lastName.isNotBlank() && school.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword) {
 						// Save profile
 						val store = AppPreferencesStore(context)
 						store.saveProfile(
 							UserProfileState(
 								firstName = firstName,
 								middleName = middleName,
-								surname = surname,
-								age = age,
+								surname = lastName,
 								school = school,
 								photoUri = null
 							)
 						)
+						store.saveAccountCredentials(email = email, password = password)
 
 						onSignUpComplete()
 					}
@@ -219,14 +221,14 @@ fun SignUpScreen(context: Context, onBack: () -> Unit, onSignUpComplete: () -> U
 					.fillMaxWidth()
 					.height(56.dp),
 				colors = ButtonDefaults.buttonColors(
-					containerColor = if (fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword && school.isNotBlank()) {
+						containerColor = if (firstName.isNotBlank() && lastName.isNotBlank() && school.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword) {
 						Color(0xFF1976D2)
 					} else {
 						Color(0xFFBDBDBD)
 					}
 				),
 				shape = RoundedCornerShape(14.dp),
-				enabled = fullName.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword && school.isNotBlank()
+					enabled = firstName.isNotBlank() && lastName.isNotBlank() && school.isNotBlank() && isEmailValid && password.isNotBlank() && password == confirmPassword
 			) {
 				Text("Create Account", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.White)
 			}

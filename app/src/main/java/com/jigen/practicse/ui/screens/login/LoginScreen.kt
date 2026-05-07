@@ -49,12 +49,14 @@ private val DividerColor = Color(0xFFE0E0E0)
 
 @Composable
 fun LoginScreen(
-	onContinue: () -> Unit,
+	onContinue: (email: String, password: String) -> String?,
 	onSignUp: () -> Unit,
 	onGuestContinue: () -> Unit = {}
 ) {
 	var email by remember { mutableStateOf("") }
 	var password by remember { mutableStateOf("") }
+	var signInError by remember { mutableStateOf<String?>(null) }
+	val canSignIn = email.isNotBlank() && password.isNotBlank()
 
 	Box(
 		modifier = Modifier
@@ -115,12 +117,17 @@ fun LoginScreen(
 				Spacer(modifier = Modifier.height(18.dp))
 
 				Button(
-					onClick = onContinue,
+					onClick = {
+						signInError = onContinue(email, password)
+					},
 					modifier = Modifier
 						.fillMaxWidth()
 						.height(56.dp),
-					colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+					colors = ButtonDefaults.buttonColors(
+						containerColor = if (canSignIn) PrimaryBlue else Color(0xFFBDBDBD)
+					),
 					shape = RoundedCornerShape(14.dp)
+					enabled = canSignIn
 				) {
 					Text(
 						"Sign In",
@@ -129,6 +136,17 @@ fun LoginScreen(
 							fontSize = 16.sp
 						),
 						color = Color.White
+					)
+				}
+
+				signInError?.let { error ->
+					Spacer(modifier = Modifier.height(10.dp))
+					Text(
+						text = error,
+						style = MaterialTheme.typography.bodySmall,
+						color = Color(0xFFD32F2F),
+						textAlign = TextAlign.Center,
+						modifier = Modifier.fillMaxWidth()
 					)
 				}
 
@@ -151,7 +169,9 @@ fun LoginScreen(
 				Spacer(modifier = Modifier.height(18.dp))
 
 				Button(
-					onClick = onContinue,
+					onClick = {
+						signInError = "Google sign-in is not available yet. Use your email and password."
+					},
 					modifier = Modifier
 						.fillMaxWidth()
 						.height(56.dp),

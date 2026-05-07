@@ -31,10 +31,6 @@ class ProfileViewModel(context: Context) : ViewModel() {
         updateState { copy(school = school) }
     }
 
-    fun updateAge(age: String) {
-        updateState { copy(age = age) }
-    }
-
     fun updatePhotoUri(uri: String?) {
         updateState { copy(photoUri = uri) }
     }
