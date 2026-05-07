@@ -1,5 +1,6 @@
 package com.jigen.practicse.ui.screens.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,18 +37,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.Image
 import com.jigen.practicse.R
 
+// ── Colour tokens ─────────────────────────────────────────────────────────────
+private val SurfaceColor = Color(0xFFF8F9FA)
+private val PrimaryBlue  = Color(0xFF1A73E8)
+private val SlateGray    = Color(0xFF5F6368)
+private val TextColor    = Color(0xFF202124)
+private val CardWhite    = Color(0xFFFFFFFF)
+private val DividerColor = Color(0xFFE0E0E0)
+
 @Composable
-fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
+fun LoginScreen(
+	onContinue: () -> Unit,
+	onSignUp: () -> Unit,
+	onGuestContinue: () -> Unit = {}
+) {
 	var email by remember { mutableStateOf("") }
 	var password by remember { mutableStateOf("") }
 
 	Box(
 		modifier = Modifier
 			.fillMaxSize()
-			.background(Color(0xFFF8F9FA))
+			.background(SurfaceColor)
 			.padding(24.dp)
 	) {
 		Column(
@@ -70,8 +83,8 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 
 				Text(
 					"Your path to civil service success",
-					fontSize = 14.sp,
-					color = Color(0xFF5F6368),
+					style = MaterialTheme.typography.bodyMedium,
+					color = SlateGray,
 					modifier = Modifier.padding(top = 8.dp)
 				)
 
@@ -81,7 +94,7 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 					value = email,
 					onValueChange = { email = it },
 					modifier = Modifier.fillMaxWidth(),
-					placeholder = { Text("Email") },
+					placeholder = { Text("Email", style = MaterialTheme.typography.bodyMedium) },
 					leadingIcon = { Icon(Icons.Filled.Email, contentDescription = null) },
 					singleLine = true,
 					shape = RoundedCornerShape(14.dp)
@@ -93,7 +106,7 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 					value = password,
 					onValueChange = { password = it },
 					modifier = Modifier.fillMaxWidth(),
-					placeholder = { Text("Password") },
+					placeholder = { Text("Password", style = MaterialTheme.typography.bodyMedium) },
 					leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null) },
 					singleLine = true,
 					shape = RoundedCornerShape(14.dp)
@@ -106,10 +119,17 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 					modifier = Modifier
 						.fillMaxWidth()
 						.height(56.dp),
-					colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2)),
+					colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
 					shape = RoundedCornerShape(14.dp)
 				) {
-					Text("Sign In", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color.White)
+					Text(
+						"Sign In",
+						style = MaterialTheme.typography.bodyMedium.copy(
+							fontWeight = FontWeight.SemiBold,
+							fontSize = 16.sp
+						),
+						color = Color.White
+					)
 				}
 
 				Spacer(modifier = Modifier.height(18.dp))
@@ -118,14 +138,14 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 					modifier = Modifier.fillMaxWidth(),
 					verticalAlignment = Alignment.CenterVertically
 				) {
-					HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE0E0E0))
+					HorizontalDivider(modifier = Modifier.weight(1f), color = DividerColor)
 					Text(
 						"or",
 						modifier = Modifier.padding(horizontal = 12.dp),
-						color = Color(0xFF5F6368),
-						fontSize = 13.sp
+						style = MaterialTheme.typography.bodySmall,
+						color = SlateGray
 					)
-					HorizontalDivider(modifier = Modifier.weight(1f), color = Color(0xFFE0E0E0))
+					HorizontalDivider(modifier = Modifier.weight(1f), color = DividerColor)
 				}
 
 				Spacer(modifier = Modifier.height(18.dp))
@@ -135,23 +155,48 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 					modifier = Modifier
 						.fillMaxWidth()
 						.height(56.dp),
-					colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color(0xFF202124)),
+					colors = ButtonDefaults.buttonColors(
+						containerColor = CardWhite,
+						contentColor = TextColor
+					),
 					shape = RoundedCornerShape(14.dp)
 				) {
-					Text("Continue with Google", fontSize = 15.sp, fontWeight = FontWeight.Medium)
+					Text(
+						"Continue with Google",
+						style = MaterialTheme.typography.bodyMedium.copy(
+							fontWeight = FontWeight.Medium
+						)
+					)
 				}
 			}
 
-			TextButton(
-				onClick = onSignUp,
+			// ── Bottom section ────────────────────────────────────
+			Column(
+				horizontalAlignment = Alignment.CenterHorizontally,
 				modifier = Modifier.padding(bottom = 12.dp)
 			) {
-				Text(
-					"Don't have an account? Sign Up",
-					fontSize = 14.sp,
-					color = Color(0xFF1976D2),
-					textAlign = TextAlign.Center
-				)
+				TextButton(onClick = onSignUp) {
+					Text(
+						"Don't have an account? Sign Up",
+						style = MaterialTheme.typography.bodyMedium.copy(
+							fontSize = 14.sp
+						),
+						color = PrimaryBlue,
+						textAlign = TextAlign.Center
+					)
+				}
+
+				TextButton(onClick = onGuestContinue) {
+					Text(
+						"Continue as Guest",
+						style = MaterialTheme.typography.bodyMedium.copy(
+							fontSize = 13.sp,
+							fontWeight = FontWeight.Normal
+						),
+						color = SlateGray,
+						textAlign = TextAlign.Center
+					)
+				}
 			}
 		}
 	}

@@ -12,6 +12,7 @@ private const val KEY_SCHOOL = "profile_school"
 private const val KEY_PHOTO_URI = "profile_photo_uri"
 private const val KEY_ACTIVE_TRACK = "active_track"
 private const val KEY_OFFLINE_RANKING = "offline_ranking"
+private const val KEY_IS_GUEST = "is_guest"
 
 private const val TRACK_PROFESSIONAL = "professional"
 private const val TRACK_SUB_PROFESSIONAL = "sub_professional"
@@ -99,6 +100,7 @@ class AppPreferencesStore(context: Context) {
 			.remove(KEY_PHOTO_URI)
 			.remove(KEY_ACTIVE_TRACK)
 			.remove(KEY_OFFLINE_RANKING)
+			.remove(KEY_IS_GUEST)
 			.apply()
 	}
 
@@ -109,6 +111,15 @@ class AppPreferencesStore(context: Context) {
 
 	fun setOfflineRankingEnabled(enabled: Boolean) {
 		prefs.edit().putBoolean(KEY_OFFLINE_RANKING, enabled).commit()
+	}
+
+	// Guest mode flag
+	fun isGuest(): Boolean {
+		return prefs.getBoolean(KEY_IS_GUEST, false)
+	}
+
+	fun setGuest(guest: Boolean) {
+		prefs.edit().putBoolean(KEY_IS_GUEST, guest).apply()
 	}
 }
 

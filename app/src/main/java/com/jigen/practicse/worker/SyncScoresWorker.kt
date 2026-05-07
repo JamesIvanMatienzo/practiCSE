@@ -30,6 +30,11 @@ class SyncScoresWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
+            // Skip sync entirely for guest users
+            if (AppPreferencesStore(applicationContext).isGuest()) {
+                return@withContext Result.success()
+            }
+
             val displayName = AppPreferencesStore(applicationContext).getDisplayName().ifBlank { "anonymous" }
 
             // Compute total score: sum of correct answers
