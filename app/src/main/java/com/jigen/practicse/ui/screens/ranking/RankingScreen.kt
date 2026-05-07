@@ -102,9 +102,8 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         )
                         Text(
                             "Leaderboard",
-                            fontWeight = FontWeight.Bold,
-                            color = TextColor,
-                            fontSize = 18.sp
+                            style = androidx.compose.material3.MaterialTheme.typography.titleLarge,
+                            color = TextColor
                         )
                     }
                 },
@@ -197,14 +196,13 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                         Text(
                                             "$totalEntries Ranked Players",
                                             color = TextColor,
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 15.sp
+                                            style = androidx.compose.material3.MaterialTheme.typography.titleMedium
                                         )
                                         Text(
-                                            if (s.isPlaceholder) "Offline sample data"
-                                            else "Live leaderboard",
+                                            if (s.isPlaceholder) "Live leaderboard"
+                                            else "Local device scores",
                                             color = MutedText,
-                                            fontSize = 12.sp
+                                            style = androidx.compose.material3.MaterialTheme.typography.bodySmall
                                         )
                                     }
                                 }
@@ -216,11 +214,11 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                 ) {
                                     Text(
                                         if (s.isPlaceholder)
-                                            "Offline mode — showing sample rankings"
+                                            "Online mode — showing live rankings"
                                         else
-                                            "Online mode — showing live rankings",
+                                            "Offline mode — showing local scores",
                                         color = CardWhite,
-                                        fontSize = 11.sp
+                                        style = androidx.compose.material3.MaterialTheme.typography.labelSmall
                                     )
                                 }
                             }
@@ -338,20 +336,35 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                             Text(
                                 "Leaderboard",
                                 color = TextColor,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 15.sp,
+                                style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                                 modifier = Modifier.weight(1f)
                             )
                             Text(
                                 "${s.top.size} players",
                                 color = MutedText,
-                                fontSize = 12.sp
+                                style = androidx.compose.material3.MaterialTheme.typography.bodySmall
                             )
                         }
                     }
 
                     // ── Ranks 4+ rows ─────────────────────────────────────────
-                    if (others.isEmpty() && top3.isNotEmpty()) {
+                    if (others.isEmpty() && top3.isEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 32.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    "Take a quiz to see your offline rank.",
+                                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
+                                    color = MutedText,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    } else if (others.isEmpty() && top3.isNotEmpty()) {
                         item {
                             Box(
                                 modifier = Modifier
@@ -361,7 +374,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                             ) {
                                 Text(
                                     "More rankings will appear as players submit scores.",
-                                    fontSize = 12.sp,
+                                    style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
                                     color = MutedText,
                                     textAlign = TextAlign.Center
                                 )

@@ -181,6 +181,7 @@ fun ExamScreen(
 					selectedAnswers = state.selectedAnswers,
 					evaluatedQuestions = state.evaluatedQuestions,
 					flaggedQuestionIds = state.flaggedQuestionIds,
+					voidedQuestions = state.voidedQuestions,
 					pagerState = pagerState,
 					reportStatusMessage = reportStatusMessage,
 					modifier = Modifier.fillMaxSize().padding(innerPadding),
@@ -188,7 +189,8 @@ fun ExamScreen(
 					onDeepDive = onDeepDive,
 					onReportError = viewModel::reportCurrentQuestion,
 					onPrevious = viewModel::previousQuestion,
-					onNext = viewModel::nextQuestion
+					onNext = viewModel::nextQuestion,
+					onReportDismissed = { reportStatusMessage = null }
 				)
 			}
 		}
@@ -312,6 +314,7 @@ private fun ExamPagerContent(
 	selectedAnswers: Map<Int, String>,
 	evaluatedQuestions: Set<Int>,
 	flaggedQuestionIds: Set<Int>,
+	voidedQuestions: Set<Int>,
 	pagerState: androidx.compose.foundation.pager.PagerState,
 	reportStatusMessage: String?,
 	modifier: Modifier = Modifier,
@@ -319,7 +322,8 @@ private fun ExamPagerContent(
 	onDeepDive: (String) -> Unit,
 	onReportError: () -> Unit,
 	onPrevious: () -> Unit,
-	onNext: () -> Unit
+	onNext: () -> Unit,
+	onReportDismissed: () -> Unit
 ) {
 	var showReportDialog by remember { mutableStateOf(false) }
 	val scope = rememberCoroutineScope()
@@ -367,6 +371,7 @@ private fun ExamPagerContent(
 				selectedAnswer = pageQuestion?.let { selectedAnswers[it.id] },
 				isEvaluated = pageQuestion?.id in evaluatedQuestions,
 				isFlagged = pageQuestion?.id in flaggedQuestionIds,
+				isVoided = pageQuestion?.id in voidedQuestions,
 				onAnswerSelected = onAnswerSelected,
 				onDeepDive = onDeepDive,
 				onReportError = onReportError
@@ -441,6 +446,7 @@ private fun QuestionPage(
 	selectedAnswer: String?,
 	isEvaluated: Boolean,
 	isFlagged: Boolean,
+	isVoided: Boolean,
 	onAnswerSelected: (String) -> Unit,
 	onDeepDive: (String) -> Unit,
 	onReportError: () -> Unit
@@ -504,7 +510,7 @@ private fun QuestionPage(
 					shape = RoundedCornerShape(18.dp),
 					colors = CardDefaults.cardColors(containerColor = background),
 					border = BorderStroke(1.dp, borderColor),
-					onClick = { onAnswerSelected(option) }
+					onClick = { if (!isVoided) onAnswerSelected(option) }
 				) {
 					Box(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
 						RowWithRadio(
@@ -541,14 +547,22 @@ private fun QuestionPage(
 
 			Spacer(modifier = Modifier.height(8.dp))
 
-			Button(
-				onClick = onReportError,
-				modifier = Modifier.fillMaxWidth(),
-				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)), 
-				shape = RoundedCornerShape(18.dp)
-			) {
-				// Changed from PrimaryBlue to ErrorRed
-				Text(text = "Report a Problem in this Question", color = ErrorRed) 
+			if (isVoided) {
+				Box(
+					modifier = Modifier.fillMaxWidth().background(Color(0xFFFDECEC), RoundedCornerShape(18.dp)).padding(16.dp),
+					contentAlignment = Alignment.Center
+				) {
+					Text("Question Reported & Voided", style = MaterialTheme.typography.bodyMedium, color = ErrorRed, fontWeight = FontWeight.Bold)
+				}
+			} else {
+				Button(
+					onClick = onReportError,
+					modifier = Modifier.fillMaxWidth(),
+					colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)),
+					shape = RoundedCornerShape(18.dp)
+				) {
+					Text(text = "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = ErrorRed)
+				}
 			}
 		}
 	}

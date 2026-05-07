@@ -29,7 +29,8 @@ sealed class ExamUiState {
 		val sessionCategory: String? = null,
 		val selectedAnswers: Map<Int, String> = emptyMap(),
 		val evaluatedQuestions: Set<Int> = emptySet(),
-		val flaggedQuestionIds: Set<Int> = emptySet()
+		val flaggedQuestionIds: Set<Int> = emptySet(),
+		val voidedQuestions: Set<Int> = emptySet()
 	) : ExamUiState() {
 		val currentQuestion: QuestionUiState?
 			get() = if (currentIndex < questions.size) questions[currentIndex] else null

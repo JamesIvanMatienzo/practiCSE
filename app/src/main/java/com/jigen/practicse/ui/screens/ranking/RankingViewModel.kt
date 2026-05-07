@@ -20,46 +20,35 @@ class RankingViewModel(private val repository: RankingRepository, private val co
         refresh()
     }
 
-    fun refresh() {
+    fun refresh(offlineModeOverride: Boolean? = null) {
         viewModelScope.launch {
             _uiState.value = RankingUiState.Loading
             val prefs = AppPreferencesStore(context)
             val userName = prefs.getDisplayName().ifBlank { "You" }
+            val offlineMode = offlineModeOverride ?: prefs.isOfflineRankingEnabled()
+
             try {
-                val list = repository.fetchGlobalTop(100)
-                val sorted = list.sortedByDescending { it.totalScore }
-                val offlineMode = prefs.isOfflineRankingEnabled()
-                val withFallback = when {
-                    offlineMode -> placeholderEntries(userName)
-                    sorted.isEmpty() -> placeholderEntries(userName)
-                    else -> sorted
+                // Reversed logic: Offline fetches local DB, Online pushes mock server data
+                val list = if (offlineMode) {
+                    repository.getCachedTop(100)
+                } else {
+                    placeholderEntries(userName)
                 }
-                val isPlaceholder = offlineMode || sorted.isEmpty()
-                val userEntry = withFallback.find { it.userName == userName }
-                val userRank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
+
+                val sorted = list.sortedByDescending { it.totalScore }
+                val isPlaceholder = !offlineMode
+
+                val userEntry = sorted.find { it.userName == userName }
+                val userRank = sorted.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
 
                 _uiState.value = RankingUiState.Success(
-                    top = withFallback,
+                    top = sorted,
                     userRank = userRank,
                     userEntry = userEntry,
                     isPlaceholder = isPlaceholder
                 )
             } catch (e: Exception) {
-                // fallback cached
-                val cached = repository.getCachedTop(100)
-                val sorted = cached.sortedByDescending { it.totalScore }
-                val offlineMode = AppPreferencesStore(context).isOfflineRankingEnabled()
-                val withFallback = if (offlineMode) placeholderEntries(userName) else if (sorted.isEmpty()) placeholderEntries(userName) else sorted
-                val isPlaceholder = offlineMode || sorted.isEmpty()
-                val rank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
-                val userEntry = withFallback.find { it.userName == userName }
-
-                _uiState.value = RankingUiState.Success(
-                    top = withFallback,
-                    userRank = rank,
-                    userEntry = userEntry,
-                    isPlaceholder = isPlaceholder
-                )
+                _uiState.value = RankingUiState.Error(e.message ?: "Failed to fetch rankings")
             }
         }
     }

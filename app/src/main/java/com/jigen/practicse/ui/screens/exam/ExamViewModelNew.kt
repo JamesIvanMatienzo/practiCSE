@@ -353,9 +353,11 @@ class ExamViewModelNew(
 				)
 			)
 
+			val scorableQuestions = state.totalQuestions - state.voidedQuestions.size
+			
 			_uiState.value = ExamUiState.Completed(
 				totalScore = state.currentScore,
-				totalQuestions = state.totalQuestions
+				totalQuestions = scorableQuestions
 			)
 			_effects.tryEmit(ExamEffect.ExamCompleted)
 		}
@@ -373,7 +375,19 @@ class ExamViewModelNew(
 						reportedAtMillis = System.currentTimeMillis()
 					)
 				)
-				_effects.tryEmit(ExamEffect.QuestionReported)
+
+				val updatedVoided = currentState.voidedQuestions.toMutableSet().apply {
+					add(currentQuestion.id)
+				}
+				_uiState.value = currentState.copy(voidedQuestions = updatedVoided)
+
+				// Auto-advance logic (glides via existing LaunchedEffect in UI)
+				if (currentState.isLastQuestion) {
+					completeExam(currentState.copy(voidedQuestions = updatedVoided))
+				} else {
+					goToQuestion(currentState.currentIndex + 1)
+				}
+
 			} catch (e: Exception) {
 				// Log but don't interrupt exam
 			}
