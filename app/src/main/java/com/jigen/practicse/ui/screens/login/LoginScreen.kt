@@ -126,7 +126,7 @@ fun LoginScreen(
 					colors = ButtonDefaults.buttonColors(
 						containerColor = if (canSignIn) PrimaryBlue else Color(0xFFBDBDBD)
 					),
-					shape = RoundedCornerShape(14.dp)
+					shape = RoundedCornerShape(14.dp),
 					enabled = canSignIn
 				) {
 					Text(
