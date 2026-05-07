@@ -114,7 +114,7 @@ class ExamViewModelNew(
 			// Determine starting point based on sessionMode
 			var startingIndex = 0
 			var startingScore = 0
-			
+
 			if (mode == "resume") {
 				if (existingSession != null && existingSession.examEndTimeMillis == null) {
 					// Only resume if session is active (not completed)
@@ -147,7 +147,7 @@ class ExamViewModelNew(
 	private suspend fun createNewSession(sessionCategory: String, trackKey: String) {
 		// Clear any existing completed sessions or old sessions
 		sessionDao.clearCompletedSessions()
-		
+
 		val newSession = SessionEntity(
 			id = 1,
 			lastScore = 0,
@@ -353,9 +353,11 @@ class ExamViewModelNew(
 				)
 			)
 
+			val scorableQuestions = state.totalQuestions - state.voidedQuestions.size
+
 			_uiState.value = ExamUiState.Completed(
 				totalScore = state.currentScore,
-				totalQuestions = state.totalQuestions
+				totalQuestions = scorableQuestions
 			)
 			_effects.tryEmit(ExamEffect.ExamCompleted)
 		}
@@ -373,14 +375,19 @@ class ExamViewModelNew(
 						reportedAtMillis = System.currentTimeMillis()
 					)
 				)
-				
-				val updatedVoided = currentState.voidedQuestionIds + currentQuestion.id
-				_uiState.value = currentState.copy(voidedQuestionIds = updatedVoided)
-				
-				_effects.tryEmit(ExamEffect.QuestionReported)
-				
-				// Glide to Next automatically
-				nextQuestion()
+
+				val updatedVoided = currentState.voidedQuestions.toMutableSet().apply {
+					add(currentQuestion.id)
+				}
+				_uiState.value = currentState.copy(voidedQuestions = updatedVoided)
+
+				// Auto-advance logic (glides via existing LaunchedEffect in UI)
+				if (currentState.isLastQuestion) {
+					completeExam(currentState.copy(voidedQuestions = updatedVoided))
+				} else {
+					goToQuestion(currentState.currentIndex + 1)
+				}
+
 			} catch (e: Exception) {
 				// Log but don't interrupt exam
 			}
