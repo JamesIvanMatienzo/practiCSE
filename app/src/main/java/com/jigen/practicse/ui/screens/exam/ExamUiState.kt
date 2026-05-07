@@ -29,13 +29,14 @@ sealed class ExamUiState {
 		val sessionCategory: String? = null,
 		val selectedAnswers: Map<Int, String> = emptyMap(),
 		val evaluatedQuestions: Set<Int> = emptySet(),
-		val flaggedQuestionIds: Set<Int> = emptySet()
+		val flaggedQuestionIds: Set<Int> = emptySet(),
+		val voidedQuestionIds: Set<Int> = emptySet()
 	) : ExamUiState() {
 		val currentQuestion: QuestionUiState?
 			get() = if (currentIndex < questions.size) questions[currentIndex] else null
 		
 		val totalQuestions: Int
-			get() = questions.size
+			get() = questions.size - voidedQuestionIds.size
 		
 		val isLastQuestion: Boolean
 			get() = currentIndex >= totalQuestions - 1

@@ -373,7 +373,14 @@ class ExamViewModelNew(
 						reportedAtMillis = System.currentTimeMillis()
 					)
 				)
+				
+				val updatedVoided = currentState.voidedQuestionIds + currentQuestion.id
+				_uiState.value = currentState.copy(voidedQuestionIds = updatedVoided)
+				
 				_effects.tryEmit(ExamEffect.QuestionReported)
+				
+				// Glide to Next automatically
+				nextQuestion()
 			} catch (e: Exception) {
 				// Log but don't interrupt exam
 			}

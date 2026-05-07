@@ -182,6 +182,7 @@ fun ExamScreen(
 					selectedAnswers = state.selectedAnswers,
 					evaluatedQuestions = state.evaluatedQuestions,
 					flaggedQuestionIds = state.flaggedQuestionIds,
+					voidedQuestionIds = state.voidedQuestionIds,
 					pagerState = pagerState,
 					reportStatusMessage = reportStatusMessage,
 					modifier = Modifier.fillMaxSize().padding(innerPadding),
@@ -307,6 +308,7 @@ private fun ExamPagerContent(
 	selectedAnswers: Map<Int, String>,
 	evaluatedQuestions: Set<Int>,
 	flaggedQuestionIds: Set<Int>,
+	voidedQuestionIds: Set<Int>,
 	pagerState: androidx.compose.foundation.pager.PagerState,
 	reportStatusMessage: String?,
 	modifier: Modifier = Modifier,
@@ -370,6 +372,7 @@ private fun ExamPagerContent(
 				selectedAnswer = pageQuestion?.let { selectedAnswers[it.id] },
 				isEvaluated = pageQuestion?.id in evaluatedQuestions,
 				isFlagged = pageQuestion?.id in flaggedQuestionIds,
+				isVoided = pageQuestion?.id in voidedQuestionIds,
 				onAnswerSelected = onAnswerSelected,
 				onDeepDive = onDeepDive,
 				onReportError = onReportError
@@ -443,6 +446,7 @@ private fun QuestionPage(
 	selectedAnswer: String?,
 	isEvaluated: Boolean,
 	isFlagged: Boolean,
+	isVoided: Boolean,
 	onAnswerSelected: (String) -> Unit,
 	onDeepDive: (String) -> Unit,
 	onReportError: () -> Unit
@@ -476,11 +480,19 @@ private fun QuestionPage(
 				Spacer(modifier = Modifier.height(14.dp))
 			}
 
+			if (isVoided) {
+				Text(
+					text = "Question Reported & Voided",
+					color = MutedGray,
+					style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+					modifier = Modifier.padding(bottom = 8.dp)
+				)
+			}
 			Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				if (isFlagged) {
 					Box(modifier = Modifier.size(8.dp).background(FlagYellow, CircleShape))
 				}
-				Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = TextColor)
+				Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = if (isVoided) MutedGray else TextColor)
 			}
 
 			Spacer(modifier = Modifier.height(20.dp))
@@ -506,7 +518,7 @@ private fun QuestionPage(
 					shape = RoundedCornerShape(18.dp),
 					colors = CardDefaults.cardColors(containerColor = background),
 					border = BorderStroke(1.dp, borderColor),
-					onClick = { onAnswerSelected(option) }
+					onClick = { if (!isVoided) onAnswerSelected(option) }
 				) {
 					Box(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
 						RowWithRadio(
@@ -548,9 +560,10 @@ private fun QuestionPage(
 				onClick = onReportError,
 				modifier = Modifier.fillMaxWidth(),
 				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)), 
-				shape = RoundedCornerShape(18.dp)
+				shape = RoundedCornerShape(18.dp),
+				enabled = !isVoided
 			) {
-				Text(text = "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = ErrorRed) 
+				Text(text = if (isVoided) "Question Reported & Voided" else "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = if (isVoided) MutedGray else ErrorRed) 
 			}
 		}
 	}
