@@ -10,8 +10,6 @@ import com.jigen.practicse.repository.RankingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.coroutines.Dispatchers
 
 class RankingViewModel(private val repository: RankingRepository, private val context: Context) : ViewModel() {
 
@@ -27,74 +25,30 @@ class RankingViewModel(private val repository: RankingRepository, private val co
             _uiState.value = RankingUiState.Loading
             val prefs = AppPreferencesStore(context)
             val userName = prefs.getDisplayName().ifBlank { "You" }
-            // Read offline mode preference FIRST to determine behavior
             val offlineMode = offlineModeOverride ?: prefs.isOfflineRankingEnabled()
 
             try {
-                // Only attempt network fetch if offline mode is disabled
+                // Reversed logic: Offline fetches local DB, Online pushes mock server data
                 val list = if (offlineMode) {
-                    emptyList()
+                    repository.getCachedTop(100)
                 } else {
-                    repository.fetchGlobalTop(100)
+                    placeholderEntries(userName)
                 }
 
                 val sorted = list.sortedByDescending { it.totalScore }
-                val isPlaceholder = offlineMode
-                val withFallback = when {
-                    offlineMode -> {
-                        val db = com.jigen.practicse.data.local.PractiCSEDatabase.getInstance(context)
-                        val progress = withContext(Dispatchers.IO) { db.progressDao().getAllProgress() }
-                        if (progress.isEmpty()) {
-                            emptyList()
-                        } else {
-                            val totalScore = progress.count { it.isCorrect }
-                            val now = System.currentTimeMillis()
-                            listOf(LeaderboardEntryEntity(userName = userName, totalScore = totalScore, lastUpdatedMillis = now))
-                        }
-                    }
-                    sorted.isEmpty() -> placeholderEntries(userName)
-                    else -> sorted
-                }
-                val userEntry = withFallback.find { it.userName == userName }
-                val userRank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
+                val isPlaceholder = !offlineMode
+
+                val userEntry = sorted.find { it.userName == userName }
+                val userRank = sorted.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
 
                 _uiState.value = RankingUiState.Success(
-                    top = withFallback,
+                    top = sorted,
                     userRank = userRank,
                     userEntry = userEntry,
                     isPlaceholder = isPlaceholder
                 )
             } catch (e: Exception) {
-                // fallback cached
-                val cached = repository.getCachedTop(100)
-                val sorted = cached.sortedByDescending { it.totalScore }
-
-                val isPlaceholder = offlineMode
-                val withFallback = when {
-                    offlineMode -> {
-                        val db = com.jigen.practicse.data.local.PractiCSEDatabase.getInstance(context)
-                        val progress = withContext(Dispatchers.IO) { db.progressDao().getAllProgress() }
-                        if (progress.isEmpty()) {
-                            emptyList()
-                        } else {
-                            val totalScore = progress.count { it.isCorrect }
-                            val now = System.currentTimeMillis()
-                            listOf(LeaderboardEntryEntity(userName = userName, totalScore = totalScore, lastUpdatedMillis = now))
-                        }
-                    }
-                    sorted.isEmpty() -> placeholderEntries(userName)
-                    else -> sorted
-                }
-
-                val rank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
-                val userEntry = withFallback.find { it.userName == userName }
-
-                _uiState.value = RankingUiState.Success(
-                    top = withFallback,
-                    userRank = rank,
-                    userEntry = userEntry,
-                    isPlaceholder = isPlaceholder
-                )
+                _uiState.value = RankingUiState.Error(e.message ?: "Failed to fetch rankings")
             }
         }
     }
@@ -103,7 +57,7 @@ class RankingViewModel(private val repository: RankingRepository, private val co
         val now = System.currentTimeMillis()
         // Offline sample entries requested by the user (capitalized)
         return listOf(
-            LeaderboardEntryEntity(userName = "Emman", totalScore = 8700, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "Emmanuel", totalScore = 8700, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Ivan", totalScore = 1250, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Gem", totalScore = 150, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "James", totalScore = 67, lastUpdatedMillis = now),
