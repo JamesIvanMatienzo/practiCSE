@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.jigen.practicse.BuildConfig
 import com.jigen.practicse.data.entity.QuestionEntity
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.dao.QuestionDao
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +31,8 @@ sealed class DeepDiveUiState {
 
 class DeepDiveViewModel(
 	private val questionDao: QuestionDao,
-	private val questionId: Int
+	private val questionId: Int,
+	private val isGuest: Boolean = false
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow<DeepDiveUiState>(DeepDiveUiState.Loading)
@@ -41,9 +43,11 @@ class DeepDiveViewModel(
 			@Suppress("UNCHECKED_CAST")
 			override fun <T : ViewModel> create(modelClass: Class<T>): T {
 				val database = PractiCSEDatabase.getInstance(context)
+				val guest = AppPreferencesStore(context).isGuest()
 				return DeepDiveViewModel(
 					database.questionDao(),
-					questionId.toIntOrNull() ?: -1
+					questionId.toIntOrNull() ?: -1,
+					isGuest = guest
 				) as T
 			}
 		}
@@ -80,8 +84,9 @@ class DeepDiveViewModel(
 		val baseUrl = BuildConfig.GROQ_BASE_URL.trim().ifBlank { "https://api.groq.com/openai/v1" }
 		val model = BuildConfig.GROQ_MODEL.trim().ifBlank { "openai/gpt-oss-120b" }
 
-		if (apiKey.isBlank()) {
-			return@withContext "Add GROQ_API_KEY in .env.local to generate an AI explanation for this question.\n\nCorrect answer: ${question.correctAnswer}"
+		// Guest mode: skip network call, show fallback
+		if (isGuest || apiKey.isBlank()) {
+			return@withContext "AI explanation is not available in guest/offline mode.\n\nCorrect answer: ${question.correctAnswer}"
 		}
 
 		val options = (question.wrongChoices + question.correctAnswer).distinct()

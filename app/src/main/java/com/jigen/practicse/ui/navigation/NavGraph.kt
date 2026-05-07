@@ -49,12 +49,20 @@ fun NavGraph(
 		composable(Screen.Login.route) {
 			LoginScreen(
 				onContinue = {
+					appPreferencesStore.setGuest(false)
 					navController.navigate(Screen.Onboarding.route) {
 						popUpTo(Screen.Login.route) { inclusive = true }
 					}
 				},
 				onSignUp = {
 					navController.navigate(Screen.SignUp.route)
+				},
+				onGuestContinue = {
+					appPreferencesStore.setGuest(true)
+					appPreferencesStore.updateDisplayName("Guest")
+					navController.navigate(Screen.Onboarding.route) {
+						popUpTo(Screen.Login.route) { inclusive = true }
+					}
 				}
 			)
 		}
@@ -66,6 +74,7 @@ fun NavGraph(
 					navController.popBackStack()
 				},
 				onSignUpComplete = {
+					appPreferencesStore.setGuest(false)
 					navController.navigate(Screen.Onboarding.route) {
 						popUpTo(Screen.Login.route) { inclusive = true }
 					}

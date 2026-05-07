@@ -26,7 +26,8 @@ class RankingViewModel(private val repository: RankingRepository, private val co
             val prefs = AppPreferencesStore(context)
             val userName = prefs.getDisplayName().ifBlank { "You" }
             // Read offline mode preference FIRST to determine behavior
-            val offlineMode = offlineModeOverride ?: prefs.isOfflineRankingEnabled()
+            // Guests always use offline mode
+            val offlineMode = offlineModeOverride ?: (prefs.isOfflineRankingEnabled() || prefs.isGuest())
 
             try {
                 // Only attempt network fetch if offline mode is disabled
