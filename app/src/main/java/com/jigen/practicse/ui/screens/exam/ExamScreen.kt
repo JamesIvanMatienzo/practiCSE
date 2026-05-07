@@ -544,10 +544,11 @@ private fun QuestionPage(
 			Button(
 				onClick = onReportError,
 				modifier = Modifier.fillMaxWidth(),
-				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE8F0FE)),
+				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)), 
 				shape = RoundedCornerShape(18.dp)
 			) {
-				Text(text = "Report a Problem in this Question", color = PrimaryBlue)
+				// Changed from PrimaryBlue to ErrorRed
+				Text(text = "Report a Problem in this Question", color = ErrorRed) 
 			}
 		}
 	}
