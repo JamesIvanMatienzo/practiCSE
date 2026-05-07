@@ -38,7 +38,7 @@ fun MainApp(context: ComponentActivity) {
             NavGraph(
                 navController = navController,
                 context = context,
-                startDestination = Screen.Login.route
+                startDestination = Screen.Splash.route
             )
         }
     }

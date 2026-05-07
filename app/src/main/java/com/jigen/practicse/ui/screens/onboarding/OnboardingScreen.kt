@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -28,11 +29,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
 import android.content.Context
+import com.jigen.practicse.R
 import com.jigen.practicse.data.local.AppPreferencesStore
 
 @Composable
@@ -55,13 +59,12 @@ fun OnboardingScreen(
 			horizontalAlignment = Alignment.CenterHorizontally,
 			verticalArrangement = Arrangement.Top
 		) {
-			Spacer(modifier = Modifier.height(32.dp))
+			Spacer(modifier = Modifier.height(16.dp))
 
-			Text(
-				"practiCSE",
-				fontSize = 32.sp,
-				fontWeight = FontWeight.Bold,
-				color = Color(0xFF1976D2)
+			Image(
+				painter = painterResource(id = R.drawable.practicse_logo),
+				contentDescription = "practiCSE Logo",
+				modifier = Modifier.size(100.dp)
 			)
 
 			Text(
@@ -69,7 +72,7 @@ fun OnboardingScreen(
 				fontSize = 12.sp,
 				color = Color(0xFF6C757D),
 				textAlign = TextAlign.Center,
-				modifier = Modifier.padding(top = 8.dp)
+				modifier = Modifier.padding(top = 16.dp)
 			)
 
 			Spacer(modifier = Modifier.height(48.dp))

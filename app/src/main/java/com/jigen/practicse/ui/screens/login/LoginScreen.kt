@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -29,10 +30,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import com.jigen.practicse.R
 
 @Composable
 fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
@@ -54,14 +58,15 @@ fun LoginScreen(onContinue: () -> Unit, onSignUp: () -> Unit) {
 				modifier = Modifier.fillMaxWidth(),
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
-				Spacer(modifier = Modifier.height(72.dp))
+				Spacer(modifier = Modifier.height(48.dp))
 
-				Text(
-					"practiCSE",
-					fontSize = 34.sp,
-					fontWeight = FontWeight.Bold,
-					color = Color(0xFF1976D2)
+				Image(
+					painter = painterResource(id = R.drawable.practicse_logo),
+					contentDescription = "practiCSE Logo",
+					modifier = Modifier.size(120.dp)
 				)
+
+				Spacer(modifier = Modifier.height(24.dp))
 
 				Text(
 					"Your path to civil service success",

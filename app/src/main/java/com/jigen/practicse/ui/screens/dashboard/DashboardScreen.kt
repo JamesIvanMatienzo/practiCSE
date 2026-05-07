@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -153,10 +154,9 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 		verticalAlignment = Alignment.CenterVertically
 	) {
 		Row(verticalAlignment = Alignment.CenterVertically) {
-			Icon(
-				painter = painterResource(id = com.jigen.practicse.R.drawable.ic_logo_p),
+			Image(
+				painter = painterResource(id = com.jigen.practicse.R.drawable.p_only),
 				contentDescription = null,
-				tint = PrimaryBlue,
 				modifier = Modifier.size(32.dp)
 			)
 

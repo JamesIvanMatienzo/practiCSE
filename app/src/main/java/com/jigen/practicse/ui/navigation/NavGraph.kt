@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.ExamConfigStore
+import com.jigen.practicse.ui.screens.splash.SplashScreen
 import com.jigen.practicse.ui.screens.login.LoginScreen
 import com.jigen.practicse.ui.screens.login.SignUpScreen
 import com.jigen.practicse.ui.screens.dashboard.DashboardScreen
@@ -35,6 +36,16 @@ fun NavGraph(
 		navController = navController,
 		startDestination = startDestination
 	) {
+		composable(Screen.Splash.route) {
+			SplashScreen(
+				onNavigateToLogin = {
+					navController.navigate(Screen.Login.route) {
+						popUpTo(Screen.Splash.route) { inclusive = true }
+					}
+				}
+			)
+		}
+
 		composable(Screen.Login.route) {
 			LoginScreen(
 				onContinue = {
