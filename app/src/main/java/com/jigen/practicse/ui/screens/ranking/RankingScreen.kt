@@ -1,6 +1,7 @@
 package com.jigen.practicse.ui.screens.ranking
 
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,10 +24,13 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -36,40 +40,50 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.material3.Switch
-import com.jigen.practicse.data.local.AppPreferencesStore
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 
+// ── Colour tokens ─────────────────────────────────────────────────────────────
+private val SurfaceColor    = Color(0xFFF8F9FA)
+private val PrimaryBlue     = Color(0xFF1A73E8)
+private val PrimaryBlueDeep = Color(0xFF0D47A1)
+private val PrimaryBlueSoft = Color(0xFFEAF2FF)
+private val BorderColor     = Color(0xFFDCE7FA)
+private val Gold            = Color(0xFFF4B400)
+private val Silver          = Color(0xFF9AA0A6)
+private val Bronze          = Color(0xFFB06D3B)
+private val TextColor       = Color(0xFF202124)
+private val MutedText       = Color(0xFF6C757D)
+private val CardWhite       = Color(0xFFFFFFFF)
+private val OnlineGreen     = Color(0xFF34A853)
 
-private val SurfaceColor = Color(0xFFF8F9FA)
-private val PrimaryBlue = Color(0xFF1A73E8)
-        private val PrimaryBlueDeep = Color(0xFF0D47A1)
-        private val PrimaryBlueSoft = Color(0xFFEAF2FF)
-        private val BorderColor = Color(0xFFDCE7FA)
-        private val Gold = Color(0xFFF4B400)
-        private val Silver = Color(0xFF9AA0A6)
-        private val Bronze = Color(0xFFB06D3B)
-        private val TextColor = Color(0xFF202124)
-        private val MutedText = Color(0xFF6C757D)
-
+// ── Screen ────────────────────────────────────────────────────────────────────
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
     val viewModel: RankingViewModel = viewModel(factory = RankingViewModel.factory(context))
     val state by viewModel.uiState.collectAsState()
+
+    val prefs = AppPreferencesStore(context)
+    // offlineEnabled = true  → showing offline/cached data
+    // switch ON (checked)    → Online mode  → offlineEnabled = false
+    // switch OFF (unchecked) → Offline mode → offlineEnabled = true
+    var offlineEnabled by remember { mutableStateOf(prefs.isOfflineRankingEnabled()) }
+    val isOnline = !offlineEnabled
 
     Scaffold(
         containerColor = SurfaceColor,
@@ -81,47 +95,53 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Icon(
-                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_rank_leaderboard),
+                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_podium),
                             contentDescription = "Ranking",
                             modifier = Modifier.size(24.dp),
                             tint = PrimaryBlue
                         )
-                        Text("Leaderboard", fontWeight = FontWeight.Bold, color = TextColor)
+                        Text(
+                            "Leaderboard",
+                            fontWeight = FontWeight.Bold,
+                            color = TextColor,
+                            fontSize = 18.sp
+                        )
                     }
                 },
                 actions = {
-                        // offline toggle + badge
-                        val prefs = AppPreferencesStore(context)
-                        var offlineEnabled by remember { mutableStateOf(prefs.isOfflineRankingEnabled()) }
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            if (offlineEnabled) {
-                                Box(
-                                    modifier = Modifier
-                                        .background(color = PrimaryBlue.copy(alpha = 0.08f), shape = RoundedCornerShape(12.dp))
-                                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                                ) {
-                                    Text("OFFLINE", color = PrimaryBlue, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                            }
-
-                            Text(if (offlineEnabled) "Offline" else "Online", color = MutedText, fontSize = 12.sp)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Switch(checked = offlineEnabled, onCheckedChange = {
-                                offlineEnabled = it
-                                prefs.setOfflineRankingEnabled(it)
-                                // refresh rankings
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                        Text(
+                            text = if (isOnline) "Online" else "Offline",
+                            color = if (isOnline) OnlineGreen else MutedText,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Switch(
+                            checked = isOnline,   // ON = Online
+                            onCheckedChange = { nowOnline ->
+                                offlineEnabled = !nowOnline
+                                prefs.setOfflineRankingEnabled(!nowOnline)
                                 viewModel.refresh()
-                            })
-                        }
+                            },
+                            colors = SwitchDefaults.colors(
+                                checkedTrackColor   = OnlineGreen,
+                                checkedThumbColor   = CardWhite,
+                                uncheckedTrackColor = MutedText.copy(alpha = 0.4f),
+                                uncheckedThumbColor = CardWhite
+                            )
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = CardWhite)
             )
         }
     ) { padding ->
@@ -138,163 +158,274 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
             }
 
             is RankingUiState.Success -> {
-                val top3 = s.top.take(3)
-                val others = s.top.drop(3)
+                val top3         = s.top.take(3)
+                val others       = s.top.drop(3)
                 val totalEntries = s.top.size
 
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
                 ) {
+
+                    // ── Header banner ────────────────────────────────────
                     item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(CardWhite)
+                                .padding(horizontal = 20.dp, vertical = 18.dp)
+                        ) {
+                            Column {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(38.dp)
+                                            .clip(CircleShape)
+                                            .background(PrimaryBlue),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = com.jigen.practicse.R.drawable.ic_podium),
+                                            contentDescription = null,
+                                            tint = CardWhite,
+                                            modifier = Modifier.size(22.dp)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Column {
+                                        Text(
+                                            "$totalEntries Ranked Players",
+                                            color = TextColor,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 15.sp
+                                        )
+                                        Text(
+                                            if (s.isPlaceholder) "Offline sample data"
+                                            else "Live leaderboard",
+                                            color = MutedText,
+                                            fontSize = 12.sp
+                                        )
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Box(
+                                    modifier = Modifier
+                                        .background(PrimaryBlue, RoundedCornerShape(8.dp))
+                                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                                ) {
+                                    Text(
+                                        if (s.isPlaceholder)
+                                            "Offline mode — showing sample rankings"
+                                        else
+                                            "Online mode — showing live rankings",
+                                        color = CardWhite,
+                                        fontSize = 11.sp
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    // ── TOP 3 Podium section ──────────────────────────────────
+                    if (top3.isNotEmpty()) {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(CardWhite)
+                                    .padding(horizontal = 16.dp)
+                                    .padding(bottom = 0.dp)
+                            ) {
+                                Spacer(modifier = Modifier.height(14.dp))
+                                Text(
+                                    "TOP 3",
+                                    color = MutedText,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 11.sp,
+                                    letterSpacing = 2.sp,
+                                    modifier = Modifier.padding(bottom = 18.dp)
+                                )
+
+                                // Avatar row: [2nd] [1st raised] [3rd]
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.Bottom
+                                ) {
+                                    if (top3.size >= 2) {
+                                        PodiumItem(
+                                            rank = 2,
+                                            entry = top3[1],
+                                            medalColor = Silver,
+                                            avatarSize = 60.dp,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    } else Spacer(modifier = Modifier.weight(1f))
+
+                                    if (top3.isNotEmpty()) {
+                                        PodiumItem(
+                                            rank = 1,
+                                            entry = top3[0],
+                                            medalColor = Gold,
+                                            avatarSize = 76.dp,
+                                            isFirst = true,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    } else Spacer(modifier = Modifier.weight(1f))
+
+                                    if (top3.size >= 3) {
+                                        PodiumItem(
+                                            rank = 3,
+                                            entry = top3[2],
+                                            medalColor = Bronze,
+                                            avatarSize = 52.dp,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    } else Spacer(modifier = Modifier.weight(1f))
+                                }
+
+                                // Podium step blocks
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalAlignment = Alignment.Bottom
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .height(40.dp)
+                                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                                            .background(Silver.copy(alpha = 0.8f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text("2", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .height(58.dp)
+                                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                                            .background(Gold.copy(alpha = 0.85f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text("1", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .height(28.dp)
+                                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                                            .background(Bronze.copy(alpha = 0.8f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text("3", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // ── Leaderboard list header ───────────────────────────────
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 14.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                "Leaderboard",
+                                color = TextColor,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 15.sp,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Text(
+                                "${s.top.size} players",
+                                color = MutedText,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+
+                    // ── Ranks 4+ rows ─────────────────────────────────────────
+                    if (others.isEmpty() && top3.isNotEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    "More rankings will appear as players submit scores.",
+                                    fontSize = 12.sp,
+                                    color = MutedText,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    }
+
+                    itemsIndexed(others) { index, entry ->
+                        LeaderboardRow(
+                            rank  = index + 4,
+                            name  = entry.userName,
+                            score = entry.totalScore,
+                            isEven = index % 2 == 0
+                        )
+                    }
+
+                    // ── Your Rank card (bottom) ───────────────────────────────
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        val userEntry = s.userEntry
                         Card(
-                            shape = RoundedCornerShape(22.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .shadow(6.dp, RoundedCornerShape(18.dp)),
+                            shape = RoundedCornerShape(18.dp),
+                            colors = CardDefaults.cardColors(containerColor = CardWhite),
+                            elevation = CardDefaults.cardElevation(0.dp)
                         ) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .border(1.dp, BorderColor, RoundedCornerShape(22.dp))
-                                    .padding(16.dp),
+                                    .background(
+                                        Brush.horizontalGradient(listOf(PrimaryBlueSoft, CardWhite))
+                                    )
+                                    .padding(horizontal = 20.dp, vertical = 16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(44.dp)
-                                        .clip(CircleShape)
-                                        .background(Brush.linearGradient(listOf(PrimaryBlue, PrimaryBlueDeep))),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = com.jigen.practicse.R.drawable.ic_rank_leaderboard),
-                                        contentDescription = null,
-                                        tint = Color.White,
-                                        modifier = Modifier.size(22.dp)
-                                    )
-                                }
-                                Spacer(modifier = Modifier.width(12.dp))
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
-                                        text = "${totalEntries} ranked players",
-                                        color = TextColor,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 14.sp
+                                        "Your Rank",
+                                        color = MutedText,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        letterSpacing = 1.sp
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = s.userRank?.let { "#$it" } ?: "Unranked",
+                                        fontSize = 30.sp,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        color = PrimaryBlue
                                     )
                                     Text(
-                                        text = if (s.isPlaceholder) {
-                                            "Offline sample data is shown here."
-                                        } else {
-                                            "Updated from the latest leaderboard sync."
-                                        },
+                                        text = userEntry?.let {
+                                            "${displayName(it.userName)} • Score: ${it.totalScore}"
+                                        } ?: "Complete a quiz to appear here.",
                                         color = MutedText,
                                         fontSize = 12.sp
                                     )
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-                    }
-
-                    if (s.isPlaceholder) {
-                        item {
-                            Card(
-                                shape = RoundedCornerShape(12.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFEAF1FE)),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-                            ) {
-                                Text(
-                                    text = "Offline mode: showing sample rankings",
-                                    color = PrimaryBlue,
-                                    fontSize = 12.sp,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(12.dp))
-                        }
-                    }
-
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-                        ) {
-                            Column(modifier = Modifier.padding(14.dp)) {
-                                Text("Your Rank", fontSize = 13.sp, color = MutedText, fontWeight = FontWeight.SemiBold)
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = s.userRank?.let { "#$it" } ?: "Unranked",
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    color = PrimaryBlue
-                                )
-                                Text(
-                                    text = s.userEntry?.let { "${displayName(it.userName)} • ${it.totalScore}" } ?: "No score yet",
-                                    color = TextColor,
-                                    fontSize = 13.sp
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(14.dp))
-                    }
-
-                    if (top3.isNotEmpty()) {
-                        item {
-                            Text(
-                                text = "Top 3",
-                                color = TextColor,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 12.dp),
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                verticalAlignment = Alignment.Bottom
-                            ) {
-                                top3.forEachIndexed { index, entry ->
-                                    PodiumItem(
-                                        rank = index + 1,
-                                        entry = entry,
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    item {
-                        Text(
-                            text = "Leaderboard",
-                            color = TextColor,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-
-                    itemsIndexed(others) { index, entry ->
-                        LeaderboardRow(rank = index + 4, name = entry.userName, score = entry.totalScore)
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-
-                    if (others.isEmpty() && top3.isNotEmpty()) {
-                        item {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "More rankings will appear as players submit scores.",
-                                fontSize = 12.sp,
-                                color = MutedText,
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        Spacer(modifier = Modifier.height(28.dp))
                     }
                 }
             }
@@ -314,136 +445,167 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
     }
 }
 
+// ── Leaderboard row ───────────────────────────────────────────────────────────
 @Composable
-private fun LeaderboardRow(rank: Int, name: String, score: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+private fun LeaderboardRow(rank: Int, name: String, score: Int, isEven: Boolean = false) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(if (isEven) CardWhite else SurfaceColor)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier = Modifier
-                    .size(28.dp)
-                    .background(color = PrimaryBlue.copy(alpha = 0.15f), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(rank.toString(), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 12.sp)
-            }
-            Spacer(modifier = Modifier.width(10.dp))
-
-            // avatar (use provided drawables for known sample users)
-            val avatarRes = when (name.lowercase()) {
-                "emman" -> com.jigen.practicse.R.drawable.emman
-                "ivan" -> com.jigen.practicse.R.drawable.ivan
-                "gem" -> com.jigen.practicse.R.drawable.gem
-                "james" -> com.jigen.practicse.R.drawable.james
-                else -> 0
-            }
-
-            if (avatarRes != 0) {
-                Image(
-                    painter = painterResource(id = avatarRes),
-                    contentDescription = "avatar",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .background(color = PrimaryBlue.copy(alpha = 0.08f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(initials(name), fontWeight = FontWeight.Bold, color = PrimaryBlue)
-                }
-            }
-
-            Spacer(modifier = Modifier.width(10.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(displayName(name), fontWeight = FontWeight.SemiBold, color = TextColor)
-                Text("Score: $score", color = MutedText, fontSize = 12.sp)
-            }
-            Text(score.toString(), color = PrimaryBlue, fontWeight = FontWeight.Bold)
-        }
-    }
-}
-
-@Composable
-private fun PodiumItem(rank: Int, entry: LeaderboardEntryEntity, modifier: Modifier = Modifier) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .size(if (rank == 1) 64.dp else 54.dp)
-                .background(color = PrimaryBlue.copy(alpha = 0.18f), shape = CircleShape),
+                .size(32.dp)
+                .clip(CircleShape)
+                .background(PrimaryBlue.copy(alpha = 0.12f)),
             contentAlignment = Alignment.Center
         ) {
-            // Show avatar image for known sample users
-            val avatar = when (entry.userName.lowercase()) {
-                "emman" -> com.jigen.practicse.R.drawable.emman
-                "ivan" -> com.jigen.practicse.R.drawable.ivan
-                "gem" -> com.jigen.practicse.R.drawable.gem
-                "james" -> com.jigen.practicse.R.drawable.james
-                else -> 0
-            }
+            Text(rank.toString(), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 13.sp)
+        }
+        Spacer(modifier = Modifier.width(12.dp))
 
-            if (avatar != 0) {
-                Image(
-                    painter = painterResource(id = avatar),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(if (rank == 1) 56.dp else 46.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-            } else {
+        val avatarRes = when (name.lowercase()) {
+            "emman" -> com.jigen.practicse.R.drawable.emman
+            "ivan"  -> com.jigen.practicse.R.drawable.ivan
+            "gem"   -> com.jigen.practicse.R.drawable.gem
+            "james" -> com.jigen.practicse.R.drawable.james
+            else    -> 0
+        }
+
+        if (avatarRes != 0) {
+            Image(
+                painter = painterResource(id = avatarRes),
+                contentDescription = "avatar",
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, BorderColor, CircleShape),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(PrimaryBlueSoft)
+                    .border(2.dp, BorderColor, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(initials(name), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 14.sp)
+            }
+        }
+
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(displayName(name), fontWeight = FontWeight.SemiBold, color = TextColor, fontSize = 14.sp)
+            Text("Score: $score", color = MutedText, fontSize = 12.sp)
+        }
+        Text(score.toString(), color = PrimaryBlue, fontWeight = FontWeight.ExtraBold, fontSize = 15.sp)
+    }
+    Divider(color = BorderColor.copy(alpha = 0.5f), thickness = 0.5.dp)
+}
+
+// ── Podium avatar item ────────────────────────────────────────────────────────
+@Composable
+private fun PodiumItem(
+    rank: Int,
+    entry: LeaderboardEntryEntity,
+    medalColor: Color,
+    avatarSize: Dp,
+    isFirst: Boolean = false,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(bottom = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(contentAlignment = Alignment.BottomCenter) {
+            // Avatar with medal-coloured ring
+            Box(
+                modifier = Modifier
+                    .size(avatarSize + 6.dp)
+                    .clip(CircleShape)
+                    .background(medalColor.copy(alpha = 0.2f))
+                    .border(3.dp, medalColor, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                val avatar = when (entry.userName.lowercase()) {
+                    "emman" -> com.jigen.practicse.R.drawable.emman
+                    "ivan"  -> com.jigen.practicse.R.drawable.ivan
+                    "gem"   -> com.jigen.practicse.R.drawable.gem
+                    "james" -> com.jigen.practicse.R.drawable.james
+                    else    -> 0
+                }
+                if (avatar != 0) {
+                    Image(
+                        painter = painterResource(id = avatar),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(avatarSize)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Text(
+                        initials(entry.userName),
+                        color = medalColor,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = if (isFirst) 22.sp else 16.sp
+                    )
+                }
+            }
+            // Medal number badge — sits centered at the very bottom of the avatar circle
+            Box(
+                modifier = Modifier
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .background(medalColor)
+                    .border(2.dp, CardWhite, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
                 Text(
-                    text = initials(entry.userName),
-                    color = PrimaryBlue,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    rank.toString(),
+                    color = CardWhite,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 10.sp,
+                    textAlign = TextAlign.Center
                 )
             }
         }
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "#$rank ${displayName(entry.userName)}",
+            displayName(entry.userName),
             color = TextColor,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
+            fontWeight = if (isFirst) FontWeight.Bold else FontWeight.SemiBold,
+            fontSize = if (isFirst) 13.sp else 11.sp,
             maxLines = 1,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
         Text(
-            text = entry.totalScore.toString(),
-            color = PrimaryBlue,
-            fontWeight = FontWeight.Bold,
-            fontSize = 12.sp
+            entry.totalScore.toString(),
+            color = medalColor,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 13.sp
         )
     }
 }
 
-private fun displayName(name: String): String {
-    return name
-        .split(" ")
+// ── Helpers ───────────────────────────────────────────────────────────────────
+private fun displayName(name: String): String =
+    name.split(" ")
         .filter { it.isNotBlank() }
         .joinToString(" ") { part ->
             part.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         }
         .ifBlank { name }
-}
 
-private fun initials(name: String): String {
-    return name
-        .split(" ")
+private fun initials(name: String): String =
+    name.split(" ")
         .filter { it.isNotBlank() }
         .take(2)
         .map { it.first().uppercaseChar() }
         .joinToString("")
         .ifBlank { "U" }
-}

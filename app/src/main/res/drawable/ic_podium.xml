@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 2nd place block (left, shorter) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M2,13h6v8h-6z" />
+
+    <!-- 1st place block (center, tallest) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M9,9h6v12h-6z" />
+
+    <!-- 3rd place block (right, medium) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,15h6v6h-6z" />
+
+    <!-- Base bar -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M1,21h22v2h-22z" />
+
+    <!-- Trophy cup on 1st place -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M11,3 Q9,3 9,5 L9,7 Q9,8.5 12,8.5 Q15,8.5 15,7 L15,5 Q15,3 13,3 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M11.5,8.5 L11.5,9.5 L12.5,9.5 L12.5,8.5 Z" />
+</vector>
