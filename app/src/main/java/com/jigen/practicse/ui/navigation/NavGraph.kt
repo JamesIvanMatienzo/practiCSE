@@ -128,17 +128,32 @@ fun NavGraph(
 					navController.navigate(Screen.Dashboard.route) {
 						popUpTo(Screen.Dashboard.route) { inclusive = false }
 					}
+				},
+				onResult = { score, totalQuestions ->
+					navController.navigate(
+						Screen.Result.createRoute(sessionId, score, totalQuestions)
+					) {
+						popUpTo(Screen.Dashboard.route) { inclusive = false }
+					}
 				}
 			)
 		}
 
 		composable(
 			Screen.Result.route,
-			arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
+			arguments = listOf(
+				navArgument("sessionId") { type = NavType.StringType },
+				navArgument("score") { type = NavType.IntType },
+				navArgument("totalQuestions") { type = NavType.IntType }
+			)
 		) { backStackEntry ->
 			val sessionId = backStackEntry.arguments?.getString("sessionId") ?: ""
+			val score = backStackEntry.arguments?.getInt("score") ?: 0
+			val totalQuestions = backStackEntry.arguments?.getInt("totalQuestions") ?: 0
 			ResultScreen(
 				sessionId = sessionId,
+				score = score,
+				totalQuestions = totalQuestions,
 				onBackToDashboard = {
 					navController.navigate(Screen.Dashboard.route) {
 						popUpTo(Screen.Dashboard.route) { inclusive = false }
