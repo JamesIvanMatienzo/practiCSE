@@ -84,9 +84,8 @@ class DeepDiveViewModel(
 		val baseUrl = BuildConfig.GROQ_BASE_URL.trim().ifBlank { "https://api.groq.com/openai/v1" }
 		val model = BuildConfig.GROQ_MODEL.trim().ifBlank { "openai/gpt-oss-120b" }
 
-		// Guest mode: skip network call, show fallback
-		if (isGuest || apiKey.isBlank()) {
-			return@withContext "AI explanation is not available in guest/offline mode.\n\nCorrect answer: ${question.correctAnswer}"
+		if (apiKey.isBlank()) {
+			return@withContext "AI explanation is not available because GROQ_API_KEY is missing.\n\nCorrect answer: ${question.correctAnswer}"
 		}
 
 		val options = (question.wrongChoices + question.correctAnswer).distinct()
