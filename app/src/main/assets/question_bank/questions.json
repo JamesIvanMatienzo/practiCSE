@@ -1320,7 +1320,10 @@
         "referenceText": null,
         "correctAnswer": "480",
         "wrongChoices": [
-            "nan"
+            "490",
+            "450",
+            "520",
+            "None of The Above"
         ]
     },
     {
@@ -1330,7 +1333,10 @@
         "referenceText": null,
         "correctAnswer": "11.25",
         "wrongChoices": [
-            "nan"
+            "11.5",
+            "12.25",
+            "10.75",
+            "None of The Above"
         ]
     },
     {
@@ -1340,7 +1346,10 @@
         "referenceText": null,
         "correctAnswer": "1440",
         "wrongChoices": [
-            "nan"
+            "1400",
+            "1500",
+            "1600",
+            "None of The Above"
         ]
     },
     {
@@ -1350,7 +1359,10 @@
         "referenceText": null,
         "correctAnswer": "360",
         "wrongChoices": [
-            "nan"
+            "350",
+            "365",
+            "355",
+            "None of The Above"
         ]
     },
     {
@@ -1360,7 +1372,10 @@
         "referenceText": null,
         "correctAnswer": "320",
         "wrongChoices": [
-            "nan"
+            "330",
+            "340",
+            "350",
+            "None of The Above"
         ]
     },
     {
@@ -1370,7 +1385,10 @@
         "referenceText": null,
         "correctAnswer": "6.75",
         "wrongChoices": [
-            "nan"
+            "6.5",
+            "7",
+            "7.5",
+            "None of The Above"
         ]
     },
     {
@@ -1380,7 +1398,10 @@
         "referenceText": null,
         "correctAnswer": "353.5",
         "wrongChoices": [
-            "nan"
+            "353.7",
+            "352.8",
+            "354.5",
+            "None of The Above"
         ]
     },
     {
@@ -1390,7 +1411,9 @@
         "referenceText": null,
         "correctAnswer": "131.625",
         "wrongChoices": [
-            "nan"
+            "131.725",
+            "132.375",
+            "None of The Above"
         ]
     },
     {
@@ -1400,7 +1423,10 @@
         "referenceText": null,
         "correctAnswer": "21",
         "wrongChoices": [
-            "nan"
+            "22",
+            "23",
+            "25",
+            "None of The Above"
         ]
     },
     {
@@ -1410,7 +1436,10 @@
         "referenceText": null,
         "correctAnswer": "25",
         "wrongChoices": [
-            "nan"
+            "26",
+            "28",
+            "32",
+            "None of The Above"
         ]
     },
     {
@@ -1420,7 +1449,10 @@
         "referenceText": null,
         "correctAnswer": "17.5",
         "wrongChoices": [
-            "nan"
+            "18",
+            "19",
+            "20",
+            "None of The Above"
         ]
     },
     {
@@ -1430,7 +1462,10 @@
         "referenceText": null,
         "correctAnswer": "184",
         "wrongChoices": [
-            "nan"
+            "185",
+            "186",
+            "187",
+            "None of The Above"
         ]
     },
     {
@@ -1440,7 +1475,10 @@
         "referenceText": null,
         "correctAnswer": "336",
         "wrongChoices": [
-            "nan"
+            "337",
+            "338",
+            "339",
+            "None of The Above"
         ]
     },
     {
@@ -1450,7 +1488,10 @@
         "referenceText": null,
         "correctAnswer": "9.5",
         "wrongChoices": [
-            "nan"
+            "9.6",
+            "9.7",
+            "9.8",
+            "None of The Above"
         ]
     },
     {
@@ -1460,7 +1501,10 @@
         "referenceText": null,
         "correctAnswer": "64",
         "wrongChoices": [
-            "nan"
+            "65",
+            "66",
+            "67",
+            "None of The Above"
         ]
     },
     {
@@ -1470,17 +1514,23 @@
         "referenceText": null,
         "correctAnswer": "219",
         "wrongChoices": [
-            "nan"
+            "220",
+            "221",
+            "222",
+            "None of The Above"
         ]
     },
     {
         "category": "Numerical Ability",
         "subCategory": "Pattern & Arithmetic",
-        "questionText": "3, 128, 6, 64, 9, _ , 12, 16, 15, 8",
+        "questionText": "3, 128, 6, 64, 9, _",
         "referenceText": null,
         "correctAnswer": "32",
         "wrongChoices": [
-            "nan"
+            "12",
+            "16",
+            "15",
+            "8"
         ]
     },
     {
@@ -1490,7 +1540,10 @@
         "referenceText": null,
         "correctAnswer": "221",
         "wrongChoices": [
-            "nan"
+            "222",
+            "223",
+            "224",
+            "None of The Above"
         ]
     },
     {
@@ -1500,7 +1553,10 @@
         "referenceText": null,
         "correctAnswer": "230",
         "wrongChoices": [
-            "nan"
+            "231",
+            "234",
+            "240",
+            "245"
         ]
     },
     {
@@ -1641,7 +1697,10 @@
         "referenceText": null,
         "correctAnswer": "135",
         "wrongChoices": [
-            "nan"
+            "140",
+            "141",
+            "142",
+            "None of The Above"
         ]
     },
     {
@@ -1651,7 +1710,10 @@
         "referenceText": null,
         "correctAnswer": "272",
         "wrongChoices": [
-            "nan"
+            "270",
+            "275",
+            "280",
+            "None of The Above"
         ]
     },
     {
@@ -1661,7 +1723,10 @@
         "referenceText": null,
         "correctAnswer": "14 5/8",
         "wrongChoices": [
-            "nan"
+            "14 6/8",
+            "14 7/8",
+            "14 1/2",
+            "None of The Above"
         ]
     },
     {
@@ -1762,7 +1827,9 @@
         "referenceText": null,
         "correctAnswer": "32",
         "wrongChoices": [
-            "nan"
+            "33",
+            "34",
+            "None of the Above"
         ]
     },
     {
@@ -1772,7 +1839,11 @@
         "referenceText": null,
         "correctAnswer": "25,000",
         "wrongChoices": [
-            "nan"
+            "30,000",
+            "32,000",
+            "33,000",
+            "34,000",
+            "None of the Above"
         ]
     },
     {
@@ -1782,7 +1853,10 @@
         "referenceText": null,
         "correctAnswer": "12",
         "wrongChoices": [
-            "nan"
+            "10",
+            "8",
+            "9",
+            "None of the Above"
         ]
     },
     {
@@ -1792,7 +1866,10 @@
         "referenceText": null,
         "correctAnswer": "38",
         "wrongChoices": [
-            "nan"
+            "39",
+            "40",
+            "41",
+            "None of the Above"
         ]
     },
     {
@@ -1828,7 +1905,9 @@
         "referenceText": null,
         "correctAnswer": "60%",
         "wrongChoices": [
-            "nan"
+            "40%",
+            "35%",
+            "55%"
         ]
     },
     {
@@ -1883,14 +1962,11 @@
         "subCategory": "Pattern & Arithmetic",
         "questionText": "Find the sum of 7,805 and 987.",
         "referenceText": null,
-        "correctAnswer": "8,792",
+        "correctAnswer": "8792",
         "wrongChoices": [
-            "17",
-            "675",
-            "8",
-            "972",
-            "8",
-            "987"
+            "17675",
+            "8972",
+            "8987"
         ]
     },
     {
@@ -1900,10 +1976,8 @@
         "referenceText": null,
         "correctAnswer": "$1,094",
         "wrongChoices": [
-            "$1",
-            "656",
-            "$1",
-            "294",
+            "$1,656",
+            "$1,294",
             "$984"
         ]
     },
@@ -1914,12 +1988,9 @@
         "referenceText": null,
         "correctAnswer": "$13,790",
         "wrongChoices": [
-            "$13",
-            "156",
-            "$7",
-            "356",
-            "$6",
-            "006"
+            "$13,156",
+            "$7,356",
+            "$6,006"
         ]
     },
     {
@@ -1929,12 +2000,9 @@
         "referenceText": null,
         "correctAnswer": "10,077",
         "wrongChoices": [
-            "11",
-            "427",
-            "3",
-            "822",
-            "-10",
-            "077"
+            "11,427",
+            "3,822",
+            "-10,077"
         ]
     },
     {
@@ -1942,14 +2010,11 @@
         "subCategory": "Pattern & Arithmetic",
         "questionText": "287,500 - 52,988 + 6,808 = _",
         "referenceText": null,
-        "correctAnswer": "241,320",
+        "correctAnswer": "241320",
         "wrongChoices": [
-            "347",
-            "396",
-            "46",
-            "467",
-            "333",
-            "680"
+            "347396",
+            "46467",
+            "333680"
         ]
     },
     {
@@ -1971,12 +2036,9 @@
         "referenceText": null,
         "correctAnswer": "311",
         "wrongChoices": [
-            "497",
-            "600",
-            "12",
-            "480",
-            "12",
-            "400"
+            "497,600",
+            "12,480",
+            "12,400"
         ]
     },
     {
@@ -1986,22 +2048,9 @@
         "referenceText": null,
         "correctAnswer": "2,917",
         "wrongChoices": [
-            "7",
-            "083",
-            "2",
-            "083",
-            "4",
-            "379"
-        ]
-    },
-    {
-        "category": "Numerical Ability",
-        "subCategory": "Pattern & Arithmetic",
-        "questionText": "Numerical Ability Questions",
-        "referenceText": null,
-        "correctAnswer": "Answers",
-        "wrongChoices": [
-            "Wrong Answers (from choices)"
+            "7,083",
+            "2,083",
+            "4,379"
         ]
     },
     {
@@ -2395,8 +2444,7 @@
         "referenceText": null,
         "correctAnswer": "2400",
         "wrongChoices": [
-            "15",
-            "000",
+            "15,000",
             "25",
             "1200",
             "120",
@@ -2575,14 +2623,10 @@
         "referenceText": null,
         "correctAnswer": "2,000",
         "wrongChoices": [
-            "3",
-            "000",
-            "5",
-            "000",
-            "10",
-            "000",
-            "20",
-            "000",
+            "3,000",
+            "5,000",
+            "10,000",
+            "20,000",
             "None of The Above"
         ]
     },
@@ -2727,8 +2771,7 @@
             "1%",
             "10%",
             "100%",
-            "1",
-            "000%",
+            "1,000%",
             "None of The Above"
         ]
     },
@@ -3330,12 +3373,9 @@
         "correctAnswer": "100",
         "wrongChoices": [
             "10",
-            "1",
-            "000",
-            "10",
-            "000",
-            "100",
-            "000",
+            "1,000",
+            "10,000",
+            "100,000",
             "None of The Above"
         ]
     },
@@ -3348,10 +3388,8 @@
         "wrongChoices": [
             "10",
             "100",
-            "1",
-            "000",
-            "100",
-            "000",
+            "1,000",
+            "100,000",
             "None of The Above"
         ]
     },
@@ -3981,8 +4019,7 @@
         "referenceText": null,
         "correctAnswer": "2400",
         "wrongChoices": [
-            "15",
-            "000",
+            "15,000",
             "25",
             "1200",
             "120",
