@@ -60,6 +60,7 @@ import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 // ── Colour tokens ─────────────────────────────────────────────────────────────
 private val SurfaceColor    = Color(0xFFF8F9FA)
 private val PrimaryBlue     = Color(0xFF1A73E8)
+private val PrimaryBlueDeep = Color(0xFF0D47A1)
 private val PrimaryBlueSoft = Color(0xFFEAF2FF)
 private val BorderColor     = Color(0xFFDCE7FA)
 private val Gold            = Color(0xFFF4B400)
@@ -77,7 +78,10 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
     val viewModel: RankingViewModel = viewModel(factory = RankingViewModel.factory(context))
     val state by viewModel.uiState.collectAsState()
 
-    val prefs = remember { AppPreferencesStore(context) }
+    val prefs = AppPreferencesStore(context)
+    // offlineEnabled = true  → showing offline/cached data
+    // switch ON (checked)    → Online mode  → offlineEnabled = false
+    // switch OFF (unchecked) → Offline mode → offlineEnabled = true
     var offlineEnabled by remember { mutableStateOf(prefs.isOfflineRankingEnabled()) }
     val isOnline = !offlineEnabled
 
@@ -98,8 +102,8 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         )
                         Text(
                             "Leaderboard",
-                            color = TextColor,
-                            style = androidx.compose.material3.MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                            style = androidx.compose.material3.MaterialTheme.typography.titleLarge,
+                            color = TextColor
                         )
                     }
                 },
@@ -111,16 +115,16 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         Text(
                             text = if (isOnline) "Online" else "Offline",
                             color = if (isOnline) OnlineGreen else MutedText,
-                            style = androidx.compose.material3.MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium)
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Switch(
-                            checked = isOnline,
+                            checked = isOnline,   // ON = Online
                             onCheckedChange = { nowOnline ->
-                                val newOffline = !nowOnline
-                                offlineEnabled = newOffline
-                                prefs.setOfflineRankingEnabled(newOffline)
-                                viewModel.refresh(offlineModeOverride = newOffline)
+                                offlineEnabled = !nowOnline
+                                prefs.setOfflineRankingEnabled(!nowOnline)
+                                viewModel.refresh()
                             },
                             colors = SwitchDefaults.colors(
                                 checkedTrackColor   = OnlineGreen,
@@ -192,11 +196,11 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                         Text(
                                             "$totalEntries Ranked Players",
                                             color = TextColor,
-                                            style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                            style = androidx.compose.material3.MaterialTheme.typography.titleMedium
                                         )
                                         Text(
-                                            if (s.isPlaceholder) "Offline sample data"
-                                            else "Live leaderboard",
+                                            if (s.isPlaceholder) "Live leaderboard"
+                                            else "Local device scores",
                                             color = MutedText,
                                             style = androidx.compose.material3.MaterialTheme.typography.bodySmall
                                         )
@@ -210,9 +214,9 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                 ) {
                                     Text(
                                         if (s.isPlaceholder)
-                                            "Offline mode — showing sample rankings"
+                                            "Online mode — showing live rankings"
                                         else
-                                            "Online mode — showing live rankings",
+                                            "Offline mode — showing local scores",
                                         color = CardWhite,
                                         style = androidx.compose.material3.MaterialTheme.typography.labelSmall
                                     )
@@ -235,7 +239,9 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                 Text(
                                     "TOP 3",
                                     color = MutedText,
-                                    style = androidx.compose.material3.MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 2.sp),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 11.sp,
+                                    letterSpacing = 2.sp,
                                     modifier = Modifier.padding(bottom = 18.dp)
                                 )
 
@@ -292,7 +298,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                             .background(Silver.copy(alpha = 0.8f)),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        Text("2", color = CardWhite, style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold))
+                                        Text("2", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 15.sp)
                                     }
                                     Box(
                                         modifier = Modifier
@@ -302,7 +308,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                             .background(Gold.copy(alpha = 0.85f)),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        Text("1", color = CardWhite, style = androidx.compose.material3.MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold))
+                                        Text("1", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                                     }
                                     Box(
                                         modifier = Modifier
@@ -312,7 +318,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                             .background(Bronze.copy(alpha = 0.8f)),
                                         contentAlignment = Alignment.Center
                                     ) {
-                                        Text("3", color = CardWhite, style = androidx.compose.material3.MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold))
+                                        Text("3", color = CardWhite, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                                     }
                                 }
                             }
@@ -330,7 +336,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                             Text(
                                 "Leaderboard",
                                 color = TextColor,
-                                style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                                 modifier = Modifier.weight(1f)
                             )
                             Text(
@@ -342,7 +348,23 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                     }
 
                     // ── Ranks 4+ rows ─────────────────────────────────────────
-                    if (others.isEmpty() && top3.isNotEmpty()) {
+                    if (others.isEmpty() && top3.isEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 32.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    "Take a quiz to see your offline rank.",
+                                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
+                                    color = MutedText,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    } else if (others.isEmpty() && top3.isNotEmpty()) {
                         item {
                             Box(
                                 modifier = Modifier
@@ -395,12 +417,15 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                     Text(
                                         "Your Rank",
                                         color = MutedText,
-                                        style = androidx.compose.material3.MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 1.sp)
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        letterSpacing = 1.sp
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
                                         text = s.userRank?.let { "#$it" } ?: "Unranked",
-                                        style = androidx.compose.material3.MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.ExtraBold),
+                                        fontSize = 30.sp,
+                                        fontWeight = FontWeight.ExtraBold,
                                         color = PrimaryBlue
                                     )
                                     Text(
@@ -408,7 +433,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                             "${displayName(it.userName)} • Score: ${it.totalScore}"
                                         } ?: "Complete a quiz to appear here.",
                                         color = MutedText,
-                                        style = androidx.compose.material3.MaterialTheme.typography.bodySmall
+                                        fontSize = 12.sp
                                     )
                                 }
                             }
@@ -450,7 +475,7 @@ private fun LeaderboardRow(rank: Int, name: String, score: Int, isEven: Boolean 
                 .background(PrimaryBlue.copy(alpha = 0.12f)),
             contentAlignment = Alignment.Center
         ) {
-            Text(rank.toString(), style = androidx.compose.material3.MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold), color = PrimaryBlue)
+            Text(rank.toString(), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 13.sp)
         }
         Spacer(modifier = Modifier.width(12.dp))
 
@@ -481,16 +506,16 @@ private fun LeaderboardRow(rank: Int, name: String, score: Int, isEven: Boolean 
                     .border(2.dp, BorderColor, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Text(initials(name), style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = PrimaryBlue)
+                Text(initials(name), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 14.sp)
             }
         }
 
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(displayName(name), style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold), color = TextColor)
-            Text("Score: $score", color = MutedText, style = androidx.compose.material3.MaterialTheme.typography.bodySmall)
+            Text(displayName(name), fontWeight = FontWeight.SemiBold, color = TextColor, fontSize = 14.sp)
+            Text("Score: $score", color = MutedText, fontSize = 12.sp)
         }
-        Text(score.toString(), color = PrimaryBlue, style = androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold))
+        Text(score.toString(), color = PrimaryBlue, fontWeight = FontWeight.ExtraBold, fontSize = 15.sp)
     }
     Divider(color = BorderColor.copy(alpha = 0.5f), thickness = 0.5.dp)
 }
@@ -510,6 +535,7 @@ private fun PodiumItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(contentAlignment = Alignment.BottomCenter) {
+            // Avatar with medal-coloured ring
             Box(
                 modifier = Modifier
                     .size(avatarSize + 6.dp)
@@ -538,10 +564,12 @@ private fun PodiumItem(
                     Text(
                         initials(entry.userName),
                         color = medalColor,
-                        style = if (isFirst) androidx.compose.material3.MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold) else androidx.compose.material3.MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold)
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = if (isFirst) 22.sp else 16.sp
                     )
                 }
             }
+            // Medal number badge — sits centered at the very bottom of the avatar circle
             Box(
                 modifier = Modifier
                     .size(22.dp)
@@ -553,7 +581,8 @@ private fun PodiumItem(
                 Text(
                     rank.toString(),
                     color = CardWhite,
-                    style = androidx.compose.material3.MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.ExtraBold),
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 10.sp,
                     textAlign = TextAlign.Center
                 )
             }
@@ -562,7 +591,8 @@ private fun PodiumItem(
         Text(
             displayName(entry.userName),
             color = TextColor,
-            style = if (isFirst) androidx.compose.material3.MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold) else androidx.compose.material3.MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
+            fontWeight = if (isFirst) FontWeight.Bold else FontWeight.SemiBold,
+            fontSize = if (isFirst) 13.sp else 11.sp,
             maxLines = 1,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
@@ -570,7 +600,8 @@ private fun PodiumItem(
         Text(
             entry.totalScore.toString(),
             color = medalColor,
-            style = androidx.compose.material3.MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.ExtraBold)
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 13.sp
         )
     }
 }
