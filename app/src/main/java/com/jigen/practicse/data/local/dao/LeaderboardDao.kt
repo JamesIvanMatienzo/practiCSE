@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LeaderboardDao {
@@ -13,6 +14,9 @@ interface LeaderboardDao {
 
     @Query("SELECT * FROM leaderboard_entries ORDER BY totalScore DESC LIMIT :limit")
     suspend fun getTop(limit: Int): List<LeaderboardEntryEntity>
+
+    @Query("SELECT * FROM leaderboard_entries ORDER BY totalScore DESC LIMIT :limit")
+    fun observeTop(limit: Int): Flow<List<LeaderboardEntryEntity>>
 
     @Query("SELECT * FROM leaderboard_entries WHERE userName = :userName LIMIT 1")
     suspend fun getForUser(userName: String): LeaderboardEntryEntity?

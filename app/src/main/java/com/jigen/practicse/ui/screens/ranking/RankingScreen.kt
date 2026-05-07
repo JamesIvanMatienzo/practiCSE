@@ -1,6 +1,8 @@
 package com.jigen.practicse.ui.screens.ranking
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Base64
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,6 +48,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -385,8 +388,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                     itemsIndexed(others) { index, entry ->
                         LeaderboardRow(
                             rank  = index + 4,
-                            name  = entry.userName,
-                            score = entry.totalScore,
+                            entry = entry,
                             isEven = index % 2 == 0
                         )
                     }
@@ -460,7 +462,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
 
 // ── Leaderboard row ───────────────────────────────────────────────────────────
 @Composable
-private fun LeaderboardRow(rank: Int, name: String, score: Int, isEven: Boolean = false) {
+private fun LeaderboardRow(rank: Int, entry: LeaderboardEntryEntity, isEven: Boolean = false) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -479,43 +481,60 @@ private fun LeaderboardRow(rank: Int, name: String, score: Int, isEven: Boolean 
         }
         Spacer(modifier = Modifier.width(12.dp))
 
-        val avatarRes = when (name.lowercase()) {
-            "emman" -> com.jigen.practicse.R.drawable.emman
+        // Try to display photo from entry first
+        val photoBitmap = decodePhotoFromBase64(entry.photoBase64)
+        val avatarRes = when (entry.userName.lowercase()) {
+            "emman", "emmanuel" -> com.jigen.practicse.R.drawable.emman
             "ivan"  -> com.jigen.practicse.R.drawable.ivan
             "gem"   -> com.jigen.practicse.R.drawable.gem
             "james" -> com.jigen.practicse.R.drawable.james
             else    -> 0
         }
 
-        if (avatarRes != 0) {
-            Image(
-                painter = painterResource(id = avatarRes),
-                contentDescription = "avatar",
-                modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape)
-                    .border(2.dp, BorderColor, CircleShape),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape)
-                    .background(PrimaryBlueSoft)
-                    .border(2.dp, BorderColor, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(initials(name), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 14.sp)
+        when {
+            photoBitmap != null -> {
+                Image(
+                    bitmap = photoBitmap,
+                    contentDescription = "avatar",
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, BorderColor, CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            avatarRes != 0 -> {
+                Image(
+                    painter = painterResource(id = avatarRes),
+                    contentDescription = "avatar",
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .border(2.dp, BorderColor, CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            else -> {
+                // Fall back to initials if no photo or hardcoded avatar
+                Box(
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .background(PrimaryBlueSoft)
+                        .border(2.dp, BorderColor, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(initials(entry.userName), fontWeight = FontWeight.Bold, color = PrimaryBlue, fontSize = 14.sp)
+                }
             }
         }
 
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(displayName(name), fontWeight = FontWeight.SemiBold, color = TextColor, fontSize = 14.sp)
-            Text("Score: $score", color = MutedText, fontSize = 12.sp)
+            Text(displayName(entry.userName), fontWeight = FontWeight.SemiBold, color = TextColor, fontSize = 14.sp)
+            Text("Score: ${entry.totalScore}", color = MutedText, fontSize = 12.sp)
         }
-        Text(score.toString(), color = PrimaryBlue, fontWeight = FontWeight.ExtraBold, fontSize = 15.sp)
+        Text(entry.totalScore.toString(), color = PrimaryBlue, fontWeight = FontWeight.ExtraBold, fontSize = 15.sp)
     }
     Divider(color = BorderColor.copy(alpha = 0.5f), thickness = 0.5.dp)
 }
@@ -544,29 +563,43 @@ private fun PodiumItem(
                     .border(3.dp, medalColor, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
+                val photoBitmap = decodePhotoFromBase64(entry.photoBase64)
                 val avatar = when (entry.userName.lowercase()) {
-                    "emman" -> com.jigen.practicse.R.drawable.emman
+                    "emman", "emmanuel" -> com.jigen.practicse.R.drawable.emman
                     "ivan"  -> com.jigen.practicse.R.drawable.ivan
                     "gem"   -> com.jigen.practicse.R.drawable.gem
                     "james" -> com.jigen.practicse.R.drawable.james
                     else    -> 0
                 }
-                if (avatar != 0) {
-                    Image(
-                        painter = painterResource(id = avatar),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(avatarSize)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Text(
-                        initials(entry.userName),
-                        color = medalColor,
-                        fontWeight = FontWeight.ExtraBold,
-                        fontSize = if (isFirst) 22.sp else 16.sp
-                    )
+                when {
+                    photoBitmap != null -> {
+                        Image(
+                            bitmap = photoBitmap,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(avatarSize)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    avatar != 0 -> {
+                        Image(
+                            painter = painterResource(id = avatar),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(avatarSize)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    else -> {
+                        Text(
+                            initials(entry.userName),
+                            color = medalColor,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = if (isFirst) 22.sp else 16.sp
+                        )
+                    }
                 }
             }
             // Medal number badge — sits centered at the very bottom of the avatar circle
@@ -622,3 +655,17 @@ private fun initials(name: String): String =
         .map { it.first().uppercaseChar() }
         .joinToString("")
         .ifBlank { "U" }
+
+private fun decodePhotoFromBase64(photoBase64: String?): androidx.compose.ui.graphics.ImageBitmap? {
+    return try {
+        if (photoBase64.isNullOrBlank()) {
+            null
+        } else {
+            val decodedBytes = Base64.decode(photoBase64, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+            bitmap?.asImageBitmap()
+        }
+    } catch (e: Exception) {
+        null
+    }
+}

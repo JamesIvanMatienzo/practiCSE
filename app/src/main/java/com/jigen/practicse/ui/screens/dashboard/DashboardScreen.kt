@@ -1,6 +1,8 @@
 package com.jigen.practicse.ui.screens.dashboard
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -48,6 +50,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -56,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jigen.practicse.data.local.AppPreferencesStore
 
 private val SurfaceColor = Color(0xFFF8F9FA)
 private val PrimaryBlue = Color(0xFF1976D2)
@@ -76,8 +81,12 @@ fun DashboardScreen(
 	onRanking: () -> Unit = {},
 	onStudyLibrary: () -> Unit = {}
 ) {
-	val viewModel: DashboardViewModel = viewModel(factory = DashboardViewModel.factory(context))
-	val uiState by viewModel.uiState.collectAsState()
+	val dashboardViewModel: DashboardViewModel = viewModel(factory = DashboardViewModel.factory(context))
+	val profileViewModel: com.jigen.practicse.ui.screens.profile.ProfileViewModel = viewModel(
+		factory = com.jigen.practicse.ui.screens.profile.ProfileViewModel.factory(context)
+	)
+	val uiState by dashboardViewModel.uiState.collectAsState()
+	val profileState by profileViewModel.profileState.collectAsState()
 
 	Column(
 		modifier = Modifier
@@ -87,7 +96,7 @@ fun DashboardScreen(
 			.padding(horizontal = 20.dp)
 			.padding(top = 14.dp, bottom = 20.dp)
 	) {
-		DashboardHeader(onProfileClick = onProfileClick)
+		DashboardHeader(onProfileClick = onProfileClick, photoUri = profileState.photoUri)
 
 		Spacer(modifier = Modifier.height(14.dp))
 
@@ -147,7 +156,20 @@ fun DashboardScreen(
 }
 
 @Composable
-private fun DashboardHeader(onProfileClick: () -> Unit) {
+private fun DashboardHeader(onProfileClick: () -> Unit, photoUri: String? = null) {
+	val photoBitmap = remember(photoUri) {
+		if (photoUri != null && photoUri.isNotBlank()) {
+			try {
+				val bitmap = BitmapFactory.decodeFile(photoUri)
+				bitmap?.asImageBitmap()
+			} catch (e: Exception) {
+				null
+			}
+		} else {
+			null
+		}
+	}
+
 	Row(
 		modifier = Modifier.fillMaxWidth(),
 		horizontalArrangement = Arrangement.SpaceBetween,
@@ -193,12 +215,24 @@ private fun DashboardHeader(onProfileClick: () -> Unit) {
 					.background(PrimaryBlueSoft),
 				contentAlignment = Alignment.Center
 			) {
-				Icon(
-					imageVector = Icons.Filled.AccountCircle,
-					contentDescription = null,
-					tint = PrimaryBlue,
-					modifier = Modifier.size(22.dp)
-				)
+				// Display photo if available, otherwise show account icon
+				if (photoBitmap != null) {
+					Image(
+						bitmap = photoBitmap,
+						contentDescription = null,
+						modifier = Modifier
+							.size(28.dp)
+							.clip(CircleShape),
+						contentScale = ContentScale.Crop
+					)
+				} else {
+					Icon(
+						imageVector = Icons.Filled.AccountCircle,
+						contentDescription = null,
+						tint = PrimaryBlue,
+						modifier = Modifier.size(22.dp)
+					)
+				}
 			}
 
 			Spacer(modifier = Modifier.width(10.dp))

@@ -349,11 +349,21 @@ class ExamViewModelNew(
 			saveSessionSnapshot(state, examEndTimeMillis = System.currentTimeMillis())
 
 			val displayName = appPreferencesStore.getDisplayName()
-			PractiCSEDatabase.getInstance(context).leaderboardDao().upsert(
+			val db = PractiCSEDatabase.getInstance(context)
+			
+			// Check if entry exists to preserve photo
+			val existingEntry = try {
+				db.leaderboardDao().getForUser(displayName)
+			} catch (e: Exception) {
+				null
+			}
+			
+			db.leaderboardDao().upsert(
 				com.jigen.practicse.data.local.entity.LeaderboardEntryEntity(
 					userName = displayName,
 					totalScore = state.currentScore,
-					lastUpdatedMillis = System.currentTimeMillis()
+					lastUpdatedMillis = System.currentTimeMillis(),
+					photoBase64 = existingEntry?.photoBase64  // Preserve existing photo
 				)
 			)
 

@@ -7,6 +7,7 @@ import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -51,4 +52,7 @@ class RankingRepository(private val context: Context) {
     suspend fun getCachedTop(limit: Int = 100): List<LeaderboardEntryEntity> = withContext(Dispatchers.IO) {
         database.leaderboardDao().getTop(limit)
     }
+
+    fun observeCachedTop(limit: Int = 100): Flow<List<LeaderboardEntryEntity>> =
+        database.leaderboardDao().observeTop(limit)
 }

@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class LeaderboardEntryEntity(
     @PrimaryKey val userName: String,
     val totalScore: Int,
-    val lastUpdatedMillis: Long
+    val lastUpdatedMillis: Long,
+    val photoBase64: String? = null
 )

@@ -57,6 +57,7 @@ import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.UserProfileState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 private val SurfaceColor = Color(0xFFF8F9FA)
@@ -76,7 +77,12 @@ fun ProfileScreen(
 	val context = LocalContext.current
 	val profile by viewModel.profileState.collectAsState()
 
-	val imageBitmap = remember(profile.photoUri) { loadBitmapFromUri(context, profile.photoUri) }
+	var imageBitmap by remember { mutableStateOf<androidx.compose.ui.graphics.ImageBitmap?>(null) }
+	
+	LaunchedEffect(profile.photoUri) {
+		imageBitmap = loadBitmapFromUri(context, profile.photoUri)
+	}
+	
 	val pickPhotoLauncher = rememberLauncherForActivityResult(GetContent()) { uri: Uri? ->
 		viewModel.updatePhotoUri(uri?.toString())
 	}
@@ -131,14 +137,14 @@ fun ProfileScreen(
 							.border(1.dp, BorderColor, CircleShape),
 						contentAlignment = Alignment.Center
 					) {
-						if (imageBitmap != null) {
+						imageBitmap?.let { bitmap ->
 							Image(
-								bitmap = imageBitmap,
+								bitmap = bitmap,
 								contentDescription = "Profile photo",
 								modifier = Modifier.fillMaxSize(),
 								contentScale = ContentScale.Crop
 							)
-						} else {
+						} ?: run {
 							Icon(
 								Icons.Filled.AccountCircle,
 								contentDescription = null,
@@ -226,8 +232,15 @@ private fun ProfileField(
 private fun loadBitmapFromUri(context: android.content.Context, photoUri: String?): androidx.compose.ui.graphics.ImageBitmap? {
 	if (photoUri.isNullOrBlank()) return null
 	return runCatching {
-		context.contentResolver.openInputStream(Uri.parse(photoUri))?.use { inputStream ->
-			BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
+		// Try loading as a file path first (for saved photos)
+		val file = java.io.File(photoUri)
+		if (file.exists()) {
+			BitmapFactory.decodeFile(photoUri)?.asImageBitmap()
+		} else {
+			// Fall back to contentResolver for content URIs (from gallery)
+			context.contentResolver.openInputStream(Uri.parse(photoUri))?.use { inputStream ->
+				BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
+			}
 		}
 	}.getOrNull()
 }

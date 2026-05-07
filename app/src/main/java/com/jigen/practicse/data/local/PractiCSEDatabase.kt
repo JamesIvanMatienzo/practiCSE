@@ -18,7 +18,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
 	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class, com.jigen.practicse.data.local.entity.LeaderboardEntryEntity::class],
-	version = 5,
+	version = 6,
 	exportSchema = false
 )	
 @TypeConverters(Converters::class)
