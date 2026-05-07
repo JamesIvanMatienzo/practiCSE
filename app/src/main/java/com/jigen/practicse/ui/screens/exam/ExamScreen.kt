@@ -93,18 +93,18 @@ fun ExamScreen(
 	if (showExitDialog) {
 		AlertDialog(
 			onDismissRequest = { showExitDialog = false },
-			title = { Text("Exit Exam?", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = TextColor) },
-			text = { Text("Your progress will be saved. You can continue later.", style = MaterialTheme.typography.bodyMedium, color = MutedGray) },
+			title = { Text("Exit Exam?", fontWeight = FontWeight.Bold, color = TextColor) },
+			text = { Text("Your progress will be saved. You can continue later.", color = MutedGray) },
 			confirmButton = {
 				Button(
 					onClick = { showExitDialog = false; onBack() },
 					colors = ButtonDefaults.buttonColors(containerColor = ErrorRed),
 					shape = RoundedCornerShape(8.dp)
-				) { Text("Exit", style = MaterialTheme.typography.bodyMedium, color = Color.White) }
+				) { Text("Exit", color = Color.White) }
 			},
 			dismissButton = {
-				androidx.compose.material3.TextButton(onClick = { showExitDialog = false }) {
-					Text("Keep Going", style = MaterialTheme.typography.bodyMedium, color = PrimaryBlue)
+				TextButton(onClick = { showExitDialog = false }) {
+					Text("Keep Going", color = PrimaryBlue)
 				}
 			},
 			containerColor = Color.White
@@ -182,7 +182,7 @@ fun ExamScreen(
 					selectedAnswers = state.selectedAnswers,
 					evaluatedQuestions = state.evaluatedQuestions,
 					flaggedQuestionIds = state.flaggedQuestionIds,
-					voidedQuestionIds = state.voidedQuestionIds,
+					voidedQuestions = state.voidedQuestions,
 					pagerState = pagerState,
 					reportStatusMessage = reportStatusMessage,
 					modifier = Modifier.fillMaxSize().padding(innerPadding),
@@ -197,23 +197,15 @@ fun ExamScreen(
 		}
 
 		is ExamUiState.Completed -> {
-			// Navigate to the ResultScreen automatically
+			// Automatically navigate to the results screen when completed
 			LaunchedEffect(state) {
 				onResult(state.totalScore, state.totalQuestions)
 			}
 
-			// Fallback UI shown briefly while navigating
+			// Show a simple loading indicator during the transition
 			Surface(modifier = modifier.fillMaxSize(), color = ScreenBackground) {
-				Box(modifier = Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-					Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-						CircularProgressIndicator(color = PrimaryBlue)
-						Spacer(modifier = Modifier.height(16.dp))
-						Text(
-							text = "Preparing your results…",
-							style = MaterialTheme.typography.bodyLarge,
-							color = TextColor
-						)
-					}
+				Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+					CircularProgressIndicator(color = PrimaryBlue)
 				}
 			}
 		}
@@ -240,9 +232,9 @@ private fun ExamTopBar(
 				Text(text = "Civil Service Exam", color = TextColor, style = MaterialTheme.typography.titleMedium)
 			},
 			navigationIcon = {
-				androidx.compose.material3.IconButton(onClick = onExit) {
-					androidx.compose.material3.Icon(
-						imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowBack,
+				IconButton(onClick = onExit) {
+					Icon(
+						imageVector = Icons.AutoMirrored.Filled.ArrowBack,
 						contentDescription = "Exit Exam",
 						tint = TextColor
 					)
@@ -260,7 +252,7 @@ private fun ExamTopBar(
 					Text(
 						text = if (currentQuestion?.id in flaggedQuestionIds) "Flagged" else "Flag",
 						color = if (currentQuestion?.id in flaggedQuestionIds) Color.White else PrimaryBlue,
-						style = MaterialTheme.typography.labelSmall
+						fontSize = 11.sp
 					)
 				}
 				Text(
@@ -287,7 +279,8 @@ private fun ExamTopBar(
 				text = "Q${currentIndex + 1}/$totalQuestions",
 				modifier = Modifier,
 				color = TextColor,
-				style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+				fontSize = 12.sp,
+				fontWeight = FontWeight.SemiBold
 			)
 			Row(
 				horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -308,7 +301,7 @@ private fun ExamPagerContent(
 	selectedAnswers: Map<Int, String>,
 	evaluatedQuestions: Set<Int>,
 	flaggedQuestionIds: Set<Int>,
-	voidedQuestionIds: Set<Int>,
+	voidedQuestions: Set<Int>,
 	pagerState: androidx.compose.foundation.pager.PagerState,
 	reportStatusMessage: String?,
 	modifier: Modifier = Modifier,
@@ -320,36 +313,56 @@ private fun ExamPagerContent(
 	onReportDismissed: () -> Unit
 ) {
 	var showReportDialog by remember { mutableStateOf(false) }
+	var showConfirmReportDialog by remember { mutableStateOf(false) }
 	val scope = rememberCoroutineScope()
 
-// Auto-dismiss dialog after 3 seconds
+	// Auto-dismiss success dialog after 3 seconds
 	LaunchedEffect(reportStatusMessage) {
 		if (!reportStatusMessage.isNullOrBlank()) {
 			showReportDialog = true
 			delay(3000L)
 			showReportDialog = false
-			onReportDismissed()
 		}
 	}
 
 	if (showReportDialog && !reportStatusMessage.isNullOrBlank()) {
 		AlertDialog(
-			onDismissRequest = { 
-				showReportDialog = false 
-				onReportDismissed()
-			},
-			title = { Text("Thank You", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = PrimaryBlue) },
-			text = { Text(reportStatusMessage, style = MaterialTheme.typography.bodyMedium, color = TextColor) },
+			onDismissRequest = { showReportDialog = false },
+			title = { Text("Thank You", fontWeight = FontWeight.SemiBold, color = PrimaryBlue) },
+			text = { Text(reportStatusMessage, color = TextColor) },
 			confirmButton = {
 				Button(
-					onClick = { 
-						showReportDialog = false 
-						onReportDismissed()
-					},
+					onClick = { showReportDialog = false },
 					colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
 					shape = RoundedCornerShape(8.dp)
 				) {
-					Text("OK", style = MaterialTheme.typography.bodyMedium, color = Color.White)
+					Text("OK", color = Color.White)
+				}
+			},
+			containerColor = Color.White
+		)
+	}
+
+	if (showConfirmReportDialog) {
+		AlertDialog(
+			onDismissRequest = { showConfirmReportDialog = false },
+			title = { Text("Report Question?", fontWeight = FontWeight.SemiBold, color = ErrorRed) },
+			text = { Text("Are you sure you want to report this question? It will be reviewed and voided from your current exam score.", color = TextColor) },
+			confirmButton = {
+				Button(
+					onClick = {
+						showConfirmReportDialog = false
+						onReportError()
+					},
+					colors = ButtonDefaults.buttonColors(containerColor = ErrorRed),
+					shape = RoundedCornerShape(8.dp)
+				) {
+					Text("Report", color = Color.White)
+				}
+			},
+			dismissButton = {
+				TextButton(onClick = { showConfirmReportDialog = false }) {
+					Text("Cancel", color = PrimaryBlue)
 				}
 			},
 			containerColor = Color.White
@@ -372,10 +385,10 @@ private fun ExamPagerContent(
 				selectedAnswer = pageQuestion?.let { selectedAnswers[it.id] },
 				isEvaluated = pageQuestion?.id in evaluatedQuestions,
 				isFlagged = pageQuestion?.id in flaggedQuestionIds,
-				isVoided = pageQuestion?.id in voidedQuestionIds,
+				isVoided = pageQuestion?.id in voidedQuestions,
 				onAnswerSelected = onAnswerSelected,
 				onDeepDive = onDeepDive,
-				onReportError = onReportError
+				onReportError = { showConfirmReportDialog = true }
 			)
 		}
 
@@ -410,7 +423,8 @@ private fun ExamPagerContent(
 						text = "${index + 1}",
 						modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
 						color = Color.White,
-						style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+						fontSize = 11.sp,
+						fontWeight = FontWeight.Bold
 					)
 				}
 			}
@@ -472,27 +486,19 @@ private fun QuestionPage(
 					colors = CardDefaults.cardColors(containerColor = Color(0xFFF3F7FE))
 				) {
 					Column(modifier = Modifier.padding(12.dp)) {
-						Text("Reference", style = MaterialTheme.typography.titleMedium, color = PrimaryBlue, fontWeight = FontWeight.SemiBold)
+						Text("Reference", color = PrimaryBlue, fontWeight = FontWeight.SemiBold)
 						Spacer(modifier = Modifier.height(6.dp))
-						Text(text = question.referenceText.orEmpty(), style = MaterialTheme.typography.bodyMedium, color = TextColor)
+						Text(text = question.referenceText.orEmpty(), color = TextColor, fontSize = 13.sp)
 					}
 				}
 				Spacer(modifier = Modifier.height(14.dp))
 			}
 
-			if (isVoided) {
-				Text(
-					text = "Question Reported & Voided",
-					color = MutedGray,
-					style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-					modifier = Modifier.padding(bottom = 8.dp)
-				)
-			}
 			Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				if (isFlagged) {
 					Box(modifier = Modifier.size(8.dp).background(FlagYellow, CircleShape))
 				}
-				Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = if (isVoided) MutedGray else TextColor)
+				Text(text = question.text, style = MaterialTheme.typography.bodyLarge, color = TextColor)
 			}
 
 			Spacer(modifier = Modifier.height(20.dp))
@@ -538,9 +544,8 @@ private fun QuestionPage(
 						"That answer is incorrect. Correct answer: ${question.correctAnswer}"
 					},
 					color = if (answersMatch(selectedAnswer, question.correctAnswer)) SuccessGreen else ErrorRed,
-					style = MaterialTheme.typography.bodyMedium.copy(
-						fontWeight = FontWeight.SemiBold
-					),
+					fontSize = 12.sp,
+					fontWeight = FontWeight.SemiBold,
 					modifier = Modifier.padding(bottom = 10.dp)
 				)
 			}
@@ -551,19 +556,27 @@ private fun QuestionPage(
 				colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
 				shape = RoundedCornerShape(18.dp)
 			) {
-				Text(text = "Ask AI for Deep Explanation", style = MaterialTheme.typography.bodyMedium)
+				Text(text = "Ask AI for Deep Explanation")
 			}
 
 			Spacer(modifier = Modifier.height(8.dp))
 
-			Button(
-				onClick = onReportError,
-				modifier = Modifier.fillMaxWidth(),
-				colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)), 
-				shape = RoundedCornerShape(18.dp),
-				enabled = !isVoided
-			) {
-				Text(text = if (isVoided) "Question Reported & Voided" else "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = if (isVoided) MutedGray else ErrorRed) 
+			if (isVoided) {
+				Box(
+					modifier = Modifier.fillMaxWidth().background(Color(0xFFFDECEC), RoundedCornerShape(18.dp)).padding(16.dp),
+					contentAlignment = Alignment.Center
+				) {
+					Text("Question Reported & Voided", style = MaterialTheme.typography.bodyMedium, color = ErrorRed, fontWeight = FontWeight.Bold)
+				}
+			} else {
+				Button(
+					onClick = onReportError,
+					modifier = Modifier.fillMaxWidth(),
+					colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDECEC)),
+					shape = RoundedCornerShape(18.dp)
+				) {
+					Text(text = "Report a Problem in this Question", style = MaterialTheme.typography.bodyMedium, color = ErrorRed)
+				}
 			}
 		}
 	}
@@ -615,12 +628,14 @@ private fun CompactStatChip(
 		) {
 			Text(
 				text = label,
-				style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
+				fontSize = 10.sp,
+				fontWeight = FontWeight.SemiBold,
 				color = bgColor
 			)
 			Text(
 				text = ": $value",
-				style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+				fontSize = 10.sp,
+				fontWeight = FontWeight.Bold,
 				color = bgColor
 			)
 		}

@@ -30,20 +30,20 @@ sealed class ExamUiState {
 		val selectedAnswers: Map<Int, String> = emptyMap(),
 		val evaluatedQuestions: Set<Int> = emptySet(),
 		val flaggedQuestionIds: Set<Int> = emptySet(),
-		val voidedQuestionIds: Set<Int> = emptySet()
+		val voidedQuestions: Set<Int> = emptySet()
 	) : ExamUiState() {
 		val currentQuestion: QuestionUiState?
 			get() = if (currentIndex < questions.size) questions[currentIndex] else null
-		
+
 		val totalQuestions: Int
-			get() = questions.size - voidedQuestionIds.size
-		
+			get() = questions.size
+
 		val isLastQuestion: Boolean
 			get() = currentIndex >= totalQuestions - 1
 
 		val answeredCount: Int
 			get() = evaluatedQuestions.size
-		
+
 		val correctCount: Int
 			get() {
 				var count = 0
@@ -57,7 +57,7 @@ sealed class ExamUiState {
 				}
 				return count
 			}
-		
+
 		val wrongCount: Int
 			get() {
 				var count = 0
@@ -71,7 +71,7 @@ sealed class ExamUiState {
 				}
 				return count
 			}
-		
+
 		val skippedCount: Int
 			get() = totalQuestions - evaluatedQuestions.size
 	}
@@ -87,7 +87,7 @@ sealed class ExamUiState {
 	) : ExamUiState() {
 		val percentage: Float
 			get() = if (totalQuestions > 0) (totalScore * 100f) / totalQuestions else 0f
-		
+
 		val isPassed: Boolean
 			get() = percentage >= 50f // 50% passing threshold
 	}
