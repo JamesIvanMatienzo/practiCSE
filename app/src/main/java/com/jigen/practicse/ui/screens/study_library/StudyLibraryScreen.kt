@@ -68,6 +68,7 @@ fun StudyLibraryScreen(
 	val viewModel: StudyLibraryViewModel = viewModel(factory = StudyLibraryViewModel.factory(context))
 	val state by viewModel.uiState.collectAsState()
 	var pendingCategory by remember { mutableStateOf<StudyCategoryItem?>(null) }
+	var pendingPracticeRequest by remember { mutableStateOf<Pair<String, Int>?>(null) }
 
 	Scaffold(
 		containerColor = SurfaceColor,
@@ -155,11 +156,28 @@ fun StudyLibraryScreen(
 				maxAllowed = selected.questionCount,
 				onDismiss = { pendingCategory = null },
 				onConfirm = { requested ->
-					onStartPractice(selected.categoryKey, requested)
-					pendingCategory = null
+						pendingPracticeRequest = selected.categoryKey to requested
+						pendingCategory = null
 				}
 			)
 		}
+
+			pendingPracticeRequest?.let { (categoryKey, requested) ->
+				AlertDialog(
+					onDismissRequest = { pendingPracticeRequest = null },
+					title = { Text("Overwrite progress?") },
+					text = { Text("Starting a practice session will clear your current progress and replace the active session.") },
+					confirmButton = {
+						TextButton(onClick = {
+							pendingPracticeRequest = null
+							onStartPractice(categoryKey, requested)
+						}) { Text("Continue") }
+					},
+					dismissButton = {
+						TextButton(onClick = { pendingPracticeRequest = null }) { Text("Cancel") }
+					}
+				)
+			}
 	}
 }
 

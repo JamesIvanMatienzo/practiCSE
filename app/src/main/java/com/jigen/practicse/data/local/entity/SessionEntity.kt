@@ -10,5 +10,9 @@ data class SessionEntity(
 	val lastTrack: String? = null,
 	val lastCategory: String? = null,
 	val lastQuestionIndex: Int = 0,
+	val remainingTimeMillis: Long = 0L,
+	val sessionSeed: Long = 0L,
+	val questionIdsJson: String? = null,
+	val flaggedQuestionIdsJson: String? = null,
 	val examEndTimeMillis: Long? = null
 )

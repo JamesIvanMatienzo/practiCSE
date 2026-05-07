@@ -21,6 +21,9 @@ interface ProgressDao {
 	@Query("SELECT * FROM user_progress")
 	fun observeAllProgress(): Flow<List<UserProgressEntity>>
 
+	@Query("DELETE FROM user_progress")
+	suspend fun clearAllProgress()
+
 	@Query("SELECT category, COUNT(*) as total, SUM(CASE WHEN isCorrect THEN 1 ELSE 0 END) as correct FROM user_progress GROUP BY category")
 	suspend fun getProgressByCategory(): List<CategoryProgress>
 

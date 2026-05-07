@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.jigen.practicse.data.local.AppPreferencesStore
-import com.jigen.practicse.data.local.normalizeTrackKey
-import com.jigen.practicse.data.local.trackKeyToLabel
 import com.jigen.practicse.data.entity.QuestionEntity
+import com.jigen.practicse.data.local.AppPreferencesStore
 import com.jigen.practicse.data.local.ExamConfigStore
 import com.jigen.practicse.data.local.PractiCSEDatabase
 import com.jigen.practicse.data.local.dao.ErrorReportDao
@@ -17,17 +15,20 @@ import com.jigen.practicse.data.local.dao.SessionDao
 import com.jigen.practicse.data.local.entity.ErrorReportEntity
 import com.jigen.practicse.data.local.entity.SessionEntity
 import com.jigen.practicse.data.local.entity.UserProgressEntity
+import com.jigen.practicse.data.local.normalizeTrackKey
+import com.jigen.practicse.data.local.trackKeyToLabel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.random.Random
 
 class ExamViewModelNew(
 	private val questionDao: QuestionDao,
@@ -35,7 +36,7 @@ class ExamViewModelNew(
 	private val progressDao: ProgressDao,
 	private val errorReportDao: ErrorReportDao,
 	private val context: Context,
-	private val sessionMode: String = "new" // "new" or "resume"
+	private val sessionMode: String = "new"
 ) : ViewModel() {
 
 	private val _uiState = MutableStateFlow<ExamUiState>(ExamUiState.Loading)
@@ -53,10 +54,10 @@ class ExamViewModelNew(
 
 		fun factory(context: Context, sessionMode: String = "new"): ViewModelProvider.Factory {
 			return object : ViewModelProvider.Factory {
+				@Suppress("UNCHECKED_CAST")
 				override fun <T : ViewModel> create(modelClass: Class<T>): T {
 					if (modelClass.isAssignableFrom(ExamViewModelNew::class.java)) {
 						val database = PractiCSEDatabase.getInstance(context)
-						@Suppress("UNCHECKED_CAST")
 						return ExamViewModelNew(
 							database.questionDao(),
 							database.sessionDao(),
@@ -73,9 +74,7 @@ class ExamViewModelNew(
 	}
 
 	init {
-		viewModelScope.launch {
-			loadExam()
-		}
+		viewModelScope.launch { loadExam() }
 	}
 
 	private suspend fun loadExam() {
@@ -84,58 +83,67 @@ class ExamViewModelNew(
 
 			val (mode, categoryKey) = parseSessionMode(sessionMode)
 			val existingSession = if (mode == "resume") sessionDao.getSession() else null
-			val resumeCategoryKey = existingSession?.lastCategory?.let(::categoryNameToKey)
-			val activeCategoryKey = categoryKey ?: resumeCategoryKey
+			val activeCategoryKey = categoryKey ?: existingSession?.lastCategory?.let(::categoryNameToKey)
 			val activeTrackKey = normalizeTrackKey(existingSession?.lastTrack ?: appPreferencesStore.getActiveTrackKey())
+			val sessionSeed = existingSession?.sessionSeed?.takeIf { it != 0L } ?: System.currentTimeMillis()
 			val examConfig = examConfigStore.getConfig()
-			val allQuestions = questionDao.getAllQuestions()
-			val questions = buildQuestionSet(allQuestions, activeCategoryKey, examConfig)
-			val sessionCategory = activeCategoryKey?.let { displayCategoryName(it) }
-				?: existingSession?.lastCategory
-				?: "All Categories"
-			val sessionTrackLabel = trackKeyToLabel(activeTrackKey)
+
+			val questions = if (mode == "resume" && !existingSession?.questionIdsJson.isNullOrBlank()) {
+				loadQuestionsFromSavedOrder(existingSession.questionIdsJson)
+			} else {
+				buildQuestionSet(questionDao.getAllQuestions(), activeCategoryKey, examConfig, sessionSeed)
+			}
 
 			if (questions.isEmpty()) {
 				_uiState.value = ExamUiState.Error("No questions available")
 				return
 			}
 
+			val sessionCategory = activeCategoryKey?.let { displayCategoryName(it) }
+				?: existingSession?.lastCategory
+				?: "All Categories"
+			val sessionTrackLabel = trackKeyToLabel(activeTrackKey)
 			val uiQuestions = questions.map { entity ->
 				QuestionUiState(
 					id = entity.id,
 					category = entity.category,
 					text = entity.questionText,
 					referenceText = entity.referenceText,
-					shuffledOptions = entity.getShuffledOptions(),
+					shuffledOptions = entity.getShuffledOptions(sessionSeed),
 					correctAnswer = entity.correctAnswer
 				)
 			}
 
-			// Determine starting point based on sessionMode
-			var startingIndex = 0
-			var startingScore = 0
-
-			if (mode == "resume") {
-				if (existingSession != null && existingSession.examEndTimeMillis == null) {
-					// Only resume if session is active (not completed)
-					startingIndex = existingSession.lastQuestionIndex.coerceIn(0, uiQuestions.lastIndex.coerceAtLeast(0))
-					startingScore = computeCurrentScore(uiQuestions)
-				} else {
-					// Session is completed or doesn't exist, create a new one
-					createNewSession(sessionCategory, activeTrackKey)
-				}
+			val restoredSelections = if (mode == "resume") buildSelectionState(uiQuestions) else emptyMap<Int, String>() to emptySet<Int>()
+			val startingTime = existingSession?.remainingTimeMillis?.takeIf { it > 0L } ?: DEFAULT_EXAM_DURATION_MILLIS
+			val startingIndex = if (mode == "resume" && existingSession != null && existingSession.examEndTimeMillis == null) {
+				existingSession.lastQuestionIndex.coerceIn(0, uiQuestions.lastIndex.coerceAtLeast(0))
 			} else {
-				// Create new session for a fresh exam
-				createNewSession(sessionCategory, activeTrackKey)
+				0
+			}
+			val startingScore = if (mode == "resume" && existingSession != null && existingSession.examEndTimeMillis == null) {
+				existingSession.lastScore
+			} else {
+				0
+			}
+			val startingFlags = if (mode == "resume") existingSession?.flaggedQuestionIdsJson.toIntSet() else emptySet()
+
+			if (mode == "new") {
+				createNewSession(sessionCategory, activeTrackKey, questions, sessionSeed, overwriteProgress = true)
+			} else if (existingSession == null || existingSession.examEndTimeMillis != null) {
+				createNewSession(sessionCategory, activeTrackKey, questions, sessionSeed, overwriteProgress = false)
 			}
 
 			_uiState.value = ExamUiState.Success(
 				questions = uiQuestions,
 				currentIndex = startingIndex,
 				currentScore = startingScore,
-				remainingTimeMillis = DEFAULT_EXAM_DURATION_MILLIS,
+				remainingTimeMillis = startingTime,
 				sessionTrack = sessionTrackLabel,
-				sessionCategory = sessionCategory
+				sessionCategory = sessionCategory,
+				selectedAnswers = restoredSelections.first,
+				evaluatedQuestions = restoredSelections.second,
+				flaggedQuestionIds = startingFlags
 			)
 
 			startTimer()
@@ -144,49 +152,77 @@ class ExamViewModelNew(
 		}
 	}
 
-	private suspend fun createNewSession(sessionCategory: String, trackKey: String) {
-		// Clear any existing completed sessions or old sessions
+	private suspend fun createNewSession(
+		sessionCategory: String,
+		trackKey: String,
+		questions: List<QuestionEntity>,
+		sessionSeed: Long,
+		overwriteProgress: Boolean
+	) {
+		if (overwriteProgress) {
+			progressDao.clearAllProgress()
+		}
 		sessionDao.clearCompletedSessions()
-
-		val newSession = SessionEntity(
-			id = 1,
-			lastScore = 0,
-			lastQuestionIndex = 0,
-			lastTrack = normalizeTrackKey(trackKey),
-			lastCategory = sessionCategory,
-			examEndTimeMillis = null
+		sessionDao.upsert(
+			SessionEntity(
+				id = 1,
+				lastScore = 0,
+				lastTrack = normalizeTrackKey(trackKey),
+				lastCategory = sessionCategory,
+				lastQuestionIndex = 0,
+				remainingTimeMillis = DEFAULT_EXAM_DURATION_MILLIS,
+				sessionSeed = sessionSeed,
+				questionIdsJson = questions.map { it.id }.toJsonArrayString(),
+				flaggedQuestionIdsJson = null,
+				examEndTimeMillis = null
+			)
 		)
-		sessionDao.upsert(newSession)
 	}
 
-	private suspend fun computeCurrentScore(uiQuestions: List<QuestionUiState>): Int {
-		var score = 0
-		for (question in uiQuestions) {
-			val progress = progressDao.getProgress(question.id)
-			if (progress?.isCorrect == true) {
-				score += 1
+	private suspend fun buildSelectionState(uiQuestions: List<QuestionUiState>): Pair<Map<Int, String>, Set<Int>> {
+		val progressMap = progressDao.getAllProgress().associateBy { it.questionId }
+		val selectedAnswers = mutableMapOf<Int, String>()
+		val evaluatedQuestions = mutableSetOf<Int>()
+
+		uiQuestions.forEach { question ->
+			val progress = progressMap[question.id] ?: return@forEach
+			val selectedText = question.shuffledOptions.getOrNull(progress.selectedIndex)
+			if (!selectedText.isNullOrBlank()) {
+				selectedAnswers[question.id] = selectedText
+				evaluatedQuestions.add(question.id)
 			}
 		}
-		return score
+
+		return selectedAnswers to evaluatedQuestions
 	}
 
 	private fun buildQuestionSet(
 		allQuestions: List<QuestionEntity>,
 		activeCategoryKey: String?,
-		examConfig: com.jigen.practicse.data.local.ExamQuestionConfig
+		examConfig: com.jigen.practicse.data.local.ExamQuestionConfig,
+		sessionSeed: Long
 	): List<QuestionEntity> {
-		if (activeCategoryKey != null) {
+		return if (activeCategoryKey != null) {
 			val filtered = allQuestions.filter { matchesCategory(it, activeCategoryKey) }
-			return filtered.shuffled().take(examConfig.countForCategoryKey(activeCategoryKey))
+			filtered.shuffled(Random(sessionSeed)).take(examConfig.countForCategoryKey(activeCategoryKey))
+		} else {
+			val requested = examConfig.allExamCount.coerceAtLeast(1)
+			allQuestions.shuffled(Random(sessionSeed)).take(minOf(requested, allQuestions.size))
 		}
+	}
 
-		val requested = examConfig.allExamCount.coerceAtLeast(1)
-		return allQuestions.shuffled().take(minOf(requested, allQuestions.size))
+	private suspend fun loadQuestionsFromSavedOrder(questionIdsJson: String?): List<QuestionEntity> {
+		val ids = questionIdsJson.toIntList()
+		if (ids.isEmpty()) return emptyList()
+		return buildList {
+			ids.forEach { questionId ->
+				questionDao.getQuestionById(questionId)?.let(::add)
+			}
+		}
 	}
 
 	private suspend fun ensureQuestionsSeeded() {
 		if (questionDao.countQuestions() > 0) return
-
 		val seedQuestions = loadSeedQuestions()
 		if (seedQuestions.isNotEmpty()) {
 			questionDao.insertAll(seedQuestions)
@@ -212,7 +248,6 @@ class ExamViewModelNew(
 	private fun JSONObject.toQuestionEntity(assignedId: Int): QuestionEntity? {
 		val questionText = optString("questionText").takeIf { it.isNotBlank() } ?: return null
 		val correctAnswer = optString("correctAnswer").takeIf { it.isNotBlank() } ?: return null
-
 		val wrongChoicesArray = optJSONArray("wrongChoices") ?: JSONArray()
 		val wrongChoices = buildList {
 			for (index in 0 until wrongChoicesArray.length()) {
@@ -220,11 +255,9 @@ class ExamViewModelNew(
 			}
 		}
 
-		// Require at least 3 wrong choices so every question has 4+ total options
 		if (wrongChoices.size < 3) return null
 
 		val refText = optString("referenceText")
-
 		return QuestionEntity(
 			id = assignedId,
 			category = optString("category", "General"),
@@ -246,12 +279,8 @@ class ExamViewModelNew(
 		viewModelScope.launch {
 			val isCorrect = selectedText.trim().equals(question.correctAnswer.trim(), ignoreCase = true)
 			val newScore = if (isCorrect) currentState.currentScore + 1 else currentState.currentScore
-			val updatedAnswers = currentState.selectedAnswers.toMutableMap().apply {
-				put(question.id, selectedText)
-			}
-			val updatedEvaluated = currentState.evaluatedQuestions.toMutableSet().apply {
-				add(question.id)
-			}
+			val updatedAnswers = currentState.selectedAnswers.toMutableMap().apply { put(question.id, selectedText) }
+			val updatedEvaluated = currentState.evaluatedQuestions.toMutableSet().apply { add(question.id) }
 
 			try {
 				progressDao.upsert(
@@ -264,17 +293,8 @@ class ExamViewModelNew(
 						category = question.category
 					)
 				)
-				sessionDao.getSession()?.let { session ->
-					sessionDao.upsert(
-						session.copy(
-							lastScore = newScore,
-							lastQuestionIndex = currentState.currentIndex,
-							lastTrack = normalizeTrackKey(currentState.sessionTrack),
-							examEndTimeMillis = null
-						)
-					)
-				}
-			} catch (e: Exception) {
+				saveSessionSnapshot(currentState.copy(currentScore = newScore, selectedAnswers = updatedAnswers, evaluatedQuestions = updatedEvaluated))
+			} catch (_: Exception) {
 				// Log but continue
 			}
 
@@ -292,18 +312,9 @@ class ExamViewModelNew(
 		if (clampedIndex == currentState.currentIndex) return
 
 		viewModelScope.launch {
-			_uiState.value = currentState.copy(currentIndex = clampedIndex)
-			sessionDao.getSession()?.let { session ->
-				sessionDao.upsert(
-					session.copy(
-						lastScore = currentState.currentScore,
-						lastQuestionIndex = clampedIndex,
-						lastCategory = currentState.sessionCategory,
-						lastTrack = normalizeTrackKey(currentState.sessionTrack),
-						examEndTimeMillis = null
-					)
-				)
-			}
+			val updatedState = currentState.copy(currentIndex = clampedIndex)
+			_uiState.value = updatedState
+			saveSessionSnapshot(updatedState)
 		}
 	}
 
@@ -327,22 +338,15 @@ class ExamViewModelNew(
 		val updatedFlags = currentState.flaggedQuestionIds.toMutableSet().apply {
 			if (contains(questionId)) remove(questionId) else add(questionId)
 		}
-		_uiState.value = currentState.copy(flaggedQuestionIds = updatedFlags)
+		val updatedState = currentState.copy(flaggedQuestionIds = updatedFlags)
+		_uiState.value = updatedState
+		viewModelScope.launch { saveSessionSnapshot(updatedState) }
 	}
 
 	private fun completeExam(state: ExamUiState.Success) {
 		viewModelScope.launch {
 			stopTimer()
-			sessionDao.getSession()?.let { session ->
-				sessionDao.upsert(
-					session.copy(
-						lastScore = state.currentScore,
-						lastQuestionIndex = state.currentIndex,
-						lastTrack = normalizeTrackKey(state.sessionTrack),
-						examEndTimeMillis = System.currentTimeMillis()
-					)
-				)
-			}
+			saveSessionSnapshot(state, examEndTimeMillis = System.currentTimeMillis())
 
 			val displayName = appPreferencesStore.getDisplayName()
 			PractiCSEDatabase.getInstance(context).leaderboardDao().upsert(
@@ -354,7 +358,6 @@ class ExamViewModelNew(
 			)
 
 			val scorableQuestions = state.totalQuestions - state.voidedQuestions.size
-
 			_uiState.value = ExamUiState.Completed(
 				totalScore = state.currentScore,
 				totalQuestions = scorableQuestions
@@ -376,19 +379,17 @@ class ExamViewModelNew(
 					)
 				)
 
-				val updatedVoided = currentState.voidedQuestions.toMutableSet().apply {
-					add(currentQuestion.id)
-				}
-				_uiState.value = currentState.copy(voidedQuestions = updatedVoided)
+				val updatedVoided = currentState.voidedQuestions.toMutableSet().apply { add(currentQuestion.id) }
+				val updatedState = currentState.copy(voidedQuestions = updatedVoided)
+				_uiState.value = updatedState
+				saveSessionSnapshot(updatedState)
 
-				// Auto-advance logic (glides via existing LaunchedEffect in UI)
 				if (currentState.isLastQuestion) {
-					completeExam(currentState.copy(voidedQuestions = updatedVoided))
+					completeExam(updatedState)
 				} else {
 					goToQuestion(currentState.currentIndex + 1)
 				}
-
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				// Log but don't interrupt exam
 			}
 		}
@@ -396,18 +397,37 @@ class ExamViewModelNew(
 
 	private fun startTimer() {
 		timerJob = viewModelScope.launch {
-			var remaining = 165L * 60_000L
+			var remaining = (_uiState.value as? ExamUiState.Success)?.remainingTimeMillis ?: DEFAULT_EXAM_DURATION_MILLIS
 			while (remaining > 0) {
 				delay(1000)
 				remaining -= 1000
 				val state = _uiState.value
 				if (state is ExamUiState.Success) {
-					_uiState.value = state.copy(remainingTimeMillis = remaining)
+					val updatedState = state.copy(remainingTimeMillis = remaining)
+					_uiState.value = updatedState
+					saveSessionSnapshot(updatedState)
 				}
 			}
 			val state = _uiState.value as? ExamUiState.Success ?: return@launch
 			_effects.tryEmit(ExamEffect.TimeExpired)
 			completeExam(state)
+		}
+	}
+
+	private suspend fun saveSessionSnapshot(state: ExamUiState.Success, examEndTimeMillis: Long? = null) {
+		sessionDao.getSession()?.let { session ->
+			sessionDao.upsert(
+				session.copy(
+					lastScore = state.currentScore,
+					lastQuestionIndex = state.currentIndex,
+					lastTrack = normalizeTrackKey(state.sessionTrack),
+					lastCategory = state.sessionCategory,
+					remainingTimeMillis = state.remainingTimeMillis,
+					questionIdsJson = state.questions.map { it.id }.toJsonArrayString(),
+					flaggedQuestionIdsJson = state.flaggedQuestionIds.toJsonArrayString(),
+					examEndTimeMillis = examEndTimeMillis
+				)
+			)
 		}
 	}
 
@@ -433,7 +453,7 @@ class ExamViewModelNew(
 			"numerical_ability" -> "Numerical Ability"
 			"verbal_ability" -> "Verbal Ability"
 			"general_information" -> "General Information"
-			else -> "Professional"
+			else -> "All Categories"
 		}
 	}
 
@@ -455,6 +475,23 @@ class ExamViewModelNew(
 			else -> true
 		}
 	}
+
+	private fun List<Int>.toJsonArrayString(): String = JSONArray(this).toString()
+
+	private fun Set<Int>.toJsonArrayString(): String = JSONArray(this.toList()).toString()
+
+	private fun String?.toIntList(): List<Int> {
+		if (this.isNullOrBlank()) return emptyList()
+		val array = runCatching { JSONArray(this) }.getOrNull() ?: return emptyList()
+		return buildList {
+			for (index in 0 until array.length()) {
+				val value = array.optInt(index, Int.MIN_VALUE)
+				if (value != Int.MIN_VALUE) add(value)
+			}
+		}
+	}
+
+	private fun String?.toIntSet(): Set<Int> = toIntList().toSet()
 
 	sealed class ExamEffect {
 		data class NavigateToPage(val index: Int) : ExamEffect()

@@ -2,6 +2,7 @@ package com.jigen.practicse.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlin.random.Random
 
 @Entity(tableName = "questions")
 data class QuestionEntity(
@@ -17,7 +18,7 @@ data class QuestionEntity(
      * Returns a randomized list of all answer choices (correct + wrong).
      * Useful for shuffling options once per session during exam initialization.
      */
-    fun getShuffledOptions(): List<String> {
-        return (wrongChoices + correctAnswer).shuffled()
+    fun getShuffledOptions(sessionSeed: Long): List<String> {
+        return (wrongChoices + correctAnswer).shuffled(Random(sessionSeed + id.toLong()))
     }
 }

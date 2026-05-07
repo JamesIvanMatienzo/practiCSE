@@ -222,6 +222,7 @@ private fun DashboardBody(
 	onStudyLibrary: () -> Unit
 ) {
 	var showQuestionDialog by remember { mutableStateOf(false) }
+	var pendingNewExamCount by remember { mutableStateOf<Int?>(null) }
 
 	Spacer(modifier = Modifier.height(12.dp))
 
@@ -241,7 +242,25 @@ private fun DashboardBody(
 			onDismiss = { showQuestionDialog = false },
 			onConfirm = { requested ->
 				showQuestionDialog = false
-				onStartNewExam(requested)
+				pendingNewExamCount = requested
+			}
+		)
+	}
+
+	if (pendingNewExamCount != null) {
+		AlertDialog(
+			onDismissRequest = { pendingNewExamCount = null },
+			title = { Text("Overwrite progress?") },
+			text = { Text("Starting a new exam will clear your current progress and replace the active session.") },
+			confirmButton = {
+				TextButton(onClick = {
+					val requested = pendingNewExamCount ?: return@TextButton
+					pendingNewExamCount = null
+					onStartNewExam(requested)
+				}) { Text("Continue") }
+			},
+			dismissButton = {
+				TextButton(onClick = { pendingNewExamCount = null }) { Text("Cancel") }
 			}
 		)
 	}

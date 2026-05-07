@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.room.TypeConverters
 import com.jigen.practicse.data.local.dao.ErrorReportDao
 import com.jigen.practicse.data.local.dao.ProgressDao
@@ -13,10 +14,11 @@ import com.jigen.practicse.data.local.entity.ErrorReportEntity
 import com.jigen.practicse.data.entity.QuestionEntity
 import com.jigen.practicse.data.local.entity.SessionEntity
 import com.jigen.practicse.data.local.entity.UserProgressEntity
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
 	entities = [QuestionEntity::class, SessionEntity::class, UserProgressEntity::class, ErrorReportEntity::class, com.jigen.practicse.data.local.entity.LeaderboardEntryEntity::class],
-	version = 4,
+	version = 5,
 	exportSchema = false
 )	
 @TypeConverters(Converters::class)
@@ -35,6 +37,14 @@ abstract class PractiCSEDatabase : RoomDatabase() {
 	companion object {
 
 		private const val DATABASE_NAME = "practicse.db"
+		private val MIGRATION_4_5 = object : Migration(4, 5) {
+			override fun migrate(db: SupportSQLiteDatabase) {
+				db.execSQL("ALTER TABLE user_session ADD COLUMN remainingTimeMillis INTEGER NOT NULL DEFAULT 0")
+				db.execSQL("ALTER TABLE user_session ADD COLUMN sessionSeed INTEGER NOT NULL DEFAULT 0")
+				db.execSQL("ALTER TABLE user_session ADD COLUMN questionIdsJson TEXT")
+				db.execSQL("ALTER TABLE user_session ADD COLUMN flaggedQuestionIdsJson TEXT")
+			}
+		}
 
 		@Volatile
 		private var instance: PractiCSEDatabase? = null
@@ -46,7 +56,7 @@ abstract class PractiCSEDatabase : RoomDatabase() {
 						context.applicationContext,
 						PractiCSEDatabase::class.java,
 						DATABASE_NAME
-					).fallbackToDestructiveMigration().build().also { instance = it }
+					).addMigrations(MIGRATION_4_5).fallbackToDestructiveMigration().build().also { instance = it }
 				} catch (e: Exception) {
 					// Log migration or DB open errors to CrashReporter for observability
 					com.jigen.practicse.util.CrashReporter.recordException(e, "RoomDatabaseOpenError")
