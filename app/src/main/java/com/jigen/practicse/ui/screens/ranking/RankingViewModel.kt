@@ -57,7 +57,7 @@ class RankingViewModel(private val repository: RankingRepository, private val co
         val now = System.currentTimeMillis()
         // Offline sample entries requested by the user (capitalized)
         return listOf(
-            LeaderboardEntryEntity(userName = "Emman", totalScore = 8700, lastUpdatedMillis = now),
+            LeaderboardEntryEntity(userName = "Emmanuel", totalScore = 8700, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Ivan", totalScore = 1250, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "Gem", totalScore = 150, lastUpdatedMillis = now),
             LeaderboardEntryEntity(userName = "James", totalScore = 67, lastUpdatedMillis = now),

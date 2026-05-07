@@ -357,7 +357,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    "Take a quiz to see your offline rank.",
+                                    "Take a quiz to see your offline rank",
                                     style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
                                     color = MutedText,
                                     textAlign = TextAlign.Center
