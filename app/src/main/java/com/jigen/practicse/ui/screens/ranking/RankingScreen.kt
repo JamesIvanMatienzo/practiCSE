@@ -60,7 +60,6 @@ import com.jigen.practicse.data.local.entity.LeaderboardEntryEntity
 // ── Colour tokens ─────────────────────────────────────────────────────────────
 private val SurfaceColor    = Color(0xFFF8F9FA)
 private val PrimaryBlue     = Color(0xFF1A73E8)
-private val PrimaryBlueDeep = Color(0xFF0D47A1)
 private val PrimaryBlueSoft = Color(0xFFEAF2FF)
 private val BorderColor     = Color(0xFFDCE7FA)
 private val Gold            = Color(0xFFF4B400)
@@ -78,10 +77,7 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
     val viewModel: RankingViewModel = viewModel(factory = RankingViewModel.factory(context))
     val state by viewModel.uiState.collectAsState()
 
-    val prefs = AppPreferencesStore(context)
-    // offlineEnabled = true  → showing offline/cached data
-    // switch ON (checked)    → Online mode  → offlineEnabled = false
-    // switch OFF (unchecked) → Offline mode → offlineEnabled = true
+    val prefs = remember { AppPreferencesStore(context) }
     var offlineEnabled by remember { mutableStateOf(prefs.isOfflineRankingEnabled()) }
     val isOnline = !offlineEnabled
 
@@ -121,11 +117,12 @@ fun RankingScreen(context: Context, onBack: () -> Unit = {}) {
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Switch(
-                            checked = isOnline,   // ON = Online
+                            checked = isOnline,
                             onCheckedChange = { nowOnline ->
-                                offlineEnabled = !nowOnline
-                                prefs.setOfflineRankingEnabled(!nowOnline)
-                                viewModel.refresh()
+                                val newOffline = !nowOnline
+                                offlineEnabled = newOffline
+                                prefs.setOfflineRankingEnabled(newOffline)
+                                viewModel.refresh(offlineModeOverride = newOffline)
                             },
                             colors = SwitchDefaults.colors(
                                 checkedTrackColor   = OnlineGreen,
@@ -522,7 +519,6 @@ private fun PodiumItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(contentAlignment = Alignment.BottomCenter) {
-            // Avatar with medal-coloured ring
             Box(
                 modifier = Modifier
                     .size(avatarSize + 6.dp)
@@ -556,7 +552,6 @@ private fun PodiumItem(
                     )
                 }
             }
-            // Medal number badge — sits centered at the very bottom of the avatar circle
             Box(
                 modifier = Modifier
                     .size(22.dp)

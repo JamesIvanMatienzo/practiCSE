@@ -108,7 +108,7 @@ class AppPreferencesStore(context: Context) {
 	}
 
 	fun setOfflineRankingEnabled(enabled: Boolean) {
-		prefs.edit().putBoolean(KEY_OFFLINE_RANKING, enabled).apply()
+		prefs.edit().putBoolean(KEY_OFFLINE_RANKING, enabled).commit()
 	}
 }
 

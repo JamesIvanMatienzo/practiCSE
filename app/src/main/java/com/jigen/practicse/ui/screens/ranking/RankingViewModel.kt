@@ -20,21 +20,33 @@ class RankingViewModel(private val repository: RankingRepository, private val co
         refresh()
     }
 
-    fun refresh() {
+    fun refresh(offlineModeOverride: Boolean? = null) {
         viewModelScope.launch {
             _uiState.value = RankingUiState.Loading
             val prefs = AppPreferencesStore(context)
             val userName = prefs.getDisplayName().ifBlank { "You" }
+            // Read offline mode preference FIRST to determine behavior
+            val offlineMode = offlineModeOverride ?: prefs.isOfflineRankingEnabled()
+
             try {
-                val list = repository.fetchGlobalTop(100)
+                // Only attempt network fetch if offline mode is disabled
+                val list = if (offlineMode) {
+                    emptyList()
+                } else {
+                    repository.fetchGlobalTop(100)
+                }
+
                 val sorted = list.sortedByDescending { it.totalScore }
-                val offlineMode = prefs.isOfflineRankingEnabled()
+                val isPlaceholder = offlineMode
                 val withFallback = when {
                     offlineMode -> placeholderEntries(userName)
-                    sorted.isEmpty() -> placeholderEntries(userName)
+                    sorted.isEmpty() -> {
+                        // Online but no data yet — show only the current user
+                        val now = System.currentTimeMillis()
+                        listOf(LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now))
+                    }
                     else -> sorted
                 }
-                val isPlaceholder = offlineMode || sorted.isEmpty()
                 val userEntry = withFallback.find { it.userName == userName }
                 val userRank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
 
@@ -48,9 +60,17 @@ class RankingViewModel(private val repository: RankingRepository, private val co
                 // fallback cached
                 val cached = repository.getCachedTop(100)
                 val sorted = cached.sortedByDescending { it.totalScore }
-                val offlineMode = AppPreferencesStore(context).isOfflineRankingEnabled()
-                val withFallback = if (offlineMode) placeholderEntries(userName) else if (sorted.isEmpty()) placeholderEntries(userName) else sorted
-                val isPlaceholder = offlineMode || sorted.isEmpty()
+
+                val isPlaceholder = offlineMode
+                val withFallback = when {
+                    offlineMode -> placeholderEntries(userName)
+                    sorted.isEmpty() -> {
+                        val now = System.currentTimeMillis()
+                        listOf(LeaderboardEntryEntity(userName = userName, totalScore = 0, lastUpdatedMillis = now))
+                    }
+                    else -> sorted
+                }
+
                 val rank = withFallback.indexOfFirst { it.userName == userName }.let { if (it == -1) null else it + 1 }
                 val userEntry = withFallback.find { it.userName == userName }
 
